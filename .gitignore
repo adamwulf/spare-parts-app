@@ -1,0 +1,8 @@
+Saved App Data
+*.xcodeproj/xcuserdata
+*.xcodeproj/xcuserdata/developer.xcuserdatad/
+*.xcodeproj/xcuserdata/adam.xcuserdatad
+*adam.*
+*.xccheckout
+.DS_Store
+DerivedData
