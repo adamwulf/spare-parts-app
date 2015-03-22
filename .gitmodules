@@ -1,0 +1,3 @@
+[submodule "codingmath"]
+	path = codingmath
+	url = https://github.com/bit101/codingmath
