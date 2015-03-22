@@ -13,6 +13,11 @@
 		66343C211ABF5BB500801962 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 66343C201ABF5BB500801962 /* Images.xcassets */; };
 		66343C301ABF5BB600801962 /* physics_2D_VerletTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 66343C2F1ABF5BB600801962 /* physics_2D_VerletTests.m */; };
 		66343C3D1ABF5D2900801962 /* MMPhysicsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 66343C3C1ABF5D2900801962 /* MMPhysicsView.m */; };
+		66343C451ABF5FE300801962 /* cat.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 66343C401ABF5FE300801962 /* cat.jpg */; };
+		66343C461ABF5FE300801962 /* image.js in Resources */ = {isa = PBXBuildFile; fileRef = 66343C411ABF5FE300801962 /* image.js */; };
+		66343C471ABF5FE300801962 /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = 66343C421ABF5FE300801962 /* index.html */; };
+		66343C481ABF5FE300801962 /* main.js in Resources */ = {isa = PBXBuildFile; fileRef = 66343C431ABF5FE300801962 /* main.js */; };
+		66343C491ABF5FE300801962 /* ragdoll.js in Resources */ = {isa = PBXBuildFile; fileRef = 66343C441ABF5FE300801962 /* ragdoll.js */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,6 +44,11 @@
 		66343C2F1ABF5BB600801962 /* physics_2D_VerletTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = physics_2D_VerletTests.m; sourceTree = "<group>"; };
 		66343C3B1ABF5D2900801962 /* MMPhysicsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMPhysicsView.h; sourceTree = "<group>"; };
 		66343C3C1ABF5D2900801962 /* MMPhysicsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMPhysicsView.m; sourceTree = "<group>"; };
+		66343C401ABF5FE300801962 /* cat.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = cat.jpg; path = codingmath/episode38/cat.jpg; sourceTree = SOURCE_ROOT; };
+		66343C411ABF5FE300801962 /* image.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = image.js; path = codingmath/episode38/image.js; sourceTree = SOURCE_ROOT; };
+		66343C421ABF5FE300801962 /* index.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = index.html; path = codingmath/episode38/index.html; sourceTree = SOURCE_ROOT; };
+		66343C431ABF5FE300801962 /* main.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = main.js; path = codingmath/episode38/main.js; sourceTree = SOURCE_ROOT; };
+		66343C441ABF5FE300801962 /* ragdoll.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = ragdoll.js; path = codingmath/episode38/ragdoll.js; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,6 +93,7 @@
 				66343C3A1ABF5D1300801962 /* PhysicsView */,
 				66343C391ABF5D0700801962 /* App Delegate */,
 				66343C131ABF5BB500801962 /* Supporting Files */,
+				66343C4A1ABF5FE500801962 /* Reference from CodingMath */,
 			);
 			path = "physics-2D-Verlet";
 			sourceTree = "<group>";
@@ -132,6 +143,18 @@
 				66343C3C1ABF5D2900801962 /* MMPhysicsView.m */,
 			);
 			name = PhysicsView;
+			sourceTree = "<group>";
+		};
+		66343C4A1ABF5FE500801962 /* Reference from CodingMath */ = {
+			isa = PBXGroup;
+			children = (
+				66343C401ABF5FE300801962 /* cat.jpg */,
+				66343C411ABF5FE300801962 /* image.js */,
+				66343C421ABF5FE300801962 /* index.html */,
+				66343C431ABF5FE300801962 /* main.js */,
+				66343C441ABF5FE300801962 /* ragdoll.js */,
+			);
+			name = "Reference from CodingMath";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -214,7 +237,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				66343C451ABF5FE300801962 /* cat.jpg in Resources */,
+				66343C471ABF5FE300801962 /* index.html in Resources */,
+				66343C491ABF5FE300801962 /* ragdoll.js in Resources */,
 				66343C211ABF5BB500801962 /* Images.xcassets in Resources */,
+				66343C461ABF5FE300801962 /* image.js in Resources */,
+				66343C481ABF5FE300801962 /* main.js in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
