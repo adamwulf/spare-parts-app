@@ -18,6 +18,8 @@
 		66343C471ABF5FE300801962 /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = 66343C421ABF5FE300801962 /* index.html */; };
 		66343C481ABF5FE300801962 /* main.js in Resources */ = {isa = PBXBuildFile; fileRef = 66343C431ABF5FE300801962 /* main.js */; };
 		66343C491ABF5FE300801962 /* ragdoll.js in Resources */ = {isa = PBXBuildFile; fileRef = 66343C441ABF5FE300801962 /* ragdoll.js */; };
+		666E0A661AC0924D0018289C /* MMPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = 666E0A651AC0924D0018289C /* MMPoint.m */; };
+		666E0A691AC093A10018289C /* MMStick.m in Sources */ = {isa = PBXBuildFile; fileRef = 666E0A681AC093A10018289C /* MMStick.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +51,10 @@
 		66343C421ABF5FE300801962 /* index.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = index.html; path = codingmath/episode38/index.html; sourceTree = SOURCE_ROOT; };
 		66343C431ABF5FE300801962 /* main.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = main.js; path = codingmath/episode38/main.js; sourceTree = SOURCE_ROOT; };
 		66343C441ABF5FE300801962 /* ragdoll.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = ragdoll.js; path = codingmath/episode38/ragdoll.js; sourceTree = SOURCE_ROOT; };
+		666E0A641AC0924C0018289C /* MMPoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMPoint.h; sourceTree = "<group>"; };
+		666E0A651AC0924D0018289C /* MMPoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMPoint.m; sourceTree = "<group>"; };
+		666E0A671AC093A10018289C /* MMStick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMStick.h; sourceTree = "<group>"; };
+		666E0A681AC093A10018289C /* MMStick.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMStick.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -141,6 +147,10 @@
 			children = (
 				66343C3B1ABF5D2900801962 /* MMPhysicsView.h */,
 				66343C3C1ABF5D2900801962 /* MMPhysicsView.m */,
+				666E0A641AC0924C0018289C /* MMPoint.h */,
+				666E0A651AC0924D0018289C /* MMPoint.m */,
+				666E0A671AC093A10018289C /* MMStick.h */,
+				666E0A681AC093A10018289C /* MMStick.m */,
 			);
 			name = PhysicsView;
 			sourceTree = "<group>";
@@ -264,6 +274,8 @@
 				66343C191ABF5BB500801962 /* AppDelegate.m in Sources */,
 				66343C3D1ABF5D2900801962 /* MMPhysicsView.m in Sources */,
 				66343C161ABF5BB500801962 /* main.m in Sources */,
+				666E0A691AC093A10018289C /* MMStick.m in Sources */,
+				666E0A661AC0924D0018289C /* MMPoint.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
