@@ -82,11 +82,24 @@
         [self addSubview:createModeSwitch];
         [self addSubview:animationOnOffSwitch];
         
+        
+        UIButton* clearButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+        [clearButton setTitle:@"Clear" forState:UIControlStateNormal];
+        [clearButton sizeToFit];
+        [clearButton addTarget:self action:@selector(clearObjects) forControlEvents:UIControlEventTouchUpInside];
+        [self addSubview:clearButton];
+        clearButton.center = CGPointMake(self.bounds.size.width - 50, 200);
+        
     }
     return self;
 }
 
 #pragma mark - Gesture
+
+-(void) clearObjects{
+    [points removeAllObjects];
+    [sticks removeAllObjects];
+}
 
 -(void) modeChanged:(UISwitch*)modeSwitch{
     grabPointGesture.enabled = modeSwitch.on;
@@ -140,6 +153,24 @@
         grabbedPoint = [[points filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) {
             return [evaluatedObject distanceFromPoint:currLoc] < 20;
         }]] firstObject];
+    }
+    
+    if(panGester.state == UIGestureRecognizerStateEnded){
+        MMPoint* pointToReplace = [[points filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) {
+            return evaluatedObject != grabbedPoint && [evaluatedObject distanceFromPoint:grabbedPoint.asCGPoint] < 20;
+        }]] firstObject];
+        if(pointToReplace){
+            for(int i=0;i<[sticks count];i++){
+                MMStick* stick = [sticks objectAtIndex:i];
+                if(stick.p0 == pointToReplace){
+                    stick = [MMStick stickWithP0:grabbedPoint andP1:stick.p1];
+                }else if(stick.p1 == pointToReplace){
+                    stick = [MMStick stickWithP0:stick.p0 andP1:grabbedPoint];
+                }
+                [sticks replaceObjectAtIndex:i withObject:stick];
+            }
+            [points removeObject:pointToReplace];
+        }
     }
 }
 
