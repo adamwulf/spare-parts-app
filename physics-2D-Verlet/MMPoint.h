@@ -18,11 +18,15 @@
 
 +(MMPoint*) point;
 
++(MMPoint*) pointWithCGPoint:(CGPoint)p;
+
 +(MMPoint*) pointWithX:(CGFloat)x andY:(CGFloat)y;
 
 -(CGPoint) asCGPoint;
 
 -(CGFloat) distanceFromPoint:(CGPoint)p;
+
+-(void) bump;
 
 -(void) bumpBy:(CGPoint)diff;
 

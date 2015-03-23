@@ -19,13 +19,27 @@
     return [[MMPoint alloc] init];
 }
 
++(MMPoint*) pointWithCGPoint:(CGPoint)p{
+    MMPoint* ret = [MMPoint point];
+    ret.x = p.x;
+    ret.y = p.y;
+    ret.oldx = ret.x;
+    ret.oldy = ret.y;
+    return ret;
+}
+
 +(MMPoint*) pointWithX:(CGFloat)x andY:(CGFloat)y{
     MMPoint* ret = [MMPoint point];
     ret.x = x;
     ret.y = y;
-    ret.oldx = x + (rand() % 10 - 5);
-    ret.oldy = y + (rand() % 10 - 5);
+    ret.oldx = ret.x;
+    ret.oldy = ret.y;
     return ret;
+}
+
+-(void) bump{
+    self.oldx = x + (rand() % 10 - 5);
+    self.oldy = y + (rand() % 10 - 5);
 }
 
 -(void) bumpBy:(CGPoint)diff{

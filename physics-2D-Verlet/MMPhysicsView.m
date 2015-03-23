@@ -20,7 +20,13 @@
     
     MMPoint* grabbedPoint;
     
-    UIPanGestureRecognizer* panGesture;
+    UIPanGestureRecognizer* grabPointGesture;
+    UIPanGestureRecognizer* createStickGesture;
+    
+    UISwitch* animationOnOffSwitch;
+    
+    
+    MMStick* currentEditedStick;
 }
 
 -(id) initWithFrame:(CGRect)frame{
@@ -41,8 +47,40 @@
         [displayLink addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSDefaultRunLoopMode];
         
         
-        panGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panGesture:)];
-        [self addGestureRecognizer:panGesture];
+        grabPointGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(movePointGesture:)];
+        [self addGestureRecognizer:grabPointGesture];
+        
+        createStickGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(createStickGesture:)];
+        createStickGesture.enabled = NO;
+        [self addGestureRecognizer:createStickGesture];
+        
+        
+        
+        
+        animationOnOffSwitch = [[UISwitch alloc] init];
+        animationOnOffSwitch.on = YES;
+        animationOnOffSwitch.center = CGPointMake(self.bounds.size.width - 80, 40);
+        
+        UILabel* onOff = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 150, animationOnOffSwitch.bounds.size.height)];
+        onOff.text = @"on/off";
+        onOff.textAlignment = NSTextAlignmentRight;
+        onOff.center = CGPointMake(animationOnOffSwitch.center.x - onOff.bounds.size.width, animationOnOffSwitch.center.y);
+        [self addSubview:onOff];
+
+        
+        
+        UISwitch* createModeSwitch = [[UISwitch alloc] init];
+        createModeSwitch.on = YES;
+        createModeSwitch.center = CGPointMake(self.bounds.size.width - 80, 80);
+        [createModeSwitch addTarget:self  action:@selector(modeChanged:) forControlEvents:UIControlEventValueChanged];
+        onOff = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 150, createModeSwitch.bounds.size.height)];
+        onOff.text = @"make / move";
+        onOff.textAlignment = NSTextAlignmentRight;
+        onOff.center = CGPointMake(createModeSwitch.center.x - onOff.bounds.size.width, createModeSwitch.center.y);
+        [self addSubview:onOff];
+        
+        [self addSubview:createModeSwitch];
+        [self addSubview:animationOnOffSwitch];
         
     }
     return self;
@@ -50,7 +88,52 @@
 
 #pragma mark - Gesture
 
--(void) panGesture:(UIPanGestureRecognizer*)panGester{
+-(void) modeChanged:(UISwitch*)modeSwitch{
+    grabPointGesture.enabled = modeSwitch.on;
+    createStickGesture.enabled = !modeSwitch.on;
+}
+
+-(void) createStickGesture:(UIPanGestureRecognizer*)panGester{
+    CGPoint currLoc = [panGester locationInView:self];
+    if(panGester.state == UIGestureRecognizerStateBegan){
+
+        MMPoint* startPoint = [[points filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) {
+            return [evaluatedObject distanceFromPoint:currLoc] < 30;
+        }]] firstObject];
+        
+        if(!startPoint){
+            startPoint = [MMPoint pointWithCGPoint:currLoc];
+        }
+
+        currentEditedStick = [MMStick stickWithP0:startPoint
+                                            andP1:[MMPoint pointWithCGPoint:currLoc]];
+    }else if(panGester.state == UIGestureRecognizerStateEnded ||
+             panGester.state == UIGestureRecognizerStateFailed ||
+             panGester.state == UIGestureRecognizerStateCancelled){
+        
+        MMPoint* startPoint = currentEditedStick.p0;
+        MMPoint* endPoint = [[points filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) {
+            return [evaluatedObject distanceFromPoint:currLoc] < 30;
+        }]] firstObject];
+        if(!endPoint){
+            endPoint = currentEditedStick.p1;
+        }
+        if(![points containsObject:startPoint]){
+            [points addObject:startPoint];
+        }
+        if(![points containsObject:endPoint]){
+            [points addObject:endPoint];
+        }
+        currentEditedStick = nil;
+
+        [sticks addObject:[MMStick stickWithP0:startPoint andP1:endPoint]];
+    }else if(currentEditedStick){
+        currentEditedStick = [MMStick stickWithP0:currentEditedStick.p0
+                                            andP1:[MMPoint pointWithCGPoint:currLoc]];
+    }
+}
+
+-(void) movePointGesture:(UIPanGestureRecognizer*)panGester{
     CGPoint currLoc = [panGester locationInView:self];
     if(panGester.state == UIGestureRecognizerStateBegan){
         // find the point to grab
@@ -81,8 +164,6 @@
                                      andP1:[points objectAtIndex:2]]];
     [sticks addObject:[MMStick stickWithP0:[points objectAtIndex:1]
                                      andP1:[points objectAtIndex:3]]];
-    
-
 }
 
 
@@ -102,8 +183,10 @@
     CGContextFillRect(context, rect);
     
 
-    // gravity + velocity etc
-    [self updatePoints];
+    if(animationOnOffSwitch.on){
+        // gravity + velocity etc
+        [self updatePoints];
+    }
     
     [self enforceGesture];
 
@@ -115,6 +198,9 @@
     
     // render everything
     [self renderSticks];
+    
+    // render edit
+    [currentEditedStick render];
 
 
     CGContextRestoreGState(context);
@@ -131,10 +217,10 @@
 
 -(void) enforceGesture{
     if(grabbedPoint){
-        if(panGesture.state == UIGestureRecognizerStateBegan ||
-           panGesture.state == UIGestureRecognizerStateChanged){
-            grabbedPoint.x = [panGesture locationInView:self].x;
-            grabbedPoint.y = [panGesture locationInView:self].y;
+        if(grabPointGesture.state == UIGestureRecognizerStateBegan ||
+           grabPointGesture.state == UIGestureRecognizerStateChanged){
+            grabbedPoint.x = [grabPointGesture locationInView:self].x;
+            grabbedPoint.y = [grabPointGesture locationInView:self].y;
         }
     }
 }
