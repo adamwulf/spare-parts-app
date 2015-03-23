@@ -22,6 +22,10 @@
 
 -(CGPoint) asCGPoint;
 
+-(CGFloat) distanceFromPoint:(CGPoint)p;
+
+-(void) bumpBy:(CGPoint)diff;
+
 -(void) render;
 
 @end

@@ -28,6 +28,15 @@
     return ret;
 }
 
+-(void) bumpBy:(CGPoint)diff{
+    x += diff.x;
+    y += diff.y;
+}
+
+-(CGFloat) distanceFromPoint:(CGPoint)p{
+    return [self distance:self.asCGPoint and:p];
+}
+
 -(void) setX:(CGFloat)_x{
     if(isnan(_x)){
         @throw [NSException exceptionWithName:@"NaNException" reason:@"nan" userInfo:nil];
@@ -47,6 +56,15 @@
                                                     clockwise:YES];
     [[UIColor redColor] setFill];
     [dot fill];
+}
+
+
+#pragma mark - Helper
+
+-(CGFloat) distance:(CGPoint)p0 and:(CGPoint)p1{
+    CGFloat dx = p1.x - p0.x,
+    dy = p1.y - p0.y;
+    return sqrtf(dx * dx + dy * dy);
 }
 
 @end

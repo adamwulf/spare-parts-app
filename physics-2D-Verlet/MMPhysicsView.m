@@ -17,6 +17,10 @@
     
     NSMutableArray* points;
     NSMutableArray* sticks;
+    
+    MMPoint* grabbedPoint;
+    
+    UIPanGestureRecognizer* panGesture;
 }
 
 -(id) initWithFrame:(CGRect)frame{
@@ -35,10 +39,29 @@
         CADisplayLink* displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(displayLinkPresentRenderBuffer:)];
         displayLink.frameInterval = 2;
         [displayLink addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSDefaultRunLoopMode];
+        
+        
+        panGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panGesture:)];
+        [self addGestureRecognizer:panGesture];
+        
     }
     return self;
 }
 
+#pragma mark - Gesture
+
+-(void) panGesture:(UIPanGestureRecognizer*)panGester{
+    CGPoint currLoc = [panGester locationInView:self];
+    if(panGester.state == UIGestureRecognizerStateBegan){
+        // find the point to grab
+        grabbedPoint = [[points filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) {
+            return [evaluatedObject distanceFromPoint:currLoc] < 20;
+        }]] firstObject];
+    }
+}
+
+
+#pragma mark - Data
 
 -(void) initializeData{
     [points addObject:[MMPoint pointWithX:100 andY:100]];
@@ -56,6 +79,8 @@
                                      andP1:[points objectAtIndex:0]]];
     [sticks addObject:[MMStick stickWithP0:[points objectAtIndex:0]
                                      andP1:[points objectAtIndex:2]]];
+    [sticks addObject:[MMStick stickWithP0:[points objectAtIndex:1]
+                                     andP1:[points objectAtIndex:3]]];
     
 
 }
@@ -79,6 +104,8 @@
 
     // gravity + velocity etc
     [self updatePoints];
+    
+    [self enforceGesture];
 
     // constrain everything
     for(int i = 0; i < 5; i++) {
@@ -99,6 +126,16 @@
 -(void) renderSticks{
     for(MMStick* stick in sticks){
         [stick render];
+    }
+}
+
+-(void) enforceGesture{
+    if(grabbedPoint){
+        if(panGesture.state == UIGestureRecognizerStateBegan ||
+           panGesture.state == UIGestureRecognizerStateChanged){
+            grabbedPoint.x = [panGesture locationInView:self].x;
+            grabbedPoint.y = [panGesture locationInView:self].y;
+        }
     }
 }
 
@@ -160,15 +197,6 @@
             p.oldy = p.y + vy * bounce;
         }
     }
-}
-
-
-#pragma mark - Helper
-
--(CGFloat) distance:(CGPoint)p0 and:(CGPoint)p1{
-    CGFloat dx = p1.x - p0.x,
-    dy = p1.y - p0.y;
-    return sqrtf(dx * dx + dy * dy);
 }
 
 
