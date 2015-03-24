@@ -314,6 +314,11 @@
             grabbedPoint.x = [grabPointGesture locationInView:self].x;
             grabbedPoint.y = [grabPointGesture locationInView:self].y;
         }
+        if(!animationOnOffSwitch.on){
+            for (MMPoint* p in points) {
+                [p nullVelocity];
+            }
+        }
     }
 }
 

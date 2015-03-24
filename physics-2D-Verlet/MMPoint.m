@@ -73,6 +73,11 @@
     [dot fill];
 }
 
+-(void) nullVelocity{
+    oldx = x;
+    oldy = y;
+}
+
 
 #pragma mark - Helper
 

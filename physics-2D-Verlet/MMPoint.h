@@ -33,4 +33,6 @@
 
 -(void) render;
 
+-(void) nullVelocity;
+
 @end
