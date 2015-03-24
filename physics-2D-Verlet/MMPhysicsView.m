@@ -24,6 +24,7 @@
     
     UIPanGestureRecognizer* grabPointGesture;
     UIPanGestureRecognizer* createStickGesture;
+    UIPanGestureRecognizer* createPistonGesture;
     
     UISwitch* animationOnOffSwitch;
     
@@ -57,11 +58,16 @@
         
         
         grabPointGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(movePointGesture:)];
+        createStickGesture.enabled = NO;
         [self addGestureRecognizer:grabPointGesture];
         
         createStickGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(createStickGesture:)];
-        createStickGesture.enabled = NO;
         [self addGestureRecognizer:createStickGesture];
+        
+        createPistonGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(createPistonGesture:)];
+        createPistonGesture.enabled = NO;
+        [self addGestureRecognizer:createPistonGesture];
+        
         
         
         UITapGestureRecognizer* tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(screenTapped:)];
@@ -80,18 +86,11 @@
         [self addSubview:onOff];
 
         
-        
-        UISwitch* createModeSwitch = [[UISwitch alloc] init];
-        createModeSwitch.on = YES;
-        createModeSwitch.center = CGPointMake(self.bounds.size.width - 80, 80);
-        [createModeSwitch addTarget:self  action:@selector(modeChanged:) forControlEvents:UIControlEventValueChanged];
-        onOff = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 150, createModeSwitch.bounds.size.height)];
-        onOff.text = @"make / move";
-        onOff.textAlignment = NSTextAlignmentRight;
-        onOff.center = CGPointMake(createModeSwitch.center.x - onOff.bounds.size.width, createModeSwitch.center.y);
-        [self addSubview:onOff];
-        
-        [self addSubview:createModeSwitch];
+        UISegmentedControl* createMode = [[UISegmentedControl alloc] initWithItems:@[@"make stick",@"make piston",@"move point"]];
+        createMode.selectedSegmentIndex = 0;
+        createMode.center = CGPointMake(self.bounds.size.width - 160, 80);
+        [createMode addTarget:self  action:@selector(modeChanged:) forControlEvents:UIControlEventValueChanged];
+        [self addSubview:createMode];
         [self addSubview:animationOnOffSwitch];
         
         
@@ -120,9 +119,10 @@
     [sticks removeAllObjects];
 }
 
--(void) modeChanged:(UISwitch*)modeSwitch{
-    grabPointGesture.enabled = modeSwitch.on;
-    createStickGesture.enabled = !modeSwitch.on;
+-(void) modeChanged:(UISegmentedControl*)modeSegmentControl{
+    grabPointGesture.enabled = modeSegmentControl.selectedSegmentIndex == 2;
+    createStickGesture.enabled = modeSegmentControl.selectedSegmentIndex == 0;
+    createPistonGesture.enabled = modeSegmentControl.selectedSegmentIndex == 1;
 }
 
 -(void) createStickGesture:(UIPanGestureRecognizer*)panGester{
@@ -154,6 +154,43 @@
         }
         currentEditedStick = nil;
 
+        [sticks addObject:[MMStick stickWithP0:startPoint andP1:endPoint]];
+    }else if(currentEditedStick){
+        currentEditedStick = [MMStick stickWithP0:currentEditedStick.p0
+                                            andP1:[MMPoint pointWithCGPoint:currLoc]];
+    }
+}
+
+
+-(void) createPistonGesture:(UIPanGestureRecognizer*)panGester{
+    CGPoint currLoc = [panGester locationInView:self];
+    if(panGester.state == UIGestureRecognizerStateBegan){
+        
+        MMPoint* startPoint = [self getPointNear:currLoc];
+        
+        if(!startPoint){
+            startPoint = [MMPoint pointWithCGPoint:currLoc];
+        }
+        
+        currentEditedStick = [MMStick stickWithP0:startPoint
+                                            andP1:[MMPoint pointWithCGPoint:currLoc]];
+    }else if(panGester.state == UIGestureRecognizerStateEnded ||
+             panGester.state == UIGestureRecognizerStateFailed ||
+             panGester.state == UIGestureRecognizerStateCancelled){
+        
+        MMPoint* startPoint = currentEditedStick.p0;
+        MMPoint* endPoint = [self getPointNear:currLoc];
+        if(!endPoint){
+            endPoint = currentEditedStick.p1;
+        }
+        if(![points containsObject:startPoint]){
+            [points addObject:startPoint];
+        }
+        if(![points containsObject:endPoint]){
+            [points addObject:endPoint];
+        }
+        currentEditedStick = nil;
+        
         [sticks addObject:[MMPiston pistonWithP0:startPoint andP1:endPoint]];
     }else if(currentEditedStick){
         currentEditedStick = [MMStick stickWithP0:currentEditedStick.p0

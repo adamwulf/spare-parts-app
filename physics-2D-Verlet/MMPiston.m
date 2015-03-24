@@ -18,7 +18,7 @@
 
 -(CGFloat) length{
     return [super length] * .8 +
-    [super length]*.4*cosf(angle);
+    [super length]*.2*cosf(angle);
 }
 
 -(void) tick{
