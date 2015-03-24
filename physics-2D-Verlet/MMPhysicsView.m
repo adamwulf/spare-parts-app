@@ -7,6 +7,7 @@
 //
 
 #import "MMPhysicsView.h"
+#import "MMPointPropsView.h"
 #import "MMPoint.h"
 #import "MMStick.h"
 
@@ -27,6 +28,10 @@
     
     
     MMStick* currentEditedStick;
+    
+    
+    MMPointPropsView* propertiesView;
+    MMPoint* selectedPoint;
 }
 
 -(id) initWithFrame:(CGRect)frame{
@@ -39,6 +44,9 @@
         
         points = [NSMutableArray array];
         sticks = [NSMutableArray array];
+        
+        propertiesView = [[MMPointPropsView alloc] initWithFrame:CGRectMake(20, 20, 200, 250)];
+        [self addSubview:propertiesView];
         
         [self initializeData];
         
@@ -54,6 +62,9 @@
         createStickGesture.enabled = NO;
         [self addGestureRecognizer:createStickGesture];
         
+        
+        UITapGestureRecognizer* tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(screenTapped:)];
+        [self addGestureRecognizer:tapGesture];
         
         
         
@@ -96,6 +107,13 @@
 
 #pragma mark - Gesture
 
+
+-(void) screenTapped:(UITapGestureRecognizer*)tapGesture{
+    selectedPoint = [self getPointNear:[tapGesture locationInView:self]];
+    [propertiesView showPointProperties:selectedPoint];
+    
+}
+
 -(void) clearObjects{
     [points removeAllObjects];
     [sticks removeAllObjects];
@@ -110,9 +128,7 @@
     CGPoint currLoc = [panGester locationInView:self];
     if(panGester.state == UIGestureRecognizerStateBegan){
 
-        MMPoint* startPoint = [[points filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) {
-            return [evaluatedObject distanceFromPoint:currLoc] < 30;
-        }]] firstObject];
+        MMPoint* startPoint = [self getPointNear:currLoc];
         
         if(!startPoint){
             startPoint = [MMPoint pointWithCGPoint:currLoc];
@@ -125,9 +141,7 @@
              panGester.state == UIGestureRecognizerStateCancelled){
         
         MMPoint* startPoint = currentEditedStick.p0;
-        MMPoint* endPoint = [[points filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) {
-            return [evaluatedObject distanceFromPoint:currLoc] < 30;
-        }]] firstObject];
+        MMPoint* endPoint = [self getPointNear:currLoc];
         if(!endPoint){
             endPoint = currentEditedStick.p1;
         }
@@ -150,14 +164,12 @@
     CGPoint currLoc = [panGester locationInView:self];
     if(panGester.state == UIGestureRecognizerStateBegan){
         // find the point to grab
-        grabbedPoint = [[points filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) {
-            return [evaluatedObject distanceFromPoint:currLoc] < 20;
-        }]] firstObject];
+        grabbedPoint = [self getPointNear:currLoc];
     }
     
     if(panGester.state == UIGestureRecognizerStateEnded){
         MMPoint* pointToReplace = [[points filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) {
-            return evaluatedObject != grabbedPoint && [evaluatedObject distanceFromPoint:grabbedPoint.asCGPoint] < 20;
+            return evaluatedObject != grabbedPoint && [evaluatedObject distanceFromPoint:grabbedPoint.asCGPoint] < 30;
         }]] firstObject];
         if(pointToReplace){
             for(int i=0;i<[sticks count];i++){
@@ -195,6 +207,8 @@
                                      andP1:[points objectAtIndex:2]]];
     [sticks addObject:[MMStick stickWithP0:[points objectAtIndex:1]
                                      andP1:[points objectAtIndex:3]]];
+    
+    [points makeObjectsPerformSelector:@selector(bump)];
 }
 
 
@@ -219,10 +233,9 @@
         [self updatePoints];
     }
     
-    [self enforceGesture];
-
     // constrain everything
     for(int i = 0; i < 5; i++) {
+        [self enforceGesture];
         [self updateSticks];
         [self constrainPoints];
     }
@@ -259,14 +272,16 @@
 -(void) updatePoints{
     for(int i = 0; i < [points count]; i++) {
         MMPoint* p = [points objectAtIndex:i];
-        CGFloat vx = (p.x - p.oldx) * friction;
-        CGFloat vy = (p.y - p.oldy) * friction;
-        
-        p.oldx = p.x;
-        p.oldy = p.y;
-        p.x += vx;
-        p.y += vy;
-        p.y += gravity;
+        if(!p.immovable){
+            CGFloat vx = (p.x - p.oldx) * friction;
+            CGFloat vy = (p.y - p.oldy) * friction;
+            
+            p.oldx = p.x;
+            p.oldy = p.y;
+            p.x += vx;
+            p.y += vy;
+            p.y += gravity;
+        }
     }
 }
 
@@ -284,37 +299,50 @@
         CGFloat offsetX = dx * percent;
         CGFloat offsetY = dy * percent;
         
-        s.p0.x -= offsetX;
-        s.p0.y -= offsetY;
-        s.p1.x += offsetX;
-        s.p1.y += offsetY;
+        if(!s.p0.immovable){
+            s.p0.x -= offsetX;
+            s.p0.y -= offsetY;
+        }
+        if(!s.p1.immovable){
+            s.p1.x += offsetX;
+            s.p1.y += offsetY;
+        }
     }
 }
 
 -(void) constrainPoints{
     for(int i = 0; i < [points count]; i++) {
         MMPoint* p = [points objectAtIndex:i];
-        CGFloat vx = (p.x - p.oldx) * friction;
-        CGFloat vy = (p.y - p.oldy) * friction;
-        
-        if(p.x > self.bounds.size.width) {
-            p.x = self.bounds.size.width;
-            p.oldx = p.x + vx * bounce;
-        }
-        else if(p.x < 0) {
-            p.x = 0;
-            p.oldx = p.x + vx * bounce;
-        }
-        if(p.y > self.bounds.size.height) {
-            p.y = self.bounds.size.height;
-            p.oldy = p.y + vy * bounce;
-        }
-        else if(p.y < 0) {
-            p.y = 0;
-            p.oldy = p.y + vy * bounce;
+        if(!p.immovable){
+            CGFloat vx = (p.x - p.oldx) * friction;
+            CGFloat vy = (p.y - p.oldy) * friction;
+            
+            if(p.x > self.bounds.size.width) {
+                p.x = self.bounds.size.width;
+                p.oldx = p.x + vx * bounce;
+            }
+            else if(p.x < 0) {
+                p.x = 0;
+                p.oldx = p.x + vx * bounce;
+            }
+            if(p.y > self.bounds.size.height) {
+                p.y = self.bounds.size.height;
+                p.oldy = p.y + vy * bounce;
+            }
+            else if(p.y < 0) {
+                p.y = 0;
+                p.oldy = p.y + vy * bounce;
+            }
         }
     }
 }
 
+
+
+-(MMPoint*) getPointNear:(CGPoint)point{
+    return [[points filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) {
+        return [evaluatedObject distanceFromPoint:point] < 30;
+    }]] firstObject];
+}
 
 @end

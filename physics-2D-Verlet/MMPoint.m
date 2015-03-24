@@ -14,6 +14,7 @@
 @synthesize y;
 @synthesize oldx;
 @synthesize oldy;
+@synthesize immovable;
 
 +(MMPoint*) point{
     return [[MMPoint alloc] init];
