@@ -16,6 +16,8 @@
 @property (readonly) MMPoint* p1;
 @property (readonly) CGFloat length;
 
+-(id) initWithP0:(MMPoint*)_p0 andP1:(MMPoint*)_p1;
+
 +(MMStick*) stickWithP0:(MMPoint*)p0 andP1:(MMPoint*)p1;
 
 -(void) render;

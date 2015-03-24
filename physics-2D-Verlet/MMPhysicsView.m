@@ -10,6 +10,7 @@
 #import "MMPointPropsView.h"
 #import "MMPoint.h"
 #import "MMStick.h"
+#import "MMPiston.h"
 
 @implementation MMPhysicsView{
     CGFloat bounce;
@@ -153,7 +154,7 @@
         }
         currentEditedStick = nil;
 
-        [sticks addObject:[MMStick stickWithP0:startPoint andP1:endPoint]];
+        [sticks addObject:[MMPiston pistonWithP0:startPoint andP1:endPoint]];
     }else if(currentEditedStick){
         currentEditedStick = [MMStick stickWithP0:currentEditedStick.p0
                                             andP1:[MMPoint pointWithCGPoint:currLoc]];
@@ -231,6 +232,7 @@
     if(animationOnOffSwitch.on){
         // gravity + velocity etc
         [self updatePoints];
+        [self tickMachines];
     }
     
     // constrain everything
@@ -252,6 +254,15 @@
 
 
 #pragma mark - Update Methods
+
+-(void) tickMachines{
+    for(MMStick* stick in sticks){
+        if([stick isKindOfClass:[MMPiston class]]){
+            [(MMPiston*)stick tick];
+        }
+    }
+
+}
 
 -(void) renderSticks{
     for(MMStick* stick in sticks){
