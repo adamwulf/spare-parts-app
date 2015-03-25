@@ -27,6 +27,6 @@
 
 -(void) constrain;
 
--(MMStick*) createStickWithP0:(MMPoint*)p0 andP1:(MMPoint*)p1;
+-(void) replacePoint:(MMPoint*)p withPoint:(MMPoint*)newP;
 
 @end

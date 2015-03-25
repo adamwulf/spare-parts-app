@@ -11,6 +11,7 @@
 #import "MMPoint.h"
 #import "MMStick.h"
 #import "MMPiston.h"
+#import "MMEngine.h"
 
 @implementation MMPhysicsView{
     CGFloat bounce;
@@ -25,6 +26,7 @@
     UIPanGestureRecognizer* grabPointGesture;
     UIPanGestureRecognizer* createStickGesture;
     UIPanGestureRecognizer* createPistonGesture;
+    UIPanGestureRecognizer* createEngineGesture;
     
     UISwitch* animationOnOffSwitch;
     
@@ -68,6 +70,10 @@
         createPistonGesture.enabled = NO;
         [self addGestureRecognizer:createPistonGesture];
         
+        createEngineGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(createEngineGesture:)];
+        createEngineGesture.enabled = NO;
+        [self addGestureRecognizer:createEngineGesture];
+        
         
         
         UITapGestureRecognizer* tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(screenTapped:)];
@@ -86,9 +92,9 @@
         [self addSubview:onOff];
 
         
-        UISegmentedControl* createMode = [[UISegmentedControl alloc] initWithItems:@[@"make stick",@"make piston",@"move point"]];
+        UISegmentedControl* createMode = [[UISegmentedControl alloc] initWithItems:@[@"make stick",@"make piston",@"make engine",@"move point"]];
         createMode.selectedSegmentIndex = 0;
-        createMode.center = CGPointMake(self.bounds.size.width - 160, 80);
+        createMode.center = CGPointMake(self.bounds.size.width - 200, 80);
         [createMode addTarget:self  action:@selector(modeChanged:) forControlEvents:UIControlEventValueChanged];
         [self addSubview:createMode];
         [self addSubview:animationOnOffSwitch];
@@ -120,14 +126,15 @@
 }
 
 -(void) modeChanged:(UISegmentedControl*)modeSegmentControl{
-    grabPointGesture.enabled = modeSegmentControl.selectedSegmentIndex == 2;
     createStickGesture.enabled = modeSegmentControl.selectedSegmentIndex == 0;
     createPistonGesture.enabled = modeSegmentControl.selectedSegmentIndex == 1;
+    createEngineGesture.enabled = modeSegmentControl.selectedSegmentIndex == 2;
+    grabPointGesture.enabled = modeSegmentControl.selectedSegmentIndex == 3;
 }
 
--(void) createStickGesture:(UIPanGestureRecognizer*)panGester{
-    CGPoint currLoc = [panGester locationInView:self];
-    if(panGester.state == UIGestureRecognizerStateBegan){
+-(void) createStickGesture:(UIPanGestureRecognizer*)panGesture{
+    CGPoint currLoc = [panGesture locationInView:self];
+    if(panGesture.state == UIGestureRecognizerStateBegan){
 
         MMPoint* startPoint = [self getPointNear:currLoc];
         
@@ -137,9 +144,9 @@
 
         currentEditedStick = [MMStick stickWithP0:startPoint
                                             andP1:[MMPoint pointWithCGPoint:currLoc]];
-    }else if(panGester.state == UIGestureRecognizerStateEnded ||
-             panGester.state == UIGestureRecognizerStateFailed ||
-             panGester.state == UIGestureRecognizerStateCancelled){
+    }else if(panGesture.state == UIGestureRecognizerStateEnded ||
+             panGesture.state == UIGestureRecognizerStateFailed ||
+             panGesture.state == UIGestureRecognizerStateCancelled){
         
         MMPoint* startPoint = currentEditedStick.p0;
         MMPoint* endPoint = [self getPointNear:currLoc];
@@ -162,9 +169,9 @@
 }
 
 
--(void) createPistonGesture:(UIPanGestureRecognizer*)panGester{
-    CGPoint currLoc = [panGester locationInView:self];
-    if(panGester.state == UIGestureRecognizerStateBegan){
+-(void) createPistonGesture:(UIPanGestureRecognizer*)panGesture{
+    CGPoint currLoc = [panGesture locationInView:self];
+    if(panGesture.state == UIGestureRecognizerStateBegan){
         
         MMPoint* startPoint = [self getPointNear:currLoc];
         
@@ -174,9 +181,9 @@
         
         currentEditedStick = [MMStick stickWithP0:startPoint
                                             andP1:[MMPoint pointWithCGPoint:currLoc]];
-    }else if(panGester.state == UIGestureRecognizerStateEnded ||
-             panGester.state == UIGestureRecognizerStateFailed ||
-             panGester.state == UIGestureRecognizerStateCancelled){
+    }else if(panGesture.state == UIGestureRecognizerStateEnded ||
+             panGesture.state == UIGestureRecognizerStateFailed ||
+             panGesture.state == UIGestureRecognizerStateCancelled){
         
         MMPoint* startPoint = currentEditedStick.p0;
         MMPoint* endPoint = [self getPointNear:currLoc];
@@ -198,26 +205,61 @@
     }
 }
 
--(void) movePointGesture:(UIPanGestureRecognizer*)panGester{
-    CGPoint currLoc = [panGester locationInView:self];
-    if(panGester.state == UIGestureRecognizerStateBegan){
+
+-(void) createEngineGesture:(UIPanGestureRecognizer*)panGesture{
+    CGPoint currLoc = [panGesture locationInView:self];
+    if(panGesture.state == UIGestureRecognizerStateBegan){
+        
+        MMPoint* startPoint = [self getPointNear:currLoc];
+        
+        if(!startPoint){
+            startPoint = [MMPoint pointWithCGPoint:currLoc];
+        }
+        
+        currentEditedStick = [MMStick stickWithP0:startPoint
+                                            andP1:[MMPoint pointWithCGPoint:currLoc]];
+    }else if(panGesture.state == UIGestureRecognizerStateEnded ||
+             panGesture.state == UIGestureRecognizerStateFailed ||
+             panGesture.state == UIGestureRecognizerStateCancelled){
+        
+        MMPoint* startPoint = currentEditedStick.p0;
+        MMPoint* endPoint = [self getPointNear:currLoc];
+        if(!endPoint){
+            endPoint = currentEditedStick.p1;
+        }
+        if(![points containsObject:startPoint]){
+            [points addObject:startPoint];
+        }
+        if(![points containsObject:endPoint]){
+            [points addObject:endPoint];
+        }
+        currentEditedStick = nil;
+        
+        MMEngine* engine = (MMEngine*)[MMEngine engineWithP0:startPoint
+                                                       andP1:endPoint];
+        [points addObject:engine.p2];
+        [sticks addObject:engine];
+    }else if(currentEditedStick){
+        currentEditedStick = [MMStick stickWithP0:currentEditedStick.p0
+                                            andP1:[MMPoint pointWithCGPoint:currLoc]];
+    }
+}
+
+-(void) movePointGesture:(UIPanGestureRecognizer*)panGesture{
+    CGPoint currLoc = [panGesture locationInView:self];
+    if(panGesture.state == UIGestureRecognizerStateBegan){
         // find the point to grab
         grabbedPoint = [self getPointNear:currLoc];
     }
     
-    if(panGester.state == UIGestureRecognizerStateEnded){
+    if(panGesture.state == UIGestureRecognizerStateEnded){
         MMPoint* pointToReplace = [[points filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) {
             return evaluatedObject != grabbedPoint && [evaluatedObject distanceFromPoint:grabbedPoint.asCGPoint] < 30;
         }]] firstObject];
         if(pointToReplace){
             for(int i=0;i<[sticks count];i++){
                 MMStick* stick = [sticks objectAtIndex:i];
-                
-                if(stick.p0 == pointToReplace){
-                    stick = [stick createStickWithP0:grabbedPoint andP1:stick.p1];
-                }else if(stick.p1 == pointToReplace){
-                    stick = [stick createStickWithP0:stick.p0 andP1:grabbedPoint];
-                }
+                [stick replacePoint:pointToReplace withPoint:grabbedPoint];
                 [sticks replaceObjectAtIndex:i withObject:stick];
             }
             [points removeObject:pointToReplace];
@@ -298,9 +340,7 @@
 
 -(void) tickMachines{
     for(MMStick* stick in sticks){
-        if([stick isKindOfClass:[MMPiston class]]){
-            [stick tick];
-        }
+        [stick tick];
     }
 }
 
