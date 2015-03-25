@@ -13,6 +13,7 @@
 @synthesize p0;
 @synthesize p1;
 @synthesize length;
+@synthesize stress;
 
 -(id) init{
     if(self = [super init]){
@@ -42,31 +43,54 @@
     return sqrtf(dx * dx + dy * dy);
 }
 
+-(void) tick{
+    // noop
+}
+
+-(void) constrain{
+    CGFloat dx = self.p1.x - self.p0.x;
+    CGFloat dy = self.p1.y - self.p0.y;
+    CGFloat distance = sqrtf(dx * dx + dy * dy);
+    CGFloat difference = self.length - distance;
+    CGFloat percent = difference / distance / 2;
+    if(isnan(percent)){
+        percent = 0;
+    }
+    CGFloat offsetX = dx * percent;
+    CGFloat offsetY = dy * percent;
+    
+    if(!self.p0.immovable){
+        self.p0.x -= offsetX;
+        self.p0.y -= offsetY;
+    }
+    if(!self.p1.immovable){
+        self.p1.x += offsetX;
+        self.p1.y += offsetY;
+    }
+    
+    // calculate stress
+    CGFloat idealLenth = [self length];
+    CGFloat currLength = [self calcLen];
+    CGFloat percDiff = ABS(currLength - idealLenth) / [self length];
+    
+    // .0 => blue
+    // .1 => red
+    stress = MIN(.1, percDiff) * 10;
+}
+
 -(void) render{
     [p0 render];
     [p1 render];
-    
-    CGFloat idealLenth = [self length];
-    CGFloat currLength = [self calcLen];
     
     UIBezierPath* line = [UIBezierPath bezierPath];
     [line moveToPoint:p0.asCGPoint];
     [line addLineToPoint:p1.asCGPoint];
     line.lineWidth = 2;
     
-    CGFloat percDiff = ABS(currLength - idealLenth) / [self length];
-    
-    // .0 => blue
-    // .1 => red
-    percDiff = MIN(.1, percDiff) * 10;
-    
-    UIColor* renderColor = [UIColor colorWithRed:1.0*percDiff
+    UIColor* renderColor = [UIColor colorWithRed:1.0*stress
                                            green:0
-                                            blue:1.0*(1.0-percDiff)
+                                            blue:1.0*(1.0-stress)
                                            alpha:1];
-    
-    
-//    NSLog(@"length diff: %f", percDiff);
     
     [renderColor setStroke];
     [line stroke];

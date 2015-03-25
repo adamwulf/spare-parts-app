@@ -12,6 +12,4 @@
 
 +(MMStick*) pistonWithP0:(MMPoint*)p0 andP1:(MMPoint*)p1;
 
--(void) tick;
-
 @end

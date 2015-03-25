@@ -23,6 +23,7 @@
 
 -(void) tick{
     angle += .1;
+    [super tick];
 }
 
 @end

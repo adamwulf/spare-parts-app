@@ -279,6 +279,9 @@
         [self constrainPoints];
     }
     
+    // remove stressed objects
+    [self cullSticks];
+    
     // render everything
     [self renderSticks];
     
@@ -295,14 +298,8 @@
 -(void) tickMachines{
     for(MMStick* stick in sticks){
         if([stick isKindOfClass:[MMPiston class]]){
-            [(MMPiston*)stick tick];
+            [stick tick];
         }
-    }
-}
-
--(void) renderSticks{
-    for(MMStick* stick in sticks){
-        [stick render];
     }
 }
 
@@ -340,25 +337,7 @@
 -(void) updateSticks{
     for(int i = 0; i < [sticks count]; i++) {
         MMStick* s = [sticks objectAtIndex:i];
-        CGFloat dx = s.p1.x - s.p0.x;
-        CGFloat dy = s.p1.y - s.p0.y;
-        CGFloat distance = sqrtf(dx * dx + dy * dy);
-        CGFloat difference = s.length - distance;
-        CGFloat percent = difference / distance / 2;
-        if(isnan(percent)){
-            percent = 0;
-        }
-        CGFloat offsetX = dx * percent;
-        CGFloat offsetY = dy * percent;
-        
-        if(!s.p0.immovable){
-            s.p0.x -= offsetX;
-            s.p0.y -= offsetY;
-        }
-        if(!s.p1.immovable){
-            s.p1.x += offsetX;
-            s.p1.y += offsetY;
-        }
+        [s constrain];
     }
 }
 
@@ -389,7 +368,33 @@
     }
 }
 
+#pragma mark - Remove Stressed Objects
 
+-(void) cullSticks{
+    for(int i = 0; i < [sticks count]; i++) {
+        MMStick* s = [sticks objectAtIndex:i];
+        if(s.stress >= 1.0){
+            // break stick
+            [sticks removeObject:s];
+            // clean up unused points
+            // remove s.p0, s.p1 if needed
+            // later. TODO!
+            i--;
+        }
+    }
+}
+
+#pragma mark - Render
+
+-(void) renderSticks{
+    for(MMStick* stick in sticks){
+        [stick render];
+    }
+}
+
+
+
+#pragma mark - Helper
 
 -(MMPoint*) getPointNear:(CGPoint)point{
     return [[points filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) {

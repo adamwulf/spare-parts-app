@@ -15,12 +15,17 @@
 @property (readonly) MMPoint* p0;
 @property (readonly) MMPoint* p1;
 @property (readonly) CGFloat length;
+@property (readonly) CGFloat stress;
 
 -(id) initWithP0:(MMPoint*)_p0 andP1:(MMPoint*)_p1;
 
 +(MMStick*) stickWithP0:(MMPoint*)p0 andP1:(MMPoint*)p1;
 
 -(void) render;
+
+-(void) tick;
+
+-(void) constrain;
 
 
 @end
