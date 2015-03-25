@@ -46,12 +46,29 @@
     [p0 render];
     [p1 render];
     
+    CGFloat idealLenth = [self length];
+    CGFloat currLength = [self calcLen];
+    
     UIBezierPath* line = [UIBezierPath bezierPath];
     [line moveToPoint:p0.asCGPoint];
     [line addLineToPoint:p1.asCGPoint];
     line.lineWidth = 2;
     
-    [[UIColor blueColor] setStroke];
+    CGFloat percDiff = ABS(currLength - idealLenth) / [self length];
+    
+    // .0 => blue
+    // .1 => red
+    percDiff = MIN(.1, percDiff) * 10;
+    
+    UIColor* renderColor = [UIColor colorWithRed:1.0*percDiff
+                                           green:0
+                                            blue:1.0*(1.0-percDiff)
+                                           alpha:1];
+    
+    
+//    NSLog(@"length diff: %f", percDiff);
+    
+    [renderColor setStroke];
     [line stroke];
 }
 

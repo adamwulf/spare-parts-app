@@ -298,7 +298,6 @@
             [(MMPiston*)stick tick];
         }
     }
-
 }
 
 -(void) renderSticks{
