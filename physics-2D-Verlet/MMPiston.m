@@ -12,6 +12,10 @@
     CGFloat angle;
 }
 
+-(void) setAngle:(CGFloat)_angle{
+    angle = _angle;
+}
+
 +(MMStick*) pistonWithP0:(MMPoint*)p0 andP1:(MMPoint*)p1{
     return [[MMPiston alloc] initWithP0:p0 andP1:p1];
 }
@@ -25,5 +29,12 @@
     angle += .1;
     [super tick];
 }
+
+-(MMStick*) createStickWithP0:(MMPoint*)_p0 andP1:(MMPoint*)_p1{
+    MMPiston* ret = (MMPiston*) [MMPiston pistonWithP0:_p0 andP1:_p1];
+    ret.angle = angle;
+    return ret;
+}
+
 
 @end

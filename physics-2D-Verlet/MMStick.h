@@ -27,5 +27,6 @@
 
 -(void) constrain;
 
+-(MMStick*) createStickWithP0:(MMPoint*)p0 andP1:(MMPoint*)p1;
 
 @end

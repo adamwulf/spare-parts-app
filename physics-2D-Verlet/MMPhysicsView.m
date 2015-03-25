@@ -212,10 +212,11 @@
         if(pointToReplace){
             for(int i=0;i<[sticks count];i++){
                 MMStick* stick = [sticks objectAtIndex:i];
+                
                 if(stick.p0 == pointToReplace){
-                    stick = [MMStick stickWithP0:grabbedPoint andP1:stick.p1];
+                    stick = [stick createStickWithP0:grabbedPoint andP1:stick.p1];
                 }else if(stick.p1 == pointToReplace){
-                    stick = [MMStick stickWithP0:stick.p0 andP1:grabbedPoint];
+                    stick = [stick createStickWithP0:stick.p0 andP1:grabbedPoint];
                 }
                 [sticks replaceObjectAtIndex:i withObject:stick];
             }
@@ -378,7 +379,13 @@
             [sticks removeObject:s];
             // clean up unused points
             // remove s.p0, s.p1 if needed
-            // later. TODO!
+            // later.
+            //
+            // actually, i dont think p0 or
+            // p1 will ever be orphaned without
+            // a stick, because a stressed stick
+            // will always share points with
+            // something else.
             i--;
         }
     }

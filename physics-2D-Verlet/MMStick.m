@@ -96,4 +96,11 @@
     [line stroke];
 }
 
+
+#pragma mark - create stick that matches our type
+
+-(MMStick*) createStickWithP0:(MMPoint*)_p0 andP1:(MMPoint*)_p1{
+    return [MMStick stickWithP0:_p0 andP1:_p1];
+}
+
 @end
