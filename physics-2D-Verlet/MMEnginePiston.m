@@ -20,7 +20,14 @@
     MMPoint* p2OfEngine = [MMPoint pointWithX:_engine.p1.x andY:_engine.p1.y];
     if(self = [super initWithP0:_engine.p0 andP1:p2OfEngine]){
         engine = _engine;
-        angle = 0;
+        angle = M_PI/2;
+        CGFloat percentLen = [self length] / [engine length];
+        
+        CGFloat diffX = engine.p1.x - engine.p0.x;
+        CGFloat diffY = engine.p1.y - engine.p0.y;
+        p2OfEngine.x = engine.p0.x + diffX * percentLen;
+        p2OfEngine.y = engine.p0.y + diffY * percentLen;
+        [p2OfEngine nullVelocity];
     }
     return self;
 }
