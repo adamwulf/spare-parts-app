@@ -53,7 +53,7 @@
     CGFloat distance = sqrtf(dx * dx + dy * dy);
     CGFloat difference = self.length - distance;
     CGFloat percent = difference / distance / 2;
-    if(isnan(percent)){
+    if(isnan(percent) || !isfinite(percent)){
         percent = 0;
     }
     CGFloat offsetX = dx * percent;

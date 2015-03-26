@@ -30,11 +30,5 @@
     [super tick];
 }
 
--(MMStick*) createStickWithP0:(MMPoint*)_p0 andP1:(MMPoint*)_p1{
-    MMPiston* ret = (MMPiston*) [MMPiston pistonWithP0:_p0 andP1:_p1];
-    ret.angle = angle;
-    return ret;
-}
-
 
 @end

@@ -7,10 +7,14 @@
 //
 
 #import "MMStick.h"
+#import "MMEnginePiston.h"
+#import "MMEngineShaft.h"
 
 @interface MMEngine : MMStick
 
 @property (readonly) MMPoint* p2;
+@property (readonly) MMEnginePiston* piston;
+@property (readonly) MMEngineShaft* shaft;
 
 +(MMStick*) engineWithP0:(MMPoint*)p0 andP1:(MMPoint*)p1;
 

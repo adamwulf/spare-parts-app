@@ -8,23 +8,21 @@
 
 #import "MMEngine.h"
 
-@implementation MMEngine{
-    CGFloat angle;
-}
+@implementation MMEngine
 
-@synthesize p2;
+@synthesize piston;
+@synthesize shaft;
 
 -(id) initWithP0:(MMPoint*)_p0 andP1:(MMPoint*)_p1{
     if(self = [super initWithP0:_p0 andP1:_p1]){
-        p2 = [MMPoint pointWithX:(_p0.x + _p1.x)/2
-                            andY:(_p0.y + _p1.y)/2];
-        [self setAngle:M_PI/4];
+        piston = [[MMEnginePiston alloc] initForEngine:self];
+        shaft = [[MMEngineShaft alloc] initWithEnginePiston:piston];
     }
     return self;
 }
 
--(void) setAngle:(CGFloat)_angle{
-    angle = _angle;
+-(MMPoint*) p2{
+    return piston.p1;
 }
 
 +(MMStick*) engineWithP0:(MMPoint*)p0 andP1:(MMPoint*)p1{
@@ -32,39 +30,27 @@
 }
 
 -(void) tick{
-    angle += .1;
     [super tick];
-}
-
--(MMStick*) createStickWithP0:(MMPoint*)_p0 andP1:(MMPoint*)_p1{
-    MMEngine* ret = (MMEngine*) [MMEngine engineWithP0:_p0 andP1:_p1];
-    ret.angle = angle;
-    return ret;
+    [piston tick];
+    [shaft tick];
 }
 
 -(void) constrain{
     [super constrain];
-
-    CGFloat perc =(cosf(angle) + 1.0) / 2.0;
-    
-    CGFloat idealX = self.p0.x + perc*(self.p1.x - self.p0.x);
-    CGFloat idealY = self.p0.y + perc*(self.p1.y - self.p0.y);
-    MMPoint* idealP2 = [MMPoint pointWithX:idealX andY:idealY];
-    
-    p2.x = idealP2.x;
-    p2.y = idealP2.y;
+    [piston constrain];
+    [shaft constrain];
 }
 
 
 -(void) render{
     [super render];
-    [p2 render];
+    [piston render];
+    [shaft render];
 }
 
 -(void) replacePoint:(MMPoint*)p withPoint:(MMPoint*)newP{
     [super replacePoint:p withPoint:newP];
-    if(p == p2){
-        p2 = newP;
-    }
+    [piston replacePoint:p withPoint:newP];
+    [shaft replacePoint:p withPoint:newP];
 }
 @end

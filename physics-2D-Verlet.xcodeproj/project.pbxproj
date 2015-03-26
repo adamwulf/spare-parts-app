@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		66309CEC1AC484E900FACEF9 /* MMEnginePiston.m in Sources */ = {isa = PBXBuildFile; fileRef = 66309CEB1AC484E900FACEF9 /* MMEnginePiston.m */; };
+		66309CEF1AC484FC00FACEF9 /* MMEngineShaft.m in Sources */ = {isa = PBXBuildFile; fileRef = 66309CEE1AC484FC00FACEF9 /* MMEngineShaft.m */; };
 		66343C161ABF5BB500801962 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 66343C151ABF5BB500801962 /* main.m */; };
 		66343C191ABF5BB500801962 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 66343C181ABF5BB500801962 /* AppDelegate.m */; };
 		66343C1C1ABF5BB500801962 /* MMPhysicsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 66343C1B1ABF5BB500801962 /* MMPhysicsViewController.m */; };
@@ -36,6 +38,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		66309CEA1AC484E900FACEF9 /* MMEnginePiston.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMEnginePiston.h; sourceTree = "<group>"; };
+		66309CEB1AC484E900FACEF9 /* MMEnginePiston.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMEnginePiston.m; sourceTree = "<group>"; };
+		66309CED1AC484FC00FACEF9 /* MMEngineShaft.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMEngineShaft.h; sourceTree = "<group>"; };
+		66309CEE1AC484FC00FACEF9 /* MMEngineShaft.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMEngineShaft.m; sourceTree = "<group>"; };
 		66343C101ABF5BB500801962 /* physics-2D-Verlet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "physics-2D-Verlet.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		66343C141ABF5BB500801962 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		66343C151ABF5BB500801962 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -84,6 +90,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		66309CE91AC484BC00FACEF9 /* Engine */ = {
+			isa = PBXGroup;
+			children = (
+				66625FE91AC3496D0025F441 /* MMEngine.h */,
+				66625FEA1AC3496D0025F441 /* MMEngine.m */,
+				66309CEA1AC484E900FACEF9 /* MMEnginePiston.h */,
+				66309CEB1AC484E900FACEF9 /* MMEnginePiston.m */,
+				66309CED1AC484FC00FACEF9 /* MMEngineShaft.h */,
+				66309CEE1AC484FC00FACEF9 /* MMEngineShaft.m */,
+			);
+			name = Engine;
+			sourceTree = "<group>";
+		};
 		66343C071ABF5BB500801962 = {
 			isa = PBXGroup;
 			children = (
@@ -162,8 +181,7 @@
 				666E0A681AC093A10018289C /* MMStick.m */,
 				66625FE61AC220FE0025F441 /* MMPiston.h */,
 				66625FE71AC220FE0025F441 /* MMPiston.m */,
-				66625FE91AC3496D0025F441 /* MMEngine.h */,
-				66625FEA1AC3496D0025F441 /* MMEngine.m */,
+				66309CE91AC484BC00FACEF9 /* Engine */,
 				66625FE31AC21E460025F441 /* MMPointPropsView.h */,
 				66625FE41AC21E460025F441 /* MMPointPropsView.m */,
 			);
@@ -289,8 +307,10 @@
 				66343C1C1ABF5BB500801962 /* MMPhysicsViewController.m in Sources */,
 				66343C191ABF5BB500801962 /* AppDelegate.m in Sources */,
 				66343C3D1ABF5D2900801962 /* MMPhysicsView.m in Sources */,
+				66309CEF1AC484FC00FACEF9 /* MMEngineShaft.m in Sources */,
 				66625FE81AC220FE0025F441 /* MMPiston.m in Sources */,
 				66343C161ABF5BB500801962 /* main.m in Sources */,
+				66309CEC1AC484E900FACEF9 /* MMEnginePiston.m in Sources */,
 				66625FEB1AC3496D0025F441 /* MMEngine.m in Sources */,
 				666E0A691AC093A10018289C /* MMStick.m in Sources */,
 				666E0A661AC0924D0018289C /* MMPoint.m in Sources */,
