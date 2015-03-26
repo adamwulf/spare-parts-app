@@ -35,4 +35,6 @@
 
 -(void) nullVelocity;
 
+-(void) updateWithGravity:(CGFloat)gravity andFriction:(CGFloat)friction;
+
 @end

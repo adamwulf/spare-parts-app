@@ -12,6 +12,7 @@
 #import "MMStick.h"
 #import "MMPiston.h"
 #import "MMEngine.h"
+#import "MMBalloon.h"
 
 #define kMaxStress 0.5
 
@@ -22,6 +23,7 @@
     
     NSMutableArray* points;
     NSMutableArray* sticks;
+    NSMutableArray* balloons;
     
     MMPoint* grabbedPoint;
     
@@ -29,6 +31,7 @@
     UIPanGestureRecognizer* createStickGesture;
     UIPanGestureRecognizer* createPistonGesture;
     UIPanGestureRecognizer* createEngineGesture;
+    UITapGestureRecognizer* createBalloonGesture;
     
     UISwitch* animationOnOffSwitch;
     
@@ -50,6 +53,7 @@
         
         points = [NSMutableArray array];
         sticks = [NSMutableArray array];
+        balloons = [NSMutableArray array];
         
         propertiesView = [[MMPointPropsView alloc] initWithFrame:CGRectMake(20, 20, 200, 250)];
         [self addSubview:propertiesView];
@@ -77,9 +81,13 @@
         [self addGestureRecognizer:createEngineGesture];
         
         
-        
         UITapGestureRecognizer* tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(screenTapped:)];
         [self addGestureRecognizer:tapGesture];
+        
+        
+        createBalloonGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(createBalloonGesture:)];
+        createBalloonGesture.enabled = NO;
+        [self addGestureRecognizer:createBalloonGesture];
         
         
         
@@ -94,9 +102,9 @@
         [self addSubview:onOff];
 
         
-        UISegmentedControl* createMode = [[UISegmentedControl alloc] initWithItems:@[@"make stick",@"make piston",@"make engine",@"move point"]];
+        UISegmentedControl* createMode = [[UISegmentedControl alloc] initWithItems:@[@"make stick",@"make piston",@"make engine",@"make balloon",@"move point"]];
         createMode.selectedSegmentIndex = 0;
-        createMode.center = CGPointMake(self.bounds.size.width - 200, 80);
+        createMode.center = CGPointMake(self.bounds.size.width - 250, 80);
         [createMode addTarget:self  action:@selector(modeChanged:) forControlEvents:UIControlEventValueChanged];
         [self addSubview:createMode];
         [self addSubview:animationOnOffSwitch];
@@ -131,7 +139,8 @@
     createStickGesture.enabled = modeSegmentControl.selectedSegmentIndex == 0;
     createPistonGesture.enabled = modeSegmentControl.selectedSegmentIndex == 1;
     createEngineGesture.enabled = modeSegmentControl.selectedSegmentIndex == 2;
-    grabPointGesture.enabled = modeSegmentControl.selectedSegmentIndex == 3;
+    createBalloonGesture.enabled = modeSegmentControl.selectedSegmentIndex == 3;
+    grabPointGesture.enabled = modeSegmentControl.selectedSegmentIndex == 4;
 }
 
 -(void) createStickGesture:(UIPanGestureRecognizer*)panGesture{
@@ -207,6 +216,15 @@
     }
 }
 
+
+-(void) createBalloonGesture:(UITapGestureRecognizer*)tapGesture{
+    CGPoint currLoc = [tapGesture locationInView:self];
+    if(tapGesture.state == UIGestureRecognizerStateRecognized){
+        MMBalloon* balloon = [MMBalloon balloonWithCGPoint:currLoc];
+        [points addObject:balloon];
+        [balloons addObject:balloon];
+    }
+}
 
 -(void) createEngineGesture:(UIPanGestureRecognizer*)panGesture{
     CGPoint currLoc = [panGesture locationInView:self];
@@ -329,6 +347,7 @@
     
     // render everything
     [self renderSticks];
+    [self renderBalloons];
     
     // render edit
     [currentEditedStick render];
@@ -364,16 +383,7 @@
 -(void) updatePoints{
     for(int i = 0; i < [points count]; i++) {
         MMPoint* p = [points objectAtIndex:i];
-        if(!p.immovable){
-            CGFloat vx = (p.x - p.oldx) * friction;
-            CGFloat vy = (p.y - p.oldy) * friction;
-            
-            p.oldx = p.x;
-            p.oldy = p.y;
-            p.x += vx;
-            p.y += vy;
-            p.y += gravity;
-        }
+        [p updateWithGravity:gravity andFriction:friction];
     }
 }
 
@@ -461,6 +471,12 @@
 
 -(void) renderSticks{
     for(MMStick* stick in sticks){
+        [stick render];
+    }
+}
+
+-(void) renderBalloons{
+    for(MMBalloon* stick in balloons){
         [stick render];
     }
 }

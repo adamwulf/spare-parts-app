@@ -78,6 +78,21 @@
     oldy = y;
 }
 
+#pragma mark - Update
+
+-(void) updateWithGravity:(CGFloat)gravity andFriction:(CGFloat)friction{
+    if(!self.immovable){
+        CGFloat vx = (self.x - self.oldx) * friction;
+        CGFloat vy = (self.y - self.oldy) * friction;
+        
+        self.oldx = self.x;
+        self.oldy = self.y;
+        self.x += vx;
+        self.y += vy;
+        self.y += gravity;
+    }
+}
+
 
 #pragma mark - Helper
 
