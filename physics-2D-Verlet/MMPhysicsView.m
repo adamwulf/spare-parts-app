@@ -13,6 +13,7 @@
 #import "MMPiston.h"
 #import "MMEngine.h"
 #import "MMBalloon.h"
+#import "MMWheel.h"
 
 #define kMaxStress 0.5
 
@@ -221,9 +222,18 @@
 -(void) createBalloonGesture:(UITapGestureRecognizer*)tapGesture{
     CGPoint currLoc = [tapGesture locationInView:self];
     if(tapGesture.state == UIGestureRecognizerStateRecognized){
-        MMBalloon* balloon = [MMBalloon balloonWithCGPoint:currLoc];
-        [points addObject:balloon];
-        [balloons addObject:balloon];
+//        MMBalloon* balloon = [MMBalloon balloonWithCGPoint:currLoc];
+//        [points addObject:balloon];
+//        [balloons addObject:balloon];
+        
+        MMWheel* wheel = [MMWheel wheelWithCenter:[MMPoint pointWithCGPoint:currLoc]
+                                        andRadius:40];
+        [points addObject:wheel.center];
+        [points addObject:wheel.p0];
+        [points addObject:wheel.p1];
+        [points addObject:wheel.p2];
+        [points addObject:wheel.p3];
+        [sticks addObject:wheel];
     }
 }
 
@@ -396,28 +406,47 @@
 }
 
 -(void) constrainPoints{
-    for(int i = 0; i < [points count]; i++) {
-        MMPoint* p = [points objectAtIndex:i];
+    
+    void(^processPoint)(MMPoint*, CGFloat) = ^(MMPoint* p, CGFloat dist){
         if(!p.immovable){
             CGFloat vx = (p.x - p.oldx) * friction;
             CGFloat vy = (p.y - p.oldy) * friction;
             
-            if(p.x > self.bounds.size.width) {
-                p.x = self.bounds.size.width;
+            if(p.x > self.bounds.size.width - dist) {
+                p.x = self.bounds.size.width - dist;
                 p.oldx = p.x + vx * bounce;
             }
-            else if(p.x < 0) {
-                p.x = 0;
+            else if(p.x < dist) {
+                p.x = dist;
                 p.oldx = p.x + vx * bounce;
             }
-            if(p.y > self.bounds.size.height) {
-                p.y = self.bounds.size.height;
+            if(p.y > self.bounds.size.height - dist) {
+                p.y = self.bounds.size.height - dist;
                 p.oldy = p.y + vy * bounce;
             }
-            else if(p.y < 0) {
-                p.y = 0;
+            else if(p.y < dist) {
+                p.y = dist;
                 p.oldy = p.y + vy * bounce;
             }
+        }
+    };
+    
+    NSMutableSet* processed = [NSMutableSet set];
+    
+    for(int i = 0; i < [sticks count]; i++) {
+        MMStick* s = [sticks objectAtIndex:i];
+        if([s isKindOfClass:[MMWheel class]]){
+            MMWheel* wheel = (MMWheel*)s;
+            // make sure center of wheel
+            // is inside the box
+            processPoint(wheel.center, wheel.radius);
+            [processed addObject:wheel.center];
+        }
+    }
+    for(int i = 0; i < [points count]; i++) {
+        MMPoint* p = [points objectAtIndex:i];
+        if(![processed containsObject:p]){
+            processPoint(p, 0);
         }
     }
 }
