@@ -133,6 +133,7 @@
 -(void) clearObjects{
     [points removeAllObjects];
     [sticks removeAllObjects];
+    [balloons removeAllObjects];
 }
 
 -(void) modeChanged:(UISegmentedControl*)modeSegmentControl{

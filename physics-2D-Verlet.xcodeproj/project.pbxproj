@@ -117,7 +117,7 @@
 			name = "Points Obs";
 			sourceTree = "<group>";
 		};
-		66309CF41AC48EA700FACEF9 /* Renderable Objs */ = {
+		66309CF41AC48EA700FACEF9 /* Stick Objs */ = {
 			isa = PBXGroup;
 			children = (
 				666E0A671AC093A10018289C /* MMStick.h */,
@@ -126,7 +126,7 @@
 				66625FE71AC220FE0025F441 /* MMPiston.m */,
 				66309CE91AC484BC00FACEF9 /* Engine */,
 			);
-			name = "Renderable Objs";
+			name = "Stick Objs";
 			sourceTree = "<group>";
 		};
 		66343C071ABF5BB500801962 = {
@@ -204,7 +204,7 @@
 				66625FE31AC21E460025F441 /* MMPointPropsView.h */,
 				66625FE41AC21E460025F441 /* MMPointPropsView.m */,
 				66309CF31AC48EA000FACEF9 /* Points Obs */,
-				66309CF41AC48EA700FACEF9 /* Renderable Objs */,
+				66309CF41AC48EA700FACEF9 /* Stick Objs */,
 			);
 			name = PhysicsView;
 			sourceTree = "<group>";
