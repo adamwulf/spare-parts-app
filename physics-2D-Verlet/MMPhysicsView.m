@@ -33,6 +33,8 @@
     UIPanGestureRecognizer* createPistonGesture;
     UIPanGestureRecognizer* createEngineGesture;
     UITapGestureRecognizer* createBalloonGesture;
+    UITapGestureRecognizer* createWheelGesture;
+    UITapGestureRecognizer* selectPointGesture;
     
     UISwitch* animationOnOffSwitch;
     
@@ -82,13 +84,17 @@
         [self addGestureRecognizer:createEngineGesture];
         
         
-        UITapGestureRecognizer* tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(screenTapped:)];
-        [self addGestureRecognizer:tapGesture];
+        selectPointGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(screenTapped:)];
+        [self addGestureRecognizer:selectPointGesture];
         
         
         createBalloonGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(createBalloonGesture:)];
         createBalloonGesture.enabled = NO;
         [self addGestureRecognizer:createBalloonGesture];
+        
+        createWheelGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(createWheelGesture:)];
+        createWheelGesture.enabled = NO;
+        [self addGestureRecognizer:createWheelGesture];
         
         
         
@@ -103,9 +109,9 @@
         [self addSubview:onOff];
 
         
-        UISegmentedControl* createMode = [[UISegmentedControl alloc] initWithItems:@[@"make stick",@"make piston",@"make engine",@"make balloon",@"move point"]];
+        UISegmentedControl* createMode = [[UISegmentedControl alloc] initWithItems:@[@"make stick",@"make piston",@"make engine",@"make balloon",@"make wheel",@"move point"]];
         createMode.selectedSegmentIndex = 0;
-        createMode.center = CGPointMake(self.bounds.size.width - 250, 80);
+        createMode.center = CGPointMake(self.bounds.size.width - 300, 80);
         [createMode addTarget:self  action:@selector(modeChanged:) forControlEvents:UIControlEventValueChanged];
         [self addSubview:createMode];
         [self addSubview:animationOnOffSwitch];
@@ -142,7 +148,10 @@
     createPistonGesture.enabled = modeSegmentControl.selectedSegmentIndex == 1;
     createEngineGesture.enabled = modeSegmentControl.selectedSegmentIndex == 2;
     createBalloonGesture.enabled = modeSegmentControl.selectedSegmentIndex == 3;
-    grabPointGesture.enabled = modeSegmentControl.selectedSegmentIndex == 4;
+    createWheelGesture.enabled = modeSegmentControl.selectedSegmentIndex == 4;
+    grabPointGesture.enabled = modeSegmentControl.selectedSegmentIndex == 5;
+    selectPointGesture.enabled = !createWheelGesture.enabled &&
+                                 !createBalloonGesture.enabled;
 }
 
 -(void) createStickGesture:(UIPanGestureRecognizer*)panGesture{
@@ -222,10 +231,15 @@
 -(void) createBalloonGesture:(UITapGestureRecognizer*)tapGesture{
     CGPoint currLoc = [tapGesture locationInView:self];
     if(tapGesture.state == UIGestureRecognizerStateRecognized){
-//        MMBalloon* balloon = [MMBalloon balloonWithCGPoint:currLoc];
-//        [points addObject:balloon];
-//        [balloons addObject:balloon];
-        
+        MMBalloon* balloon = [MMBalloon balloonWithCGPoint:currLoc];
+        [points addObject:balloon];
+        [balloons addObject:balloon];
+    }
+}
+
+-(void) createWheelGesture:(UITapGestureRecognizer*)tapGesture{
+    CGPoint currLoc = [tapGesture locationInView:self];
+    if(tapGesture.state == UIGestureRecognizerStateRecognized){
         MMWheel* wheel = [MMWheel wheelWithCenter:[MMPoint pointWithCGPoint:currLoc]
                                         andRadius:40];
         [points addObject:wheel.center];
