@@ -13,6 +13,8 @@
 #import "MMPiston.h"
 #import "MMEngine.h"
 
+#define kMaxStress 0.5
+
 @implementation MMPhysicsView{
     CGFloat bounce;
     CGFloat gravity;
@@ -414,9 +416,33 @@
 -(void) cullSticks{
     for(int i = 0; i < [sticks count]; i++) {
         MMStick* s = [sticks objectAtIndex:i];
-        if(s.stress >= 1.0){
+        if(s.stress >= kMaxStress){
             // break stick
             [sticks removeObject:s];
+            
+            CGPoint p0 = s.p0.asCGPoint;
+            CGPoint p3 = s.p1.asCGPoint;
+            
+            CGFloat xDiff = p3.x - p0.x;
+            CGFloat yDiff = p3.y - p0.y;
+            
+            CGPoint p1 = CGPointMake(p0.x + .3*xDiff,
+                                     p0.y + .3*yDiff);
+            CGPoint p2 = CGPointMake(p0.x + .6*xDiff,
+                                     p0.y + .6*yDiff);
+            
+            MMStick* s1 = [MMStick stickWithP0:[MMPoint pointWithCGPoint:p0]
+                                         andP1:[MMPoint pointWithCGPoint:p1]];
+            MMStick* s2 = [MMStick stickWithP0:[MMPoint pointWithCGPoint:p1]
+                                         andP1:[MMPoint pointWithCGPoint:p2]];
+            MMStick* s3 = [MMStick stickWithP0:[MMPoint pointWithCGPoint:p2]
+                                         andP1:[MMPoint pointWithCGPoint:p3]];
+            
+            NSArray* newPoints = @[s1.p0, s1.p1, s2.p0, s2.p1, s3.p0, s3.p1];
+            [newPoints makeObjectsPerformSelector:@selector(bump)];
+            [sticks addObjectsFromArray:@[s1, s2, s3]];
+            [points addObjectsFromArray:newPoints];
+            
             // clean up unused points
             // remove s.p0, s.p1 if needed
             // later.
