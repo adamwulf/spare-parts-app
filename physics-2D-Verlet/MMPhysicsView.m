@@ -44,6 +44,9 @@
     
     MMPointPropsView* propertiesView;
     MMPoint* selectedPoint;
+    
+    
+    NSMutableSet* processedPoints;
 }
 
 -(id) initWithFrame:(CGRect)frame{
@@ -53,6 +56,8 @@
         bounce = 0.9;
         gravity = 0.5;
         friction = 0.999;
+        
+        processedPoints = [NSMutableSet set];
         
         points = [NSMutableArray array];
         sticks = [NSMutableArray array];
@@ -360,10 +365,12 @@
         [self tickMachines];
     }
     
+    [processedPoints removeAllObjects];
     // constrain everything
     for(int i = 0; i < 5; i++) {
         [self enforceGesture];
         [self updateSticks];
+        [self constrainWheels];
         [self constrainPoints];
     }
     
@@ -419,48 +426,91 @@
     }
 }
 
--(void) constrainPoints{
-    
-    void(^processPoint)(MMPoint*, CGFloat) = ^(MMPoint* p, CGFloat dist){
-        if(!p.immovable){
-            CGFloat vx = (p.x - p.oldx) * friction;
-            CGFloat vy = (p.y - p.oldy) * friction;
-            
-            if(p.x > self.bounds.size.width - dist) {
-                p.x = self.bounds.size.width - dist;
-                p.oldx = p.x + vx * bounce;
-            }
-            else if(p.x < dist) {
-                p.x = dist;
-                p.oldx = p.x + vx * bounce;
-            }
-            if(p.y > self.bounds.size.height - dist) {
-                p.y = self.bounds.size.height - dist;
-                p.oldy = p.y + vy * bounce;
-            }
-            else if(p.y < dist) {
-                p.y = dist;
-                p.oldy = p.y + vy * bounce;
-            }
-        }
-    };
-    
-    NSMutableSet* processed = [NSMutableSet set];
-    
+-(void) constrainWheels{
+    // bounce wheels
+
     for(int i = 0; i < [sticks count]; i++) {
-        MMStick* s = [sticks objectAtIndex:i];
-        if([s isKindOfClass:[MMWheel class]]){
-            MMWheel* wheel = (MMWheel*)s;
-            // make sure center of wheel
-            // is inside the box
-            processPoint(wheel.center, wheel.radius);
-            [processed addObject:wheel.center];
+        MMStick* stick = [sticks objectAtIndex:i];
+        if([stick isKindOfClass:[MMWheel class]]){
+            MMWheel* wheel = (MMWheel*) stick;
+            
+            // constrain the wheel
+            
+            CGFloat moveX = 0;
+            CGFloat moveY = 0;
+            
+            [processedPoints addObject:wheel.center];
+            if(!wheel.center.immovable){
+                CGPoint v = [wheel.center velocityForFriction:friction];
+                
+                if(wheel.center.x > self.bounds.size.width - wheel.radius) {
+                    moveX = wheel.center.x - (self.bounds.size.width - wheel.radius);
+                    wheel.center.x = self.bounds.size.width - wheel.radius;
+                    wheel.center.oldx = wheel.center.x + v.x * bounce;
+                }
+                else if(wheel.center.x < wheel.radius) {
+                    moveX = wheel.center.x - wheel.radius;
+                    wheel.center.x = wheel.radius;
+                    wheel.center.oldx = wheel.center.x + v.x * bounce;
+                }
+                if(wheel.center.y > self.bounds.size.height - wheel.radius) {
+                    moveY = wheel.center.y - (self.bounds.size.height - wheel.radius);
+                    wheel.center.y = self.bounds.size.height - wheel.radius;
+                    wheel.center.oldy = wheel.center.y + v.y * bounce;
+                }
+                else if(wheel.center.y < wheel.radius) {
+                    moveY = wheel.center.y - wheel.radius;
+                    wheel.center.y = wheel.radius;
+                    wheel.center.oldy = wheel.center.y + v.y * bounce;
+                }
+                
+                
+                if(moveX || moveY){
+                    // update other 4 points
+                    for(MMPoint* p in @[wheel.p0, wheel.p1, wheel.p2, wheel.p3]){
+                        CGPoint v = [p velocityForFriction:friction];
+                        if(moveX){
+                            p.x -= moveX;
+                            p.oldx = p.x + v.x * bounce;
+                        }
+                        if(moveY){
+                            p.y -= moveY;
+                            p.oldy = p.y + v.y * bounce;
+                        }
+                    }
+                }
+            }
         }
     }
+
+}
+
+-(void) constrainPoints{
     for(int i = 0; i < [points count]; i++) {
         MMPoint* p = [points objectAtIndex:i];
-        if(![processed containsObject:p]){
-            processPoint(p, 0);
+        if(![processedPoints containsObject:p]){
+            [processedPoints addObject:p];
+            if(!p.immovable){
+                CGFloat vx = (p.x - p.oldx) * friction;
+                CGFloat vy = (p.y - p.oldy) * friction;
+                
+                if(p.x > self.bounds.size.width) {
+                    p.x = self.bounds.size.width;
+                    p.oldx = p.x + vx * bounce;
+                }
+                else if(p.x < 0) {
+                    p.x = 0;
+                    p.oldx = p.x + vx * bounce;
+                }
+                if(p.y > self.bounds.size.height) {
+                    p.y = self.bounds.size.height;
+                    p.oldy = p.y + vy * bounce;
+                }
+                else if(p.y < 0) {
+                    p.y = 0;
+                    p.oldy = p.y + vy * bounce;
+                }
+            }
         }
     }
 }

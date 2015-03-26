@@ -29,6 +29,9 @@
 
 -(void) bump;
 
+-(CGPoint) velocityForFriction:(CGFloat)friction;
+
+
 -(void) bumpBy:(CGPoint)diff;
 
 -(void) render;

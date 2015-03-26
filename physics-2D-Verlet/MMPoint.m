@@ -38,6 +38,13 @@
     return ret;
 }
 
+-(CGPoint) velocityForFriction:(CGFloat)friction{
+    CGPoint ret;
+    ret.x = (self.x - self.oldx) * friction;
+    ret.y = (self.y - self.oldy) * friction;
+    return ret;
+}
+
 -(void) bump{
     self.oldx = x + (rand() % 10 - 5);
     self.oldy = y + (rand() % 10 - 5);
