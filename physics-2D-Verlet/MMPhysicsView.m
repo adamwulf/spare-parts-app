@@ -479,6 +479,8 @@
                         }
                     }
                 }
+                
+                [processedPoints addObjectsFromArray:@[wheel.p0, wheel.p1, wheel.p2, wheel.p3]];
             }
         }
     }
