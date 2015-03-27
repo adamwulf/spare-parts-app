@@ -10,11 +10,23 @@
 
 @implementation MMBalloon
 
+@synthesize center;
+
+-(id) init{
+    if(self = [super init]){
+        center = [[MMPoint alloc] init];
+        center.gravityModifier = ^(CGFloat g){
+            return -g;
+        };
+    }
+    return self;
+}
+
 +(MMBalloon*) balloonWithCGPoint:(CGPoint)p{
     MMBalloon* ret = [[MMBalloon alloc] init];
-    ret.x = p.x;
-    ret.y = p.y;
-    [ret nullVelocity];
+    ret.center.x = p.x;
+    ret.center.y = p.y;
+    [ret.center nullVelocity];
     return ret;
 }
 
@@ -22,13 +34,13 @@
 #pragma mark - Update
 
 -(void) updateWithGravity:(CGFloat)gravity andFriction:(CGFloat)friction{
-    [super updateWithGravity:-gravity andFriction:friction];
+    [center updateWithGravity:-gravity andFriction:friction];
 }
 
 -(void) render{
-    [super render];
+    [center render];
     
-    UIBezierPath* balloon = [UIBezierPath bezierPathWithArcCenter:self.asCGPoint
+    UIBezierPath* balloon = [UIBezierPath bezierPathWithArcCenter:self.center.asCGPoint
                                                        radius:25
                                                    startAngle:0
                                                      endAngle:2*M_PI
@@ -36,7 +48,15 @@
     
     [[UIColor greenColor] setStroke];
     [balloon stroke];
+}
 
+-(void) replacePoint:(MMPoint*)p withPoint:(MMPoint*)newP{
+    if(p == center){
+        center = newP;
+        center.gravityModifier = ^(CGFloat g){
+            return -g;
+        };
+    }
 }
 
 @end

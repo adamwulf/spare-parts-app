@@ -237,7 +237,7 @@
     CGPoint currLoc = [tapGesture locationInView:self];
     if(tapGesture.state == UIGestureRecognizerStateRecognized){
         MMBalloon* balloon = [MMBalloon balloonWithCGPoint:currLoc];
-        [points addObject:balloon];
+        [points addObject:balloon.center];
         [balloons addObject:balloon];
     }
 }
@@ -311,6 +311,10 @@
                 MMStick* stick = [sticks objectAtIndex:i];
                 [stick replacePoint:pointToReplace withPoint:grabbedPoint];
                 [sticks replaceObjectAtIndex:i withObject:stick];
+            }
+            for(int i=0;i<[balloons count];i++){
+                MMBalloon* balloon = [balloons objectAtIndex:i];
+                [balloon replacePoint:pointToReplace withPoint:grabbedPoint];
             }
             [points removeObject:pointToReplace];
         }
@@ -422,13 +426,14 @@
 -(void) updateSticks{
     for(int i = 0; i < [sticks count]; i++) {
         MMStick* s = [sticks objectAtIndex:i];
-        [s constrain];
+        if(![s isKindOfClass:[MMWheel class]]){
+            [s constrain];
+        }
     }
 }
 
 -(void) constrainWheels{
     // bounce wheels
-
     for(int i = 0; i < [sticks count]; i++) {
         MMStick* stick = [sticks objectAtIndex:i];
         if([stick isKindOfClass:[MMWheel class]]){
@@ -580,8 +585,8 @@
 }
 
 -(void) renderBalloons{
-    for(MMBalloon* stick in balloons){
-        [stick render];
+    for(MMBalloon* balloon in balloons){
+        [balloon render];
     }
 }
 

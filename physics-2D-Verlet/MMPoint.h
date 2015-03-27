@@ -16,6 +16,7 @@
 @property (nonatomic) CGFloat oldx;
 @property (nonatomic) CGFloat oldy;
 @property (nonatomic) BOOL immovable;
+@property (nonatomic) CGFloat(^gravityModifier)(CGFloat);
 
 +(MMPoint*) point;
 

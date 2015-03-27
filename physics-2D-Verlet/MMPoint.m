@@ -8,13 +8,23 @@
 
 #import "MMPoint.h"
 
-@implementation MMPoint
+@implementation MMPoint{
+    CGFloat(^gravityModifier)(CGFloat);
+}
 
 @synthesize x;
 @synthesize y;
 @synthesize oldx;
 @synthesize oldy;
 @synthesize immovable;
+
+-(void) setGravityModifier:(CGFloat (^)(CGFloat))_gravityModifier{
+    gravityModifier = _gravityModifier;
+}
+
+-(CGFloat(^)(CGFloat))gravityModifier{
+    return gravityModifier;
+}
 
 +(MMPoint*) point{
     return [[MMPoint alloc] init];
@@ -88,6 +98,9 @@
 #pragma mark - Update
 
 -(void) updateWithGravity:(CGFloat)gravity andFriction:(CGFloat)friction{
+    if(gravityModifier){
+        gravity = gravityModifier(gravity);
+    }
     if(!self.immovable){
         CGFloat vx = (self.x - self.oldx) * friction;
         CGFloat vy = (self.y - self.oldy) * friction;

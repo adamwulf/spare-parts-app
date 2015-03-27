@@ -7,9 +7,16 @@
 //
 
 #import "MMPoint.h"
+#import "MMPoint.h"
 
-@interface MMBalloon : MMPoint
+@interface MMBalloon : NSObject
+
+@property (readonly) MMPoint* center;
 
 +(MMBalloon*) balloonWithCGPoint:(CGPoint)p;
+
+-(void) render;
+
+-(void) replacePoint:(MMPoint*)p withPoint:(MMPoint*)newP;
 
 @end
