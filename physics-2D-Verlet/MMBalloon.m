@@ -11,6 +11,7 @@
 @implementation MMBalloon
 
 @synthesize center;
+@synthesize radius;
 
 -(id) init{
     if(self = [super init]){
@@ -18,6 +19,7 @@
         center.gravityModifier = ^(CGFloat g){
             return -g;
         };
+        radius = 25;
     }
     return self;
 }
@@ -41,7 +43,7 @@
     [center render];
     
     UIBezierPath* balloon = [UIBezierPath bezierPathWithArcCenter:self.center.asCGPoint
-                                                       radius:25
+                                                       radius:radius
                                                    startAngle:0
                                                      endAngle:2*M_PI
                                                     clockwise:YES];

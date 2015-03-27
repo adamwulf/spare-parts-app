@@ -375,6 +375,7 @@
         [self enforceGesture];
         [self updateSticks];
         [self constrainWheels];
+        [self constrainBalloons];
         [self constrainPoints];
     }
     
@@ -500,6 +501,37 @@
     }
 }
 
+
+-(void) constrainBalloons{
+    for(int i = 0; i < [balloons count]; i++) {
+        MMBalloon* b = [balloons objectAtIndex:i];
+        if(![processedPoints containsObject:b.center]){
+            [processedPoints addObject:b.center];
+            if(!b.center.immovable){
+                CGFloat vx = (b.center.x - b.center.oldx) * friction;
+                CGFloat vy = (b.center.y - b.center.oldy) * friction;
+                
+                if(b.center.x > self.bounds.size.width - b.radius) {
+                    b.center.x = self.bounds.size.width - b.radius;
+                    b.center.oldx = b.center.x + vx * bounce;
+                }
+                else if(b.center.x < b.radius) {
+                    b.center.x = b.radius;
+                    b.center.oldx = b.center.x + vx * bounce;
+                }
+                if(b.center.y > self.bounds.size.height - b.radius) {
+                    b.center.y = self.bounds.size.height - b.radius;
+                    b.center.oldy = b.center.y + vy * bounce;
+                }
+                else if(b.center.y < b.radius) {
+                    b.center.y = b.radius;
+                    b.center.oldy = b.center.y + vy * bounce;
+                }
+            }
+        }
+    }
+}
+
 -(void) constrainPoints{
     for(int i = 0; i < [points count]; i++) {
         MMPoint* p = [points objectAtIndex:i];
@@ -529,6 +561,7 @@
         }
     }
 }
+
 
 #pragma mark - Remove Stressed Objects
 

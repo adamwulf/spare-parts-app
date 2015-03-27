@@ -12,6 +12,7 @@
 @interface MMBalloon : NSObject
 
 @property (readonly) MMPoint* center;
+@property (readonly) CGFloat radius;
 
 +(MMBalloon*) balloonWithCGPoint:(CGPoint)p;
 
