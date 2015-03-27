@@ -30,7 +30,7 @@
     
     MMPoint* grabbedPoint;
     
-    InstantPanGestureRecognizer* grabPointGesture;
+    UIPanGestureRecognizer* grabPointGesture;
     InstantPanGestureRecognizer* createStickGesture;
     InstantPanGestureRecognizer* createPistonGesture;
     InstantPanGestureRecognizer* createSpringGesture;
@@ -76,7 +76,7 @@
         [displayLink addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSDefaultRunLoopMode];
         
         
-        grabPointGesture = [[InstantPanGestureRecognizer alloc] initWithTarget:self action:@selector(movePointGesture:)];
+        grabPointGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(movePointGesture:)];
         createStickGesture.enabled = NO;
         [self addGestureRecognizer:grabPointGesture];
         
@@ -343,10 +343,10 @@
     }
 }
 
--(void) movePointGesture:(InstantPanGestureRecognizer*)panGesture{
+-(void) movePointGesture:(UIPanGestureRecognizer*)panGesture{
     CGPoint currLoc = [panGesture locationInView:self];
     if(panGesture.state == UIGestureRecognizerStateBegan){
-        currLoc = panGesture.initialLocationInWindow;
+//        currLoc = panGesture.initialLocationInWindow;
         // find the point to grab
         grabbedPoint = [self getPointNear:currLoc];
     }
