@@ -536,19 +536,18 @@
                     if(movement > 0){
                         // collision!
                         
-                        CGPoint vector = [otherB.center differenceFrom:b.center];
-                        vector.x = (dist != 0) ? vector.x / dist : dist;
-                        vector.y = (dist != 0) ? vector.y / dist : dist;
-                        vector.x *= movement;
-                        vector.y *= movement;
-                        b.center.x -= vector.x / 2;
-                        b.center.oldx -= vector.x / 2;
-                        b.center.y -= vector.y / 2;
-                        b.center.oldy -= vector.y / 2;
-                        otherB.center.x += vector.x / 2;
-                        otherB.center.oldx += vector.x / 2;
-                        otherB.center.y += vector.y / 2;
-                        otherB.center.oldy += vector.y / 2;
+                        // fix their offset to be outside their
+                        // combined radius
+                        CGPoint distToMove = [otherB.center differenceFrom:b.center];
+                        distToMove.x = (dist != 0) ? distToMove.x / dist : dist;
+                        distToMove.y = (dist != 0) ? distToMove.y / dist : dist;
+                        distToMove.x *= movement;
+                        distToMove.y *= movement;
+                        
+                        b.center.x -= distToMove.x / 2;
+                        b.center.y -= distToMove.y / 2;
+                        otherB.center.x += distToMove.x / 2;
+                        otherB.center.y += distToMove.y / 2;
                     }
                 }
             }
