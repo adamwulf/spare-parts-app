@@ -7,6 +7,7 @@
 //
 
 #import "MMPhysicsView.h"
+#import "InstantPanGestureRecognizer.h"
 #import "MMPointPropsView.h"
 #import "MMPoint.h"
 #import "MMStick.h"
@@ -28,10 +29,10 @@
     
     MMPoint* grabbedPoint;
     
-    UIPanGestureRecognizer* grabPointGesture;
-    UIPanGestureRecognizer* createStickGesture;
-    UIPanGestureRecognizer* createPistonGesture;
-    UIPanGestureRecognizer* createEngineGesture;
+    InstantPanGestureRecognizer* grabPointGesture;
+    InstantPanGestureRecognizer* createStickGesture;
+    InstantPanGestureRecognizer* createPistonGesture;
+    InstantPanGestureRecognizer* createEngineGesture;
     UITapGestureRecognizer* createBalloonGesture;
     UITapGestureRecognizer* createWheelGesture;
     UITapGestureRecognizer* selectPointGesture;
@@ -73,18 +74,18 @@
         [displayLink addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSDefaultRunLoopMode];
         
         
-        grabPointGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(movePointGesture:)];
+        grabPointGesture = [[InstantPanGestureRecognizer alloc] initWithTarget:self action:@selector(movePointGesture:)];
         createStickGesture.enabled = NO;
         [self addGestureRecognizer:grabPointGesture];
         
-        createStickGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(createStickGesture:)];
+        createStickGesture = [[InstantPanGestureRecognizer alloc] initWithTarget:self action:@selector(createStickGesture:)];
         [self addGestureRecognizer:createStickGesture];
         
-        createPistonGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(createPistonGesture:)];
+        createPistonGesture = [[InstantPanGestureRecognizer alloc] initWithTarget:self action:@selector(createPistonGesture:)];
         createPistonGesture.enabled = NO;
         [self addGestureRecognizer:createPistonGesture];
         
-        createEngineGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(createEngineGesture:)];
+        createEngineGesture = [[InstantPanGestureRecognizer alloc] initWithTarget:self action:@selector(createEngineGesture:)];
         createEngineGesture.enabled = NO;
         [self addGestureRecognizer:createEngineGesture];
         
@@ -159,9 +160,10 @@
                                  !createBalloonGesture.enabled;
 }
 
--(void) createStickGesture:(UIPanGestureRecognizer*)panGesture{
+-(void) createStickGesture:(InstantPanGestureRecognizer*)panGesture{
     CGPoint currLoc = [panGesture locationInView:self];
     if(panGesture.state == UIGestureRecognizerStateBegan){
+        currLoc = panGesture.initialLocationInWindow;
 
         MMPoint* startPoint = [self getPointNear:currLoc];
         
@@ -196,10 +198,11 @@
 }
 
 
--(void) createPistonGesture:(UIPanGestureRecognizer*)panGesture{
+-(void) createPistonGesture:(InstantPanGestureRecognizer*)panGesture{
     CGPoint currLoc = [panGesture locationInView:self];
     if(panGesture.state == UIGestureRecognizerStateBegan){
-        
+        currLoc = panGesture.initialLocationInWindow;
+
         MMPoint* startPoint = [self getPointNear:currLoc];
         
         if(!startPoint){
@@ -256,10 +259,11 @@
     }
 }
 
--(void) createEngineGesture:(UIPanGestureRecognizer*)panGesture{
+-(void) createEngineGesture:(InstantPanGestureRecognizer*)panGesture{
     CGPoint currLoc = [panGesture locationInView:self];
     if(panGesture.state == UIGestureRecognizerStateBegan){
-        
+        currLoc = panGesture.initialLocationInWindow;
+
         MMPoint* startPoint = [self getPointNear:currLoc];
         
         if(!startPoint){
@@ -295,9 +299,10 @@
     }
 }
 
--(void) movePointGesture:(UIPanGestureRecognizer*)panGesture{
+-(void) movePointGesture:(InstantPanGestureRecognizer*)panGesture{
     CGPoint currLoc = [panGesture locationInView:self];
     if(panGesture.state == UIGestureRecognizerStateBegan){
+        currLoc = panGesture.initialLocationInWindow;
         // find the point to grab
         grabbedPoint = [self getPointNear:currLoc];
     }

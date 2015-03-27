@@ -27,6 +27,7 @@
 		66625FEB1AC3496D0025F441 /* MMEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 66625FEA1AC3496D0025F441 /* MMEngine.m */; };
 		666E0A661AC0924D0018289C /* MMPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = 666E0A651AC0924D0018289C /* MMPoint.m */; };
 		666E0A691AC093A10018289C /* MMStick.m in Sources */ = {isa = PBXBuildFile; fileRef = 666E0A681AC093A10018289C /* MMStick.m */; };
+		66A490011AC5E91500CC21BA /* InstantPanGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 66A490001AC5E91500CC21BA /* InstantPanGestureRecognizer.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -76,6 +77,8 @@
 		666E0A651AC0924D0018289C /* MMPoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMPoint.m; sourceTree = "<group>"; };
 		666E0A671AC093A10018289C /* MMStick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMStick.h; sourceTree = "<group>"; };
 		666E0A681AC093A10018289C /* MMStick.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMStick.m; sourceTree = "<group>"; };
+		66A48FFF1AC5E91500CC21BA /* InstantPanGestureRecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InstantPanGestureRecognizer.h; sourceTree = "<group>"; };
+		66A490001AC5E91500CC21BA /* InstantPanGestureRecognizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InstantPanGestureRecognizer.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -163,6 +166,7 @@
 		66343C121ABF5BB500801962 /* physics-2D-Verlet */ = {
 			isa = PBXGroup;
 			children = (
+				66A48FFE1AC5E90400CC21BA /* Gesture */,
 				66343C3A1ABF5D1300801962 /* PhysicsView */,
 				66343C391ABF5D0700801962 /* App Delegate */,
 				66343C131ABF5BB500801962 /* Supporting Files */,
@@ -232,6 +236,15 @@
 				66343C441ABF5FE300801962 /* ragdoll.js */,
 			);
 			name = "Reference from CodingMath";
+			sourceTree = "<group>";
+		};
+		66A48FFE1AC5E90400CC21BA /* Gesture */ = {
+			isa = PBXGroup;
+			children = (
+				66A48FFF1AC5E91500CC21BA /* InstantPanGestureRecognizer.h */,
+				66A490001AC5E91500CC21BA /* InstantPanGestureRecognizer.m */,
+			);
+			name = Gesture;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -340,6 +353,7 @@
 				66625FE51AC21E460025F441 /* MMPointPropsView.m in Sources */,
 				66343C1C1ABF5BB500801962 /* MMPhysicsViewController.m in Sources */,
 				66343C191ABF5BB500801962 /* AppDelegate.m in Sources */,
+				66A490011AC5E91500CC21BA /* InstantPanGestureRecognizer.m in Sources */,
 				66309CF21AC48E9900FACEF9 /* MMBalloon.m in Sources */,
 				66343C3D1ABF5D2900801962 /* MMPhysicsView.m in Sources */,
 				66309CFA1AC4942700FACEF9 /* MMWheel.m in Sources */,
