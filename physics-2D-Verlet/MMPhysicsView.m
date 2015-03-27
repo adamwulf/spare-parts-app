@@ -484,7 +484,6 @@
             }
         }
     }
-
 }
 
 -(void) constrainPoints{

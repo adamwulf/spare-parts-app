@@ -18,6 +18,8 @@
     MMStick* crossBar1;
     MMStick* crossBar2;
     MMStick* crossBar3;
+    MMStick* crossBar4;
+    MMStick* crossBar5;
 }
 
 @synthesize radius;
@@ -58,7 +60,9 @@
         crossBar1 = [MMStick stickWithP0:p2 andP1:p3];
 
         crossBar2 = [MMStick stickWithP0:_p0 andP1:p2];
-        crossBar3 = [MMStick stickWithP0:_p1 andP1:p3];
+        crossBar3 = [MMStick stickWithP0:_p0 andP1:p3];
+        crossBar4 = [MMStick stickWithP0:_p1 andP1:p2];
+        crossBar5 = [MMStick stickWithP0:_p1 andP1:p3];
         
     }
     return self;
@@ -74,6 +78,8 @@
     [crossBar1 tick];
     [crossBar2 tick];
     [crossBar3 tick];
+    [crossBar4 tick];
+    [crossBar5 tick];
 }
 
 -(void) constrain{
@@ -82,11 +88,11 @@
     [spoke2 constrain];
     [spoke3 constrain];
     [spoke4 constrain];
-    for (int i=0; i<5; i++) {
-        [crossBar1 constrain];
-        [crossBar2 constrain];
-        [crossBar3 constrain];
-    }
+    [crossBar1 constrain];
+    [crossBar2 constrain];
+    [crossBar3 constrain];
+    [crossBar4 constrain];
+    [crossBar5 constrain];
 }
 
 
@@ -99,6 +105,8 @@
     [crossBar1 render];
     [crossBar2 render];
     [crossBar3 render];
+    [crossBar4 render];
+    [crossBar5 render];
 
     UIBezierPath* balloon = [UIBezierPath bezierPathWithArcCenter:center.asCGPoint
                                                            radius:radius
@@ -119,5 +127,7 @@
     [crossBar1 replacePoint:p withPoint:newP];
     [crossBar2 replacePoint:p withPoint:newP];
     [crossBar3 replacePoint:p withPoint:newP];
+    [crossBar4 replacePoint:p withPoint:newP];
+    [crossBar5 replacePoint:p withPoint:newP];
 }
 @end
