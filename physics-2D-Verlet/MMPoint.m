@@ -70,10 +70,16 @@
 }
 
 -(void) setX:(CGFloat)_x{
-    if(isnan(_x)){
+    if(isnan(_x) || !isfinite(_x)){
         @throw [NSException exceptionWithName:@"NaNException" reason:@"nan" userInfo:nil];
     }
     x = _x;
+}
+-(void) setY:(CGFloat)_y{
+    if(isnan(_y) || !isfinite(_y)){
+        @throw [NSException exceptionWithName:@"NaNException" reason:@"nan" userInfo:nil];
+    }
+    y = _y;
 }
 
 -(CGPoint) asCGPoint{
@@ -111,6 +117,11 @@
         self.y += vy;
         self.y += gravity;
     }
+}
+
+-(CGPoint) differenceFrom:(MMPoint*)p{
+    return CGPointMake(self.asCGPoint.x - p.asCGPoint.x,
+                       self.asCGPoint.y - p.asCGPoint.y);
 }
 
 

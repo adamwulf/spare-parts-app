@@ -28,6 +28,8 @@
 
 -(CGFloat) distanceFromPoint:(CGPoint)p;
 
+-(CGPoint) differenceFrom:(MMPoint*)p;
+
 -(void) bump;
 
 -(CGPoint) velocityForFriction:(CGFloat)friction;

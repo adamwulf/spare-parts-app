@@ -503,10 +503,10 @@
 
 
 -(void) constrainBalloons{
-    for(int i = 0; i < [balloons count]; i++) {
-        MMBalloon* b = [balloons objectAtIndex:i];
+    for(MMBalloon* b in balloons) {
         if(![processedPoints containsObject:b.center]){
             [processedPoints addObject:b.center];
+            // make sure balloon is inside the box
             if(!b.center.immovable){
                 CGFloat vx = (b.center.x - b.center.oldx) * friction;
                 CGFloat vy = (b.center.y - b.center.oldy) * friction;
@@ -526,6 +526,30 @@
                 else if(b.center.y < b.radius) {
                     b.center.y = b.radius;
                     b.center.oldy = b.center.y + vy * bounce;
+                }
+            }
+            // make sure the balloon isn't hitting other balloons
+            for(MMBalloon* otherB in balloons) {
+                if(otherB != b){
+                    CGFloat dist = [otherB.center distanceFromPoint:b.center.asCGPoint];
+                    CGFloat movement = (otherB.radius + b.radius) - dist;
+                    if(movement > 0){
+                        // collision!
+                        
+                        CGPoint vector = [otherB.center differenceFrom:b.center];
+                        vector.x = (dist != 0) ? vector.x / dist : dist;
+                        vector.y = (dist != 0) ? vector.y / dist : dist;
+                        vector.x *= movement;
+                        vector.y *= movement;
+                        b.center.x -= vector.x / 2;
+                        b.center.oldx -= vector.x / 2;
+                        b.center.y -= vector.y / 2;
+                        b.center.oldy -= vector.y / 2;
+                        otherB.center.x += vector.x / 2;
+                        otherB.center.oldx += vector.x / 2;
+                        otherB.center.y += vector.y / 2;
+                        otherB.center.oldy += vector.y / 2;
+                    }
                 }
             }
         }
