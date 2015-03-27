@@ -488,6 +488,7 @@
         MMStick* stick = [sticks objectAtIndex:i];
         if([stick isKindOfClass:[MMWheel class]]){
             MMWheel* wheel = (MMWheel*) stick;
+            [wheel constrain];
             
             // constrain the wheel
             
