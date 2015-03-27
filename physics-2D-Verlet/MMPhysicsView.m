@@ -439,6 +439,9 @@
             CGFloat moveX = 0;
             CGFloat moveY = 0;
             
+            CGFloat deltaVX = 0;
+            CGFloat deltaVY = 0;
+            
             [processedPoints addObject:wheel.center];
             if(!wheel.center.immovable){
                 CGPoint v = [wheel.center velocityForFriction:friction];
@@ -446,22 +449,26 @@
                 if(wheel.center.x > self.bounds.size.width - wheel.radius) {
                     moveX = wheel.center.x - (self.bounds.size.width - wheel.radius);
                     wheel.center.x = self.bounds.size.width - wheel.radius;
-                    wheel.center.oldx = wheel.center.x + v.x * bounce;
+                    deltaVX = v.x * bounce;
+                    wheel.center.oldx = wheel.center.x + deltaVX;
                 }
                 else if(wheel.center.x < wheel.radius) {
                     moveX = wheel.center.x - wheel.radius;
                     wheel.center.x = wheel.radius;
-                    wheel.center.oldx = wheel.center.x + v.x * bounce;
+                    deltaVX = v.x * bounce;
+                    wheel.center.oldx = wheel.center.x + deltaVX;
                 }
                 if(wheel.center.y > self.bounds.size.height - wheel.radius) {
                     moveY = wheel.center.y - (self.bounds.size.height - wheel.radius);
                     wheel.center.y = self.bounds.size.height - wheel.radius;
-                    wheel.center.oldy = wheel.center.y + v.y * bounce;
+                    deltaVY = v.y * bounce;
+                    wheel.center.oldy = wheel.center.y + deltaVY;
                 }
                 else if(wheel.center.y < wheel.radius) {
                     moveY = wheel.center.y - wheel.radius;
                     wheel.center.y = wheel.radius;
-                    wheel.center.oldy = wheel.center.y + v.y * bounce;
+                    deltaVY = v.y * bounce;
+                    wheel.center.oldy = wheel.center.y + deltaVY;
                 }
                 
                 
@@ -469,13 +476,15 @@
                     // update other 4 points
                     for(MMPoint* p in @[wheel.p0, wheel.p1, wheel.p2, wheel.p3]){
                         CGPoint v = [p velocityForFriction:friction];
+                        // reverse velocity of the point
+                        // maintain relative velocity of point vs center
                         if(moveX){
                             p.x -= moveX;
-                            p.oldx = p.x + v.x * bounce;
+                            p.oldx = p.x + v.x * bounce - (v.x - deltaVX);
                         }
                         if(moveY){
                             p.y -= moveY;
-                            p.oldy = p.y + v.y * bounce;
+                            p.oldy = p.y + v.y * bounce - (v.y - deltaVY);
                         }
                     }
                 }
