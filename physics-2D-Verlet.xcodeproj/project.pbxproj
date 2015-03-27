@@ -28,6 +28,7 @@
 		666E0A661AC0924D0018289C /* MMPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = 666E0A651AC0924D0018289C /* MMPoint.m */; };
 		666E0A691AC093A10018289C /* MMStick.m in Sources */ = {isa = PBXBuildFile; fileRef = 666E0A681AC093A10018289C /* MMStick.m */; };
 		66A490011AC5E91500CC21BA /* InstantPanGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 66A490001AC5E91500CC21BA /* InstantPanGestureRecognizer.m */; };
+		66A490041AC5EAE500CC21BA /* MMSpring.m in Sources */ = {isa = PBXBuildFile; fileRef = 66A490031AC5EAE500CC21BA /* MMSpring.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -79,6 +80,8 @@
 		666E0A681AC093A10018289C /* MMStick.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMStick.m; sourceTree = "<group>"; };
 		66A48FFF1AC5E91500CC21BA /* InstantPanGestureRecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InstantPanGestureRecognizer.h; sourceTree = "<group>"; };
 		66A490001AC5E91500CC21BA /* InstantPanGestureRecognizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InstantPanGestureRecognizer.m; sourceTree = "<group>"; };
+		66A490021AC5EAE500CC21BA /* MMSpring.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMSpring.h; sourceTree = "<group>"; };
+		66A490031AC5EAE500CC21BA /* MMSpring.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMSpring.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -128,6 +131,8 @@
 			children = (
 				666E0A671AC093A10018289C /* MMStick.h */,
 				666E0A681AC093A10018289C /* MMStick.m */,
+				66A490021AC5EAE500CC21BA /* MMSpring.h */,
+				66A490031AC5EAE500CC21BA /* MMSpring.m */,
 				66625FE61AC220FE0025F441 /* MMPiston.h */,
 				66625FE71AC220FE0025F441 /* MMPiston.m */,
 				66309CE91AC484BC00FACEF9 /* Engine */,
@@ -358,6 +363,7 @@
 				66343C3D1ABF5D2900801962 /* MMPhysicsView.m in Sources */,
 				66309CFA1AC4942700FACEF9 /* MMWheel.m in Sources */,
 				66309CEF1AC484FC00FACEF9 /* MMEngineShaft.m in Sources */,
+				66A490041AC5EAE500CC21BA /* MMSpring.m in Sources */,
 				66625FE81AC220FE0025F441 /* MMPiston.m in Sources */,
 				66343C161ABF5BB500801962 /* main.m in Sources */,
 				66309CEC1AC484E900FACEF9 /* MMEnginePiston.m in Sources */,

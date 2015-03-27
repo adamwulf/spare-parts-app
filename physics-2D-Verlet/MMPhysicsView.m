@@ -13,6 +13,7 @@
 #import "MMStick.h"
 #import "MMPiston.h"
 #import "MMEngine.h"
+#import "MMSpring.h"
 #import "MMBalloon.h"
 #import "MMWheel.h"
 
@@ -32,6 +33,7 @@
     InstantPanGestureRecognizer* grabPointGesture;
     InstantPanGestureRecognizer* createStickGesture;
     InstantPanGestureRecognizer* createPistonGesture;
+    InstantPanGestureRecognizer* createSpringGesture;
     InstantPanGestureRecognizer* createEngineGesture;
     UITapGestureRecognizer* createBalloonGesture;
     UITapGestureRecognizer* createWheelGesture;
@@ -85,6 +87,10 @@
         createPistonGesture.enabled = NO;
         [self addGestureRecognizer:createPistonGesture];
         
+        createSpringGesture = [[InstantPanGestureRecognizer alloc] initWithTarget:self action:@selector(createSpringGesture:)];
+        createSpringGesture.enabled = NO;
+        [self addGestureRecognizer:createSpringGesture];
+        
         createEngineGesture = [[InstantPanGestureRecognizer alloc] initWithTarget:self action:@selector(createEngineGesture:)];
         createEngineGesture.enabled = NO;
         [self addGestureRecognizer:createEngineGesture];
@@ -115,9 +121,9 @@
         [self addSubview:onOff];
 
         
-        UISegmentedControl* createMode = [[UISegmentedControl alloc] initWithItems:@[@"make stick",@"make piston",@"make engine",@"make balloon",@"make wheel",@"move point"]];
+        UISegmentedControl* createMode = [[UISegmentedControl alloc] initWithItems:@[@"make stick",@"make piston",@"make spring",@"make engine",@"make balloon",@"make wheel",@"move point"]];
         createMode.selectedSegmentIndex = 0;
-        createMode.center = CGPointMake(self.bounds.size.width - 300, 80);
+        createMode.center = CGPointMake(self.bounds.size.width - 350, 80);
         [createMode addTarget:self  action:@selector(modeChanged:) forControlEvents:UIControlEventValueChanged];
         [self addSubview:createMode];
         [self addSubview:animationOnOffSwitch];
@@ -152,10 +158,11 @@
 -(void) modeChanged:(UISegmentedControl*)modeSegmentControl{
     createStickGesture.enabled = modeSegmentControl.selectedSegmentIndex == 0;
     createPistonGesture.enabled = modeSegmentControl.selectedSegmentIndex == 1;
-    createEngineGesture.enabled = modeSegmentControl.selectedSegmentIndex == 2;
-    createBalloonGesture.enabled = modeSegmentControl.selectedSegmentIndex == 3;
-    createWheelGesture.enabled = modeSegmentControl.selectedSegmentIndex == 4;
-    grabPointGesture.enabled = modeSegmentControl.selectedSegmentIndex == 5;
+    createSpringGesture.enabled = modeSegmentControl.selectedSegmentIndex == 2;
+    createEngineGesture.enabled = modeSegmentControl.selectedSegmentIndex == 3;
+    createBalloonGesture.enabled = modeSegmentControl.selectedSegmentIndex == 4;
+    createWheelGesture.enabled = modeSegmentControl.selectedSegmentIndex == 5;
+    grabPointGesture.enabled = modeSegmentControl.selectedSegmentIndex == 6;
     selectPointGesture.enabled = !createWheelGesture.enabled &&
                                  !createBalloonGesture.enabled;
 }
@@ -229,6 +236,43 @@
         currentEditedStick = nil;
         
         [sticks addObject:[MMPiston pistonWithP0:startPoint andP1:endPoint]];
+    }else if(currentEditedStick){
+        currentEditedStick = [MMStick stickWithP0:currentEditedStick.p0
+                                            andP1:[MMPoint pointWithCGPoint:currLoc]];
+    }
+}
+
+-(void) createSpringGesture:(InstantPanGestureRecognizer*)panGesture{
+    CGPoint currLoc = [panGesture locationInView:self];
+    if(panGesture.state == UIGestureRecognizerStateBegan){
+        currLoc = panGesture.initialLocationInWindow;
+        
+        MMPoint* startPoint = [self getPointNear:currLoc];
+        
+        if(!startPoint){
+            startPoint = [MMPoint pointWithCGPoint:currLoc];
+        }
+        
+        currentEditedStick = [MMStick stickWithP0:startPoint
+                                            andP1:[MMPoint pointWithCGPoint:currLoc]];
+    }else if(panGesture.state == UIGestureRecognizerStateEnded ||
+             panGesture.state == UIGestureRecognizerStateFailed ||
+             panGesture.state == UIGestureRecognizerStateCancelled){
+        
+        MMPoint* startPoint = currentEditedStick.p0;
+        MMPoint* endPoint = [self getPointNear:currLoc];
+        if(!endPoint){
+            endPoint = currentEditedStick.p1;
+        }
+        if(![points containsObject:startPoint]){
+            [points addObject:startPoint];
+        }
+        if(![points containsObject:endPoint]){
+            [points addObject:endPoint];
+        }
+        currentEditedStick = nil;
+        
+        [sticks addObject:[MMSpring springWithP0:startPoint andP1:endPoint]];
     }else if(currentEditedStick){
         currentEditedStick = [MMStick stickWithP0:currentEditedStick.p0
                                             andP1:[MMPoint pointWithCGPoint:currLoc]];

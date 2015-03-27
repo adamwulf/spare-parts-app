@@ -10,7 +10,9 @@
 #import "MMPoint.h"
 
 
-@interface MMStick : NSObject
+@interface MMStick : NSObject{
+    CGFloat stress;
+}
 
 @property (readonly) MMPoint* p0;
 @property (readonly) MMPoint* p1;
@@ -28,5 +30,12 @@
 -(void) constrain;
 
 -(void) replacePoint:(MMPoint*)p withPoint:(MMPoint*)newP;
+
+
+
+// subclasses only please
+
+-(CGFloat) calcLen;
+
 
 @end
