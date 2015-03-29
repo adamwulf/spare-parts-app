@@ -66,7 +66,7 @@
 }
 
 -(CGFloat) distanceFromPoint:(CGPoint)p{
-    return [self distance:self.asCGPoint and:p];
+    return [MMPoint distance:self.asCGPoint and:p];
 }
 
 -(void) setX:(CGFloat)_x{
@@ -127,7 +127,7 @@
 
 #pragma mark - Helper
 
--(CGFloat) distance:(CGPoint)p0 and:(CGPoint)p1{
++(CGFloat) distance:(CGPoint)p0 and:(CGPoint)p1{
     CGFloat dx = p1.x - p0.x,
     dy = p1.y - p0.y;
     return sqrtf(dx * dx + dy * dy);

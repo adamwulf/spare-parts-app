@@ -26,6 +26,8 @@
 
 -(CGPoint) asCGPoint;
 
++(CGFloat) distance:(CGPoint)p0 and:(CGPoint)p1;
+
 -(CGFloat) distanceFromPoint:(CGPoint)p;
 
 -(CGPoint) differenceFrom:(MMPoint*)p;

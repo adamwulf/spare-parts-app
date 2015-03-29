@@ -108,9 +108,53 @@
     }
 }
 
+// return the distance from the input point
+// to this line segment of p0 -> p1
 -(CGFloat) distanceFromPoint:(CGPoint)point{
-    // TODO: fix this!
-    return 20;
+    CGPoint pointOnLine = NearestPointOnLine(point, self.p0.asCGPoint, self.p1.asCGPoint);
+    
+    if([self.p0 distanceFromPoint:pointOnLine] + [self.p1 distanceFromPoint:pointOnLine] <=
+       [self.p0 distanceFromPoint:self.p1.asCGPoint]){
+        // found a point inside the line segment
+        // so, the distance from point to pointOnLine
+        // is the distance to the line
+        return [MMPoint distance:point and:pointOnLine];
+    }else{
+        // found a point outside the line segment
+        return MIN([MMPoint distance:point and:self.p0.asCGPoint], [MMPoint distance:point and:self.p1.asCGPoint]);
+    }
 }
+
+
+
+
+/// return the distance of <inPoint> from a line segment drawn from a to b.
+
+CGPoint		NearestPointOnLine( const CGPoint inPoint, const CGPoint a, const CGPoint b )
+{
+    CGFloat mag = hypotf(( b.x - a.x ), ( b.y - a.y ));
+    
+    if( mag > 0.0 )
+    {
+        CGFloat u = ((( inPoint.x - a.x ) * ( b.x - a.x )) + (( inPoint.y - a.y ) * ( b.y - a.y ))) / ( mag * mag );
+        
+        if( u <= 0.0 )
+            return a;
+        else if ( u >= 1.0 )
+            return b;
+        else
+        {
+            CGPoint cp;
+            
+            cp.x = a.x + u * ( b.x - a.x );
+            cp.y = a.y + u * ( b.y - a.y );
+            
+            return cp;
+        }
+    }
+    else
+        return a;
+}
+
 
 @end
