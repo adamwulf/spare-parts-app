@@ -108,4 +108,9 @@
     }
 }
 
+-(CGFloat) distanceFromPoint:(CGPoint)point{
+    // TODO: fix this!
+    return 20;
+}
+
 @end

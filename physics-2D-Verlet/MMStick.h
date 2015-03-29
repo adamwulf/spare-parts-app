@@ -31,6 +31,8 @@
 
 -(void) replacePoint:(MMPoint*)p withPoint:(MMPoint*)newP;
 
+-(CGFloat) distanceFromPoint:(CGPoint)point;
+
 
 
 // subclasses only please

@@ -27,9 +27,14 @@
     NSMutableArray* points;
     NSMutableArray* sticks;
     NSMutableArray* balloons;
-    
+
+    // stuff for the move gesture
+    MMStick* grabbedStick;
+    CGPoint grabbedStickOffsetP0;
+    CGPoint grabbedStickOffsetP1;
     MMPoint* grabbedPoint;
     
+    // all of the gestures
     UIPanGestureRecognizer* grabPointGesture;
     InstantPanGestureRecognizer* createStickGesture;
     InstantPanGestureRecognizer* createPistonGesture;
@@ -39,9 +44,10 @@
     UITapGestureRecognizer* createWheelGesture;
     UITapGestureRecognizer* selectPointGesture;
     
+    // toggle running the simulation on/off
     UISwitch* animationOnOffSwitch;
     
-    
+    // the stick that's currently being made
     MMStick* currentEditedStick;
     
     
@@ -344,11 +350,17 @@
 }
 
 -(void) movePointGesture:(UIPanGestureRecognizer*)panGesture{
-    CGPoint currLoc = [panGesture locationInView:self];
     if(panGesture.state == UIGestureRecognizerStateBegan){
-//        currLoc = panGesture.initialLocationInWindow;
+        CGPoint currLoc = [panGesture locationInView:self];
         // find the point to grab
         grabbedPoint = [self getPointNear:currLoc];
+        if(!grabbedPoint){
+            grabbedStick = [self getStickNear:currLoc];
+            grabbedStickOffsetP0 = CGPointMake(currLoc.x - grabbedStick.p0.x,
+                                               currLoc.y - grabbedStick.p0.y);
+            grabbedStickOffsetP1 = CGPointMake(currLoc.x - grabbedStick.p1.x,
+                                               currLoc.y - grabbedStick.p1.y);
+        }
     }
     
     if(panGesture.state == UIGestureRecognizerStateEnded){
@@ -368,6 +380,7 @@
             [points removeObject:pointToReplace];
         }
         grabbedPoint = nil;
+        grabbedStick = nil;
     }
 }
 
@@ -458,6 +471,19 @@
            grabPointGesture.state == UIGestureRecognizerStateChanged){
             grabbedPoint.x = [grabPointGesture locationInView:self].x;
             grabbedPoint.y = [grabPointGesture locationInView:self].y;
+        }
+        if(!animationOnOffSwitch.on){
+            for (MMPoint* p in points) {
+                [p nullVelocity];
+            }
+        }
+    }else if(grabbedStick){
+        if(grabPointGesture.state == UIGestureRecognizerStateBegan ||
+           grabPointGesture.state == UIGestureRecognizerStateChanged){
+            grabbedStick.p0.x = [grabPointGesture locationInView:self].x - grabbedStickOffsetP0.x;
+            grabbedStick.p0.y = [grabPointGesture locationInView:self].y - grabbedStickOffsetP0.y;
+            grabbedStick.p1.x = [grabPointGesture locationInView:self].x - grabbedStickOffsetP1.x;
+            grabbedStick.p1.y = [grabPointGesture locationInView:self].y - grabbedStickOffsetP1.y;
         }
         if(!animationOnOffSwitch.on){
             for (MMPoint* p in points) {
@@ -703,6 +729,16 @@
 
 -(MMPoint*) getPointNear:(CGPoint)point{
     MMPoint* ret = [[points sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+        return [obj1 distanceFromPoint:point] < [obj2 distanceFromPoint:point] ? NSOrderedAscending : NSOrderedDescending;
+    }] firstObject];
+    if([ret distanceFromPoint:point] < 30){
+        return ret;
+    }
+    return nil;
+}
+
+-(MMStick*) getStickNear:(CGPoint)point{
+    MMStick* ret = [[sticks sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
         return [obj1 distanceFromPoint:point] < [obj2 distanceFromPoint:point] ? NSOrderedAscending : NSOrderedDescending;
     }] firstObject];
     if([ret distanceFromPoint:point] < 30){
