@@ -702,9 +702,13 @@
 #pragma mark - Helper
 
 -(MMPoint*) getPointNear:(CGPoint)point{
-    return [[points filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) {
-        return [evaluatedObject distanceFromPoint:point] < 30;
-    }]] firstObject];
+    MMPoint* ret = [[points sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+        return [obj1 distanceFromPoint:point] < [obj2 distanceFromPoint:point] ? NSOrderedAscending : NSOrderedDescending;
+    }] firstObject];
+    if([ret distanceFromPoint:point] < 30){
+        return ret;
+    }
+    return nil;
 }
 
 @end
