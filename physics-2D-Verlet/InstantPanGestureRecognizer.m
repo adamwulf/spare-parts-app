@@ -14,8 +14,8 @@
 @synthesize initialLocationInWindow;
 
 -(void) touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
+    initialLocationInWindow = [[touches anyObject] locationInView:nil];
     [super touchesBegan:touches withEvent:event];
-    initialLocationInWindow = [self locationInView:nil];
 }
 
 -(void) touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event{

@@ -76,7 +76,7 @@
         [displayLink addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSDefaultRunLoopMode];
         
         
-        grabPointGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(movePointGesture:)];
+        grabPointGesture = [[InstantPanGestureRecognizer alloc] initWithTarget:self action:@selector(movePointGesture:)];
         createStickGesture.enabled = NO;
         [self addGestureRecognizer:grabPointGesture];
         
@@ -367,6 +367,7 @@
             }
             [points removeObject:pointToReplace];
         }
+        grabbedPoint = nil;
     }
 }
 
