@@ -27,6 +27,10 @@
 		66625FEB1AC3496D0025F441 /* MMEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 66625FEA1AC3496D0025F441 /* MMEngine.m */; };
 		666E0A661AC0924D0018289C /* MMPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = 666E0A651AC0924D0018289C /* MMPoint.m */; };
 		666E0A691AC093A10018289C /* MMStick.m in Sources */ = {isa = PBXBuildFile; fileRef = 666E0A681AC093A10018289C /* MMStick.m */; };
+		66A08EFA1AC9D86700C670E5 /* screw2.png in Resources */ = {isa = PBXBuildFile; fileRef = 66A08EF91AC9D86700C670E5 /* screw2.png */; };
+		66A08EFC1AC9D86B00C670E5 /* screw1.png in Resources */ = {isa = PBXBuildFile; fileRef = 66A08EFB1AC9D86B00C670E5 /* screw1.png */; };
+		66A08EFE1AC9D86F00C670E5 /* screw2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 66A08EFD1AC9D86F00C670E5 /* screw2@2x.png */; };
+		66A08F001AC9D87300C670E5 /* screw1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 66A08EFF1AC9D87300C670E5 /* screw1@2x.png */; };
 		66A490011AC5E91500CC21BA /* InstantPanGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 66A490001AC5E91500CC21BA /* InstantPanGestureRecognizer.m */; };
 		66A490041AC5EAE500CC21BA /* MMSpring.m in Sources */ = {isa = PBXBuildFile; fileRef = 66A490031AC5EAE500CC21BA /* MMSpring.m */; };
 /* End PBXBuildFile section */
@@ -78,6 +82,10 @@
 		666E0A651AC0924D0018289C /* MMPoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMPoint.m; sourceTree = "<group>"; };
 		666E0A671AC093A10018289C /* MMStick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMStick.h; sourceTree = "<group>"; };
 		666E0A681AC093A10018289C /* MMStick.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMStick.m; sourceTree = "<group>"; };
+		66A08EF91AC9D86700C670E5 /* screw2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = screw2.png; sourceTree = "<group>"; };
+		66A08EFB1AC9D86B00C670E5 /* screw1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = screw1.png; sourceTree = "<group>"; };
+		66A08EFD1AC9D86F00C670E5 /* screw2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "screw2@2x.png"; sourceTree = "<group>"; };
+		66A08EFF1AC9D87300C670E5 /* screw1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "screw1@2x.png"; sourceTree = "<group>"; };
 		66A48FFF1AC5E91500CC21BA /* InstantPanGestureRecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InstantPanGestureRecognizer.h; sourceTree = "<group>"; };
 		66A490001AC5E91500CC21BA /* InstantPanGestureRecognizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InstantPanGestureRecognizer.m; sourceTree = "<group>"; };
 		66A490021AC5EAE500CC21BA /* MMSpring.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMSpring.h; sourceTree = "<group>"; };
@@ -171,6 +179,7 @@
 		66343C121ABF5BB500801962 /* physics-2D-Verlet */ = {
 			isa = PBXGroup;
 			children = (
+				66A08EF81AC9D85E00C670E5 /* images */,
 				66A48FFE1AC5E90400CC21BA /* Gesture */,
 				66343C3A1ABF5D1300801962 /* PhysicsView */,
 				66343C391ABF5D0700801962 /* App Delegate */,
@@ -241,6 +250,17 @@
 				66343C441ABF5FE300801962 /* ragdoll.js */,
 			);
 			name = "Reference from CodingMath";
+			sourceTree = "<group>";
+		};
+		66A08EF81AC9D85E00C670E5 /* images */ = {
+			isa = PBXGroup;
+			children = (
+				66A08EF91AC9D86700C670E5 /* screw2.png */,
+				66A08EFB1AC9D86B00C670E5 /* screw1.png */,
+				66A08EFD1AC9D86F00C670E5 /* screw2@2x.png */,
+				66A08EFF1AC9D87300C670E5 /* screw1@2x.png */,
+			);
+			name = images;
 			sourceTree = "<group>";
 		};
 		66A48FFE1AC5E90400CC21BA /* Gesture */ = {
@@ -334,8 +354,12 @@
 			files = (
 				66343C451ABF5FE300801962 /* cat.jpg in Resources */,
 				66343C471ABF5FE300801962 /* index.html in Resources */,
+				66A08EFC1AC9D86B00C670E5 /* screw1.png in Resources */,
+				66A08EFA1AC9D86700C670E5 /* screw2.png in Resources */,
 				66343C491ABF5FE300801962 /* ragdoll.js in Resources */,
+				66A08F001AC9D87300C670E5 /* screw1@2x.png in Resources */,
 				66343C211ABF5BB500801962 /* Images.xcassets in Resources */,
+				66A08EFE1AC9D86F00C670E5 /* screw2@2x.png in Resources */,
 				66343C461ABF5FE300801962 /* image.js in Resources */,
 				66343C481ABF5FE300801962 /* main.js in Resources */,
 			);
