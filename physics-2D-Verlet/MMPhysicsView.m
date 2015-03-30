@@ -16,6 +16,7 @@
 #import "MMSpring.h"
 #import "MMBalloon.h"
 #import "MMWheel.h"
+#import "Constants.h"
 
 #define kMaxStress 0.5
 
@@ -641,20 +642,20 @@
                 CGFloat vx = (p.x - p.oldx) * friction;
                 CGFloat vy = (p.y - p.oldy) * friction;
                 
-                if(p.x > self.bounds.size.width) {
-                    p.x = self.bounds.size.width;
+                if(p.x > self.bounds.size.width - kStickWidth/2) {
+                    p.x = self.bounds.size.width - kStickWidth/2;
                     p.oldx = p.x + vx * bounce;
                 }
-                else if(p.x < 0) {
-                    p.x = 0;
+                else if(p.x < kStickWidth/2) {
+                    p.x = kStickWidth/2;
                     p.oldx = p.x + vx * bounce;
                 }
-                if(p.y > self.bounds.size.height) {
-                    p.y = self.bounds.size.height;
+                if(p.y > self.bounds.size.height - kStickWidth/2) {
+                    p.y = self.bounds.size.height - kStickWidth/2;
                     p.oldy = p.y + vy * bounce;
                 }
-                else if(p.y < 0) {
-                    p.y = 0;
+                else if(p.y < kStickWidth/2) {
+                    p.y = kStickWidth/2;
                     p.oldy = p.y + vy * bounce;
                 }
             }
