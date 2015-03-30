@@ -7,6 +7,8 @@
 //
 
 #import "MMStick.h"
+#import "Constants.h"
+
 
 @implementation MMStick
 
@@ -82,9 +84,6 @@
     
     UIImage* boardImage = [UIImage imageNamed:@"board1.png"];
     
-    CGFloat boardWidth = 30;
-    CGSize drawnSize = CGSizeMake(boardWidth, [self length] + boardWidth);
-    
     CGContextRef context = UIGraphicsGetCurrentContext();
     CGContextSaveGState(context);
     
@@ -94,44 +93,15 @@
     CGFloat angle = atan2f(self.p1.x - self.p0.x, self.p1.y - self.p0.y);
     CGContextRotateCTM(context, -angle + M_PI/2);
     
-    CGFloat len = [self length];
+    // draw our board image
+    [boardImage drawInRect:CGRectMake(-kStickWidth/2, -kStickWidth/2, self.length + kStickWidth, kStickWidth)];
     
-    UIBezierPath* newline = [UIBezierPath bezierPath];
-    [newline moveToPoint:CGPointZero];
-    [newline addLineToPoint:CGPointMake(len, 0)];
-    
-    
-    newline.lineWidth = 20;
-    [[UIColor blueColor] setStroke];
-    [newline stroke];
-    
-    [boardImage drawInRect:CGRectMake(-boardWidth/2, -boardWidth/2, self.length + boardWidth, boardWidth)];
-    
+    // render our nails / screws
     [p0 renderAtZeroZero];
-    
     CGContextTranslateCTM(context, self.length, 0);
-    
     [p1 renderAtZeroZero];
     
-
-    
     CGContextRestoreGState(context);
-    
-    
-    
-//
-//    UIBezierPath* line = [UIBezierPath bezierPath];
-//    [line moveToPoint:p0.asCGPoint];
-//    [line addLineToPoint:p1.asCGPoint];
-//    line.lineWidth = 2;
-//    
-//    UIColor* renderColor = [UIColor colorWithRed:1.0*stress
-//                                           green:0
-//                                            blue:1.0*(1.0-stress)
-//                                           alpha:1];
-//    
-//    [renderColor setStroke];
-//    [line stroke];
 }
 
 

@@ -88,6 +88,7 @@
 		66A08EFD1AC9D86F00C670E5 /* screw2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "screw2@2x.png"; sourceTree = "<group>"; };
 		66A08EFF1AC9D87300C670E5 /* screw1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "screw1@2x.png"; sourceTree = "<group>"; };
 		66A08F011AC9DACD00C670E5 /* board1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = board1.png; sourceTree = "<group>"; };
+		66A08F031AC9DF9200C670E5 /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		66A48FFF1AC5E91500CC21BA /* InstantPanGestureRecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InstantPanGestureRecognizer.h; sourceTree = "<group>"; };
 		66A490001AC5E91500CC21BA /* InstantPanGestureRecognizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InstantPanGestureRecognizer.m; sourceTree = "<group>"; };
 		66A490021AC5EAE500CC21BA /* MMSpring.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMSpring.h; sourceTree = "<group>"; };
@@ -181,6 +182,7 @@
 		66343C121ABF5BB500801962 /* physics-2D-Verlet */ = {
 			isa = PBXGroup;
 			children = (
+				66A08F031AC9DF9200C670E5 /* Constants.h */,
 				66A08EF81AC9D85E00C670E5 /* images */,
 				66A48FFE1AC5E90400CC21BA /* Gesture */,
 				66343C3A1ABF5D1300801962 /* PhysicsView */,

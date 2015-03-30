@@ -7,6 +7,7 @@
 //
 
 #import "MMPoint.h"
+#import "Constants.h"
 
 @implementation MMPoint{
     CGFloat(^gravityModifier)(CGFloat);
@@ -110,7 +111,7 @@
     NSString* imageName = [NSString stringWithFormat:@"screw%d.png", (screwType+1)];
     UIImage* dotImage = [UIImage imageNamed:imageName];
     
-    CGSize sizeToRender = CGSizeMake(20, 20);
+    CGSize sizeToRender = CGSizeMake(kPointRadius*2, kPointRadius*2);
     CGPoint center = CGPointZero;
     
     [dotImage drawInRect:CGRectMake(center.x - sizeToRender.width/2, center.y - sizeToRender.height/2, sizeToRender.width, sizeToRender.height)];
