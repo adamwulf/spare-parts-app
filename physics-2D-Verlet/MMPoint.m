@@ -95,23 +95,25 @@
 }
 
 -(void) render{
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    CGContextSaveGState(context);
     
+    // translate
+    CGContextTranslateCTM(context, self.x, self.y);
+
+    [self renderAtZeroZero];
+    
+    CGContextRestoreGState(context);
+}
+
+-(void) renderAtZeroZero{
     NSString* imageName = [NSString stringWithFormat:@"screw%d.png", (screwType+1)];
     UIImage* dotImage = [UIImage imageNamed:imageName];
     
     CGSize sizeToRender = CGSizeMake(20, 20);
-    CGPoint center = CGPointMake(x, y);
+    CGPoint center = CGPointZero;
     
     [dotImage drawInRect:CGRectMake(center.x - sizeToRender.width/2, center.y - sizeToRender.height/2, sizeToRender.width, sizeToRender.height)];
-    
-//    
-//    UIBezierPath* dot = [UIBezierPath bezierPathWithArcCenter:CGPointMake(x, y)
-//                                                       radius:3
-//                                                   startAngle:0
-//                                                     endAngle:2*M_PI
-//                                                    clockwise:YES];
-//    [[UIColor redColor] setFill];
-//    [dot fill];
 }
 
 -(void) nullVelocity{

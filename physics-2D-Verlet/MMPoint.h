@@ -40,6 +40,8 @@
 
 -(void) render;
 
+-(void) renderAtZeroZero;
+
 -(void) nullVelocity;
 
 -(void) updateWithGravity:(CGFloat)gravity andFriction:(CGFloat)friction;
