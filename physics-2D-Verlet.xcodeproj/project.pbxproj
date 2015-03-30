@@ -33,6 +33,10 @@
 		66A08F001AC9D87300C670E5 /* screw1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 66A08EFF1AC9D87300C670E5 /* screw1@2x.png */; };
 		66A08F021AC9DACD00C670E5 /* board1.png in Resources */ = {isa = PBXBuildFile; fileRef = 66A08F011AC9DACD00C670E5 /* board1.png */; };
 		66A08F051AC9E4A000C670E5 /* wheel.png in Resources */ = {isa = PBXBuildFile; fileRef = 66A08F041AC9E4A000C670E5 /* wheel.png */; };
+		66A08F071AC9E72300C670E5 /* piston-head.png in Resources */ = {isa = PBXBuildFile; fileRef = 66A08F061AC9E72300C670E5 /* piston-head.png */; };
+		66A08F091AC9E72800C670E5 /* piston-base.png in Resources */ = {isa = PBXBuildFile; fileRef = 66A08F081AC9E72800C670E5 /* piston-base.png */; };
+		66A08F0B1AC9E9DD00C670E5 /* engine-end.png in Resources */ = {isa = PBXBuildFile; fileRef = 66A08F0A1AC9E9DD00C670E5 /* engine-end.png */; };
+		66A08F0D1AC9E9E100C670E5 /* engine-back.png in Resources */ = {isa = PBXBuildFile; fileRef = 66A08F0C1AC9E9E100C670E5 /* engine-back.png */; };
 		66A490011AC5E91500CC21BA /* InstantPanGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 66A490001AC5E91500CC21BA /* InstantPanGestureRecognizer.m */; };
 		66A490041AC5EAE500CC21BA /* MMSpring.m in Sources */ = {isa = PBXBuildFile; fileRef = 66A490031AC5EAE500CC21BA /* MMSpring.m */; };
 /* End PBXBuildFile section */
@@ -91,6 +95,10 @@
 		66A08F011AC9DACD00C670E5 /* board1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = board1.png; sourceTree = "<group>"; };
 		66A08F031AC9DF9200C670E5 /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		66A08F041AC9E4A000C670E5 /* wheel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wheel.png; sourceTree = "<group>"; };
+		66A08F061AC9E72300C670E5 /* piston-head.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "piston-head.png"; sourceTree = "<group>"; };
+		66A08F081AC9E72800C670E5 /* piston-base.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "piston-base.png"; sourceTree = "<group>"; };
+		66A08F0A1AC9E9DD00C670E5 /* engine-end.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "engine-end.png"; sourceTree = "<group>"; };
+		66A08F0C1AC9E9E100C670E5 /* engine-back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "engine-back.png"; sourceTree = "<group>"; };
 		66A48FFF1AC5E91500CC21BA /* InstantPanGestureRecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InstantPanGestureRecognizer.h; sourceTree = "<group>"; };
 		66A490001AC5E91500CC21BA /* InstantPanGestureRecognizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InstantPanGestureRecognizer.m; sourceTree = "<group>"; };
 		66A490021AC5EAE500CC21BA /* MMSpring.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMSpring.h; sourceTree = "<group>"; };
@@ -264,6 +272,10 @@
 				66A08F011AC9DACD00C670E5 /* board1.png */,
 				66A08EF91AC9D86700C670E5 /* screw2.png */,
 				66A08EFB1AC9D86B00C670E5 /* screw1.png */,
+				66A08F061AC9E72300C670E5 /* piston-head.png */,
+				66A08F0A1AC9E9DD00C670E5 /* engine-end.png */,
+				66A08F0C1AC9E9E100C670E5 /* engine-back.png */,
+				66A08F081AC9E72800C670E5 /* piston-base.png */,
 				66A08F041AC9E4A000C670E5 /* wheel.png */,
 				66A08EFD1AC9D86F00C670E5 /* screw2@2x.png */,
 				66A08EFF1AC9D87300C670E5 /* screw1@2x.png */,
@@ -361,9 +373,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				66343C451ABF5FE300801962 /* cat.jpg in Resources */,
+				66A08F091AC9E72800C670E5 /* piston-base.png in Resources */,
 				66343C471ABF5FE300801962 /* index.html in Resources */,
 				66A08EFC1AC9D86B00C670E5 /* screw1.png in Resources */,
+				66A08F0B1AC9E9DD00C670E5 /* engine-end.png in Resources */,
 				66A08EFA1AC9D86700C670E5 /* screw2.png in Resources */,
+				66A08F0D1AC9E9E100C670E5 /* engine-back.png in Resources */,
 				66343C491ABF5FE300801962 /* ragdoll.js in Resources */,
 				66A08F051AC9E4A000C670E5 /* wheel.png in Resources */,
 				66A08F001AC9D87300C670E5 /* screw1@2x.png in Resources */,
@@ -371,6 +386,7 @@
 				66A08EFE1AC9D86F00C670E5 /* screw2@2x.png in Resources */,
 				66343C461ABF5FE300801962 /* image.js in Resources */,
 				66343C481ABF5FE300801962 /* main.js in Resources */,
+				66A08F071AC9E72300C670E5 /* piston-head.png in Resources */,
 				66A08F021AC9DACD00C670E5 /* board1.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

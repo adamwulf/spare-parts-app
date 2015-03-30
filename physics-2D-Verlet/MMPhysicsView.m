@@ -223,7 +223,7 @@
             startPoint = [MMPoint pointWithCGPoint:currLoc];
         }
         
-        currentEditedStick = [MMStick stickWithP0:startPoint
+        currentEditedStick = [MMPiston pistonWithP0:startPoint
                                             andP1:[MMPoint pointWithCGPoint:currLoc]];
     }else if(panGesture.state == UIGestureRecognizerStateEnded ||
              panGesture.state == UIGestureRecognizerStateFailed ||
@@ -244,7 +244,7 @@
         
         [sticks addObject:[MMPiston pistonWithP0:startPoint andP1:endPoint]];
     }else if(currentEditedStick){
-        currentEditedStick = [MMStick stickWithP0:currentEditedStick.p0
+        currentEditedStick = [MMPiston pistonWithP0:currentEditedStick.p0
                                             andP1:[MMPoint pointWithCGPoint:currLoc]];
     }
 }
@@ -321,7 +321,7 @@
             startPoint = [MMPoint pointWithCGPoint:currLoc];
         }
         
-        currentEditedStick = [MMStick stickWithP0:startPoint
+        currentEditedStick = [MMEngine engineWithP0:startPoint
                                             andP1:[MMPoint pointWithCGPoint:currLoc]];
     }else if(panGesture.state == UIGestureRecognizerStateEnded ||
              panGesture.state == UIGestureRecognizerStateFailed ||
@@ -345,7 +345,7 @@
         [points addObject:engine.p2];
         [sticks addObject:engine];
     }else if(currentEditedStick){
-        currentEditedStick = [MMStick stickWithP0:currentEditedStick.p0
+        currentEditedStick = [MMEngine engineWithP0:currentEditedStick.p0
                                             andP1:[MMPoint pointWithCGPoint:currLoc]];
     }
 }

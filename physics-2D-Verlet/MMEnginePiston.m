@@ -22,6 +22,9 @@
         engine = _engine;
         angle = M_PI/2;
         CGFloat percentLen = [self length] / [engine length];
+        if(![engine length]){
+            percentLen = 0;
+        }
         
         CGFloat diffX = engine.p1.x - engine.p0.x;
         CGFloat diffY = engine.p1.y - engine.p0.y;

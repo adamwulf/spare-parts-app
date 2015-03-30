@@ -7,6 +7,7 @@
 //
 
 #import "MMEngine.h"
+#import "Constants.h"
 
 @implementation MMEngine
 
@@ -43,9 +44,43 @@
 
 
 -(void) render{
-    [super render];
-    [piston render];
-    [shaft render];
+    
+    
+    UIImage* engineBack = [UIImage imageNamed:@"engine-back.png"];
+    UIImage* engineEnd = [UIImage imageNamed:@"engine-end.png"];
+    
+    
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    CGContextSaveGState(context);
+    
+    // translate
+    CGContextTranslateCTM(context, self.p0.x, self.p0.y);
+    // rotate
+    CGFloat angle = atan2f(self.p1.x - self.p0.x, self.p1.y - self.p0.y);
+    CGContextRotateCTM(context, -angle + M_PI/2);
+    
+    // draw our board image
+    [engineBack drawInRect:CGRectMake(-kStickWidth/2, -kStickWidth/2, [self calcLen] + kStickWidth, kStickWidth)];
+    
+    [engineEnd drawInRect:CGRectMake(-kStickWidth/2, -kStickWidth/2, kStickWidth, kStickWidth)];
+    
+    // render our nails / screws
+    [self.p0 renderAtZeroZero];
+    
+    
+    CGContextSaveGState(context);
+    CGContextTranslateCTM(context, [self calcLen], 0);
+    [engineEnd drawInRect:CGRectMake(-kStickWidth/2, -kStickWidth/2, kStickWidth, kStickWidth)];
+    [self.p1 renderAtZeroZero];
+    CGContextRestoreGState(context);
+    
+    CGContextTranslateCTM(context, [piston length], 0);
+    [engineEnd drawInRect:CGRectMake(-kStickWidth/2, -kStickWidth/2, kStickWidth, kStickWidth)];
+    [self.p2 renderAtZeroZero];
+
+    
+    
+    CGContextRestoreGState(context);
 }
 
 -(void) replacePoint:(MMPoint*)p withPoint:(MMPoint*)newP{

@@ -7,6 +7,7 @@
 //
 
 #import "MMPiston.h"
+#import "Constants.h"
 
 @implementation MMPiston{
     CGFloat angle;
@@ -28,6 +29,40 @@
 -(void) tick{
     angle += .1;
     [super tick];
+}
+
+
+-(void) render{
+    
+    UIImage* baseImage = [UIImage imageNamed:@"piston-base.png"];
+    UIImage* headImage = [UIImage imageNamed:@"piston-head.png"];
+    
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    CGContextSaveGState(context);
+    
+    // translate
+    CGContextTranslateCTM(context, self.p0.x, self.p0.y);
+    // rotate
+    CGFloat rot = atan2f(self.p1.x - self.p0.x, self.p1.y - self.p0.y);
+    CGContextRotateCTM(context, -rot + M_PI/2);
+    
+
+    // draw our board image
+    [headImage drawInRect:CGRectMake(.6*[super length] - 2*kPointRadius,
+                                     -kStickWidth/2 + 2,
+                                     [self length] - .6*[super length] + kStickWidth/2 + 2*kPointRadius,
+                                     kStickWidth - 4)];
+    
+    // draw our board image
+    [baseImage drawInRect:CGRectMake(-kStickWidth/2, -kStickWidth/2, .6*[super length] + kStickWidth - 2*kPointRadius, kStickWidth)];
+    
+    
+    // render our nails / screws
+    [self.p0 renderAtZeroZero];
+    CGContextTranslateCTM(context, [self calcLen], 0);
+    [self.p1 renderAtZeroZero];
+    
+    CGContextRestoreGState(context);
 }
 
 
