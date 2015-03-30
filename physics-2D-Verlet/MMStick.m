@@ -94,11 +94,11 @@
     CGContextRotateCTM(context, -angle + M_PI/2);
     
     // draw our board image
-    [boardImage drawInRect:CGRectMake(-kStickWidth/2, -kStickWidth/2, self.length + kStickWidth, kStickWidth)];
+    [boardImage drawInRect:CGRectMake(-kStickWidth/2, -kStickWidth/2, [self calcLen] + kStickWidth, kStickWidth)];
     
     // render our nails / screws
     [p0 renderAtZeroZero];
-    CGContextTranslateCTM(context, self.length, 0);
+    CGContextTranslateCTM(context, [self calcLen], 0);
     [p1 renderAtZeroZero];
     
     CGContextRestoreGState(context);

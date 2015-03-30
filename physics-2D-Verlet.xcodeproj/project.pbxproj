@@ -32,6 +32,7 @@
 		66A08EFE1AC9D86F00C670E5 /* screw2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 66A08EFD1AC9D86F00C670E5 /* screw2@2x.png */; };
 		66A08F001AC9D87300C670E5 /* screw1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 66A08EFF1AC9D87300C670E5 /* screw1@2x.png */; };
 		66A08F021AC9DACD00C670E5 /* board1.png in Resources */ = {isa = PBXBuildFile; fileRef = 66A08F011AC9DACD00C670E5 /* board1.png */; };
+		66A08F051AC9E4A000C670E5 /* wheel.png in Resources */ = {isa = PBXBuildFile; fileRef = 66A08F041AC9E4A000C670E5 /* wheel.png */; };
 		66A490011AC5E91500CC21BA /* InstantPanGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 66A490001AC5E91500CC21BA /* InstantPanGestureRecognizer.m */; };
 		66A490041AC5EAE500CC21BA /* MMSpring.m in Sources */ = {isa = PBXBuildFile; fileRef = 66A490031AC5EAE500CC21BA /* MMSpring.m */; };
 /* End PBXBuildFile section */
@@ -89,6 +90,7 @@
 		66A08EFF1AC9D87300C670E5 /* screw1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "screw1@2x.png"; sourceTree = "<group>"; };
 		66A08F011AC9DACD00C670E5 /* board1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = board1.png; sourceTree = "<group>"; };
 		66A08F031AC9DF9200C670E5 /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
+		66A08F041AC9E4A000C670E5 /* wheel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wheel.png; sourceTree = "<group>"; };
 		66A48FFF1AC5E91500CC21BA /* InstantPanGestureRecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InstantPanGestureRecognizer.h; sourceTree = "<group>"; };
 		66A490001AC5E91500CC21BA /* InstantPanGestureRecognizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InstantPanGestureRecognizer.m; sourceTree = "<group>"; };
 		66A490021AC5EAE500CC21BA /* MMSpring.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMSpring.h; sourceTree = "<group>"; };
@@ -262,6 +264,7 @@
 				66A08F011AC9DACD00C670E5 /* board1.png */,
 				66A08EF91AC9D86700C670E5 /* screw2.png */,
 				66A08EFB1AC9D86B00C670E5 /* screw1.png */,
+				66A08F041AC9E4A000C670E5 /* wheel.png */,
 				66A08EFD1AC9D86F00C670E5 /* screw2@2x.png */,
 				66A08EFF1AC9D87300C670E5 /* screw1@2x.png */,
 			);
@@ -362,6 +365,7 @@
 				66A08EFC1AC9D86B00C670E5 /* screw1.png in Resources */,
 				66A08EFA1AC9D86700C670E5 /* screw2.png in Resources */,
 				66343C491ABF5FE300801962 /* ragdoll.js in Resources */,
+				66A08F051AC9E4A000C670E5 /* wheel.png in Resources */,
 				66A08F001AC9D87300C670E5 /* screw1@2x.png in Resources */,
 				66343C211ABF5BB500801962 /* Images.xcassets in Resources */,
 				66A08EFE1AC9D86F00C670E5 /* screw2@2x.png in Resources */,

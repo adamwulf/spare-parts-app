@@ -8,6 +8,7 @@
 
 #import "MMWheel.h"
 #import "MMPoint.h"
+#import "Constants.h"
 
 @implementation MMWheel{
     MMStick* spoke1;
@@ -36,8 +37,8 @@
     // initial crossbar
     MMPoint* _p0 = [MMPoint pointWithCGPoint:_center.asCGPoint];
     MMPoint* _p1 = [MMPoint pointWithCGPoint:_center.asCGPoint];
-    _p0.x -= _radius;
-    _p1.x += _radius;
+    _p0.x = _p0.x - _radius + kPointRadius;
+    _p1.x = _p1.x + _radius - kPointRadius;
     [_p0 nullVelocity];
     [_p1 nullVelocity];
 
@@ -45,13 +46,13 @@
         center = _center;
         spoke1 = [MMStick stickWithP0:_p0 andP1:center];
         spoke2 = [MMStick stickWithP0:center andP1:_p1];
-        radius = [center distanceFromPoint:_p1.asCGPoint];
+        radius = _radius;
         
         // create other spokes
         p2 = [MMPoint pointWithCGPoint:_center.asCGPoint];
         p3 = [MMPoint pointWithCGPoint:_center.asCGPoint];
-        p2.y -= _radius;
-        p3.y += _radius;
+        p2.y = p2.y - _radius + kPointRadius;
+        p3.y = p3.y + _radius - kPointRadius;
         [p2 nullVelocity];
         [p3 nullVelocity];
 
@@ -97,25 +98,71 @@
 
 
 -(void) render{
-    [super render];
-    [spoke1 render];
-    [spoke2 render];
-    [spoke3 render];
-    [spoke4 render];
-    [crossBar1 render];
-    [crossBar2 render];
-    [crossBar3 render];
-    [crossBar4 render];
-    [crossBar5 render];
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    CGContextSaveGState(context);
 
-    UIBezierPath* balloon = [UIBezierPath bezierPathWithArcCenter:center.asCGPoint
+    UIBezierPath* wheel = [UIBezierPath bezierPathWithArcCenter:center.asCGPoint
                                                            radius:radius
                                                        startAngle:0
                                                          endAngle:2*M_PI
                                                         clockwise:YES];
+    [wheel addClip];
+    
+    
+    
+    
+    // translate
+    CGContextTranslateCTM(context, center.x, center.y);
+    // rotate
+    CGFloat angle = atan2f(self.p1.x - self.center.x, self.p1.y - self.center.y);
+    CGContextRotateCTM(context, -angle + M_PI/2);
+
+    UIImage* wheelImage = [UIImage imageNamed:@"wheel.png"];
+    
+    [wheelImage drawInRect:CGRectMake(-radius, -radius, radius*2, radius*2)];
+    
+    [center renderAtZeroZero];
+    
+    
+    CGContextSaveGState(context);
+    CGContextTranslateCTM(context, -radius+kPointRadius, 0);
+    [self.p0 renderAtZeroZero];
+    CGContextRestoreGState(context);
+
+    CGContextSaveGState(context);
+    CGContextTranslateCTM(context, radius-kPointRadius, 0);
+    [self.p1 renderAtZeroZero];
+    CGContextRestoreGState(context);
+
+    
+    CGContextSaveGState(context);
+    CGContextTranslateCTM(context, 0, -radius+kPointRadius);
+    [self.p2 renderAtZeroZero];
+    CGContextRestoreGState(context);
+    
+    CGContextSaveGState(context);
+    CGContextTranslateCTM(context, 0, radius-kPointRadius);
+    [self.p3 renderAtZeroZero];
+    CGContextRestoreGState(context);
+    
+   
+//    [super render];
+//    [spoke1 render];
+//    [spoke2 render];
+//    [spoke3 render];
+//    [spoke4 render];
+//    [crossBar1 render];
+//    [crossBar2 render];
+//    [crossBar3 render];
+//    [crossBar4 render];
+//    [crossBar5 render];
+
     
     [[UIColor blueColor] setStroke];
-    [balloon stroke];
+    [wheel stroke];
+    
+    CGContextRestoreGState(context);
+
 }
 
 -(void) replacePoint:(MMPoint*)p withPoint:(MMPoint*)newP{

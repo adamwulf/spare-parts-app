@@ -300,7 +300,7 @@
     CGPoint currLoc = [tapGesture locationInView:self];
     if(tapGesture.state == UIGestureRecognizerStateRecognized){
         MMWheel* wheel = [MMWheel wheelWithCenter:[MMPoint pointWithCGPoint:currLoc]
-                                        andRadius:40];
+                                        andRadius:kWheelRadius];
         [points addObject:wheel.center];
         [points addObject:wheel.p0];
         [points addObject:wheel.p1];
