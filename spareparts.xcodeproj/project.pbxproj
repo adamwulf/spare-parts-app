@@ -15,7 +15,6 @@
 		66343C191ABF5BB500801962 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 66343C181ABF5BB500801962 /* AppDelegate.m */; };
 		66343C1C1ABF5BB500801962 /* MMPhysicsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 66343C1B1ABF5BB500801962 /* MMPhysicsViewController.m */; };
 		66343C211ABF5BB500801962 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 66343C201ABF5BB500801962 /* Images.xcassets */; };
-		66343C301ABF5BB600801962 /* physics_2D_VerletTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 66343C2F1ABF5BB600801962 /* physics_2D_VerletTests.m */; };
 		66343C3D1ABF5D2900801962 /* MMPhysicsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 66343C3C1ABF5D2900801962 /* MMPhysicsView.m */; };
 		66343C451ABF5FE300801962 /* cat.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 66343C401ABF5FE300801962 /* cat.jpg */; };
 		66343C461ABF5FE300801962 /* image.js in Resources */ = {isa = PBXBuildFile; fileRef = 66343C411ABF5FE300801962 /* image.js */; };
@@ -41,16 +40,6 @@
 		66A490041AC5EAE500CC21BA /* MMSpring.m in Sources */ = {isa = PBXBuildFile; fileRef = 66A490031AC5EAE500CC21BA /* MMSpring.m */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		66343C2A1ABF5BB600801962 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 66343C081ABF5BB500801962 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 66343C0F1ABF5BB500801962;
-			remoteInfo = "physics-2D-Verlet";
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXFileReference section */
 		66309CEA1AC484E900FACEF9 /* MMEnginePiston.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMEnginePiston.h; sourceTree = "<group>"; };
 		66309CEB1AC484E900FACEF9 /* MMEnginePiston.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMEnginePiston.m; sourceTree = "<group>"; };
@@ -60,7 +49,7 @@
 		66309CF11AC48E9900FACEF9 /* MMBalloon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMBalloon.m; sourceTree = "<group>"; };
 		66309CF81AC4942700FACEF9 /* MMWheel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMWheel.h; sourceTree = "<group>"; };
 		66309CF91AC4942700FACEF9 /* MMWheel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMWheel.m; sourceTree = "<group>"; };
-		66343C101ABF5BB500801962 /* physics-2D-Verlet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "physics-2D-Verlet.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		66343C101ABF5BB500801962 /* spareparts.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = spareparts.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		66343C141ABF5BB500801962 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		66343C151ABF5BB500801962 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		66343C171ABF5BB500801962 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -68,9 +57,6 @@
 		66343C1A1ABF5BB500801962 /* MMPhysicsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MMPhysicsViewController.h; sourceTree = "<group>"; };
 		66343C1B1ABF5BB500801962 /* MMPhysicsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MMPhysicsViewController.m; sourceTree = "<group>"; };
 		66343C201ABF5BB500801962 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		66343C291ABF5BB600801962 /* physics-2D-VerletTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "physics-2D-VerletTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		66343C2E1ABF5BB600801962 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		66343C2F1ABF5BB600801962 /* physics_2D_VerletTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = physics_2D_VerletTests.m; sourceTree = "<group>"; };
 		66343C3B1ABF5D2900801962 /* MMPhysicsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMPhysicsView.h; sourceTree = "<group>"; };
 		66343C3C1ABF5D2900801962 /* MMPhysicsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMPhysicsView.m; sourceTree = "<group>"; };
 		66343C401ABF5FE300801962 /* cat.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = cat.jpg; path = codingmath/episode38/cat.jpg; sourceTree = SOURCE_ROOT; };
@@ -107,13 +93,6 @@
 
 /* Begin PBXFrameworksBuildPhase section */
 		66343C0D1ABF5BB500801962 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		66343C261ABF5BB600801962 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -175,7 +154,6 @@
 			isa = PBXGroup;
 			children = (
 				66343C121ABF5BB500801962 /* physics-2D-Verlet */,
-				66343C2C1ABF5BB600801962 /* physics-2D-VerletTests */,
 				66343C111ABF5BB500801962 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -183,8 +161,7 @@
 		66343C111ABF5BB500801962 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				66343C101ABF5BB500801962 /* physics-2D-Verlet.app */,
-				66343C291ABF5BB600801962 /* physics-2D-VerletTests.xctest */,
+				66343C101ABF5BB500801962 /* spareparts.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -209,23 +186,6 @@
 				66343C201ABF5BB500801962 /* Images.xcassets */,
 				66343C141ABF5BB500801962 /* Info.plist */,
 				66343C151ABF5BB500801962 /* main.m */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		66343C2C1ABF5BB600801962 /* physics-2D-VerletTests */ = {
-			isa = PBXGroup;
-			children = (
-				66343C2F1ABF5BB600801962 /* physics_2D_VerletTests.m */,
-				66343C2D1ABF5BB600801962 /* Supporting Files */,
-			);
-			path = "physics-2D-VerletTests";
-			sourceTree = "<group>";
-		};
-		66343C2D1ABF5BB600801962 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				66343C2E1ABF5BB600801962 /* Info.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -295,40 +255,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		66343C0F1ABF5BB500801962 /* physics-2D-Verlet */ = {
+		66343C0F1ABF5BB500801962 /* spareparts */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 66343C331ABF5BB600801962 /* Build configuration list for PBXNativeTarget "physics-2D-Verlet" */;
+			buildConfigurationList = 66343C331ABF5BB600801962 /* Build configuration list for PBXNativeTarget "spareparts" */;
 			buildPhases = (
 				66343C0C1ABF5BB500801962 /* Sources */,
 				66343C0D1ABF5BB500801962 /* Frameworks */,
 				66343C0E1ABF5BB500801962 /* Resources */,
+				665CB55C1ACB2FE40045E51E /* ShellScript */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = "physics-2D-Verlet";
+			name = spareparts;
 			productName = "physics-2D-Verlet";
-			productReference = 66343C101ABF5BB500801962 /* physics-2D-Verlet.app */;
+			productReference = 66343C101ABF5BB500801962 /* spareparts.app */;
 			productType = "com.apple.product-type.application";
-		};
-		66343C281ABF5BB600801962 /* physics-2D-VerletTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 66343C361ABF5BB600801962 /* Build configuration list for PBXNativeTarget "physics-2D-VerletTests" */;
-			buildPhases = (
-				66343C251ABF5BB600801962 /* Sources */,
-				66343C261ABF5BB600801962 /* Frameworks */,
-				66343C271ABF5BB600801962 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				66343C2B1ABF5BB600801962 /* PBXTargetDependency */,
-			);
-			name = "physics-2D-VerletTests";
-			productName = "physics-2D-VerletTests";
-			productReference = 66343C291ABF5BB600801962 /* physics-2D-VerletTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
 
@@ -342,13 +285,9 @@
 					66343C0F1ABF5BB500801962 = {
 						CreatedOnToolsVersion = 6.2;
 					};
-					66343C281ABF5BB600801962 = {
-						CreatedOnToolsVersion = 6.2;
-						TestTargetID = 66343C0F1ABF5BB500801962;
-					};
 				};
 			};
-			buildConfigurationList = 66343C0B1ABF5BB500801962 /* Build configuration list for PBXProject "physics-2D-Verlet" */;
+			buildConfigurationList = 66343C0B1ABF5BB500801962 /* Build configuration list for PBXProject "spareparts" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -361,8 +300,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				66343C0F1ABF5BB500801962 /* physics-2D-Verlet */,
-				66343C281ABF5BB600801962 /* physics-2D-VerletTests */,
+				66343C0F1ABF5BB500801962 /* spareparts */,
 			);
 		};
 /* End PBXProject section */
@@ -391,14 +329,23 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		66343C271ABF5BB600801962 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		665CB55C1ACB2FE40045E51E /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
 			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Update the CFBundleShortVersionString in the generated Info.plist using the most recent Git tag.\n# Idea taken from http://tinyurl.com/3usjj9d by Joachim Bondo.\n\n# Get the current release description from Git.\nGIT_RELEASE_SHORT_VERSION=`git describe --tags | awk '{split($0,a,\"-\"); print a[1]}'`\nGIT_RELEASE_VERSION=`git describe --tags --abbrev=0`\n\necho \"built products dir/info plist\"\necho \"${BUILT_PRODUCTS_DIR}/${INFOPLIST_PATH%.*}\"\necho $GIT_RELEASE_VERSION\necho $GIT_RELEASE_SHORT_VERSION\n\n# Set the CFBundleShortVersionString in the generated Info.plist (stripping off the leading \"v\").\ndefaults write \"${BUILT_PRODUCTS_DIR}/${INFOPLIST_PATH%.*}\" \"CFBundleShortVersionString\" \"$GIT_RELEASE_SHORT_VERSION\"\ndefaults write \"${BUILT_PRODUCTS_DIR}/${INFOPLIST_PATH%.*}\" \"CFBundleVersion\" \"$GIT_RELEASE_VERSION\"\n\ntouch \"${BUILT_PRODUCTS_DIR}/${INFOPLIST_PATH%.*}.plist\"";
 		};
-/* End PBXResourcesBuildPhase section */
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		66343C0C1ABF5BB500801962 /* Sources */ = {
@@ -423,23 +370,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		66343C251ABF5BB600801962 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				66343C301ABF5BB600801962 /* physics_2D_VerletTests.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		66343C2B1ABF5BB600801962 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 66343C0F1ABF5BB500801962 /* physics-2D-Verlet */;
-			targetProxy = 66343C2A1ABF5BB600801962 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		66343C311ABF5BB600801962 /* Debug */ = {
@@ -527,7 +458,7 @@
 				INFOPLIST_FILE = "physics-2D-Verlet/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = spareparts;
 			};
 			name = Debug;
 		};
@@ -538,48 +469,14 @@
 				INFOPLIST_FILE = "physics-2D-Verlet/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Release;
-		};
-		66343C371ABF5BB600801962 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = "physics-2D-VerletTests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/physics-2D-Verlet.app/physics-2D-Verlet";
-			};
-			name = Debug;
-		};
-		66343C381ABF5BB600801962 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = "physics-2D-VerletTests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/physics-2D-Verlet.app/physics-2D-Verlet";
+				PRODUCT_NAME = spareparts;
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		66343C0B1ABF5BB500801962 /* Build configuration list for PBXProject "physics-2D-Verlet" */ = {
+		66343C0B1ABF5BB500801962 /* Build configuration list for PBXProject "spareparts" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				66343C311ABF5BB600801962 /* Debug */,
@@ -588,20 +485,11 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		66343C331ABF5BB600801962 /* Build configuration list for PBXNativeTarget "physics-2D-Verlet" */ = {
+		66343C331ABF5BB600801962 /* Build configuration list for PBXNativeTarget "spareparts" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				66343C341ABF5BB600801962 /* Debug */,
 				66343C351ABF5BB600801962 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		66343C361ABF5BB600801962 /* Build configuration list for PBXNativeTarget "physics-2D-VerletTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				66343C371ABF5BB600801962 /* Debug */,
-				66343C381ABF5BB600801962 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

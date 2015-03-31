@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:physics-2D-Verlet.xcodeproj">
+      location = "self:spareparts.xcodeproj">
    </FileRef>
 </Workspace>
