@@ -164,5 +164,13 @@ CGPoint		NearestPointOnLine( const CGPoint inPoint, const CGPoint a, const CGPoi
         return a;
 }
 
+-(MMStick*) cloneObject{
+    return [MMStick stickWithP0:[MMPoint pointWithCGPoint:p0.asCGPoint]
+                          andP1:[MMPoint pointWithCGPoint:p1.asCGPoint]];
+}
+
+-(NSArray*) allPoints{
+    return @[p0, p1];
+}
 
 @end

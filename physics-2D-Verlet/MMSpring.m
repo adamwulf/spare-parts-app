@@ -57,5 +57,10 @@
     stress = MIN(.1, percDiff) * 2;
 }
 
+-(MMStick*) cloneObject{
+    return [MMSpring springWithP0:[MMPoint pointWithCGPoint:self.p0.asCGPoint]
+                            andP1:[MMPoint pointWithCGPoint:self.p1.asCGPoint]];
+}
+
 
 @end

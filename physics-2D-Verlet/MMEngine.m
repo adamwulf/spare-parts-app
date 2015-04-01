@@ -89,4 +89,13 @@
     [shaft replacePoint:p withPoint:newP];
 }
 
+-(MMStick*) cloneObject{
+    return [MMEngine engineWithP0:[MMPoint pointWithCGPoint:self.p0.asCGPoint]
+                            andP1:[MMPoint pointWithCGPoint:self.p1.asCGPoint]];
+}
+
+-(NSArray*) allPoints{
+    return [[super allPoints] arrayByAddingObject:self.p2];
+}
+
 @end

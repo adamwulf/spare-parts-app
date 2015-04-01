@@ -92,7 +92,7 @@
         [self addSubview:animationOnOffSwitch];
 
 
-        UIButton* clearButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+        UIButton* clearButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [clearButton setImage:[UIImage imageNamed:@"trash.png"] forState:UIControlStateNormal];
         [clearButton sizeToFit];
         [clearButton addTarget:self action:@selector(clearObjects) forControlEvents:UIControlEventTouchUpInside];
@@ -138,193 +138,36 @@
     [balloons removeAllObjects];
 }
 
--(void) createStickGesture:(InstantPanGestureRecognizer*)panGesture{
-    CGPoint currLoc = [panGesture locationInView:self];
-    if(panGesture.state == UIGestureRecognizerStateBegan){
-        currLoc = panGesture.initialLocationInWindow;
-
-        MMPoint* startPoint = [self getPointNear:currLoc];
-        
-        if(!startPoint){
-            startPoint = [MMPoint pointWithCGPoint:currLoc];
-        }
-
-        currentEditedStick = [MMStick stickWithP0:startPoint
-                                            andP1:[MMPoint pointWithCGPoint:currLoc]];
-    }else if(panGesture.state == UIGestureRecognizerStateEnded ||
-             panGesture.state == UIGestureRecognizerStateFailed ||
-             panGesture.state == UIGestureRecognizerStateCancelled){
-        
-        MMPoint* startPoint = currentEditedStick.p0;
-        MMPoint* endPoint = [self getPointNear:currLoc];
-        if(!endPoint){
-            endPoint = currentEditedStick.p1;
-        }
-        if(![points containsObject:startPoint]){
-            [points addObject:startPoint];
-        }
-        if(![points containsObject:endPoint]){
-            [points addObject:endPoint];
-        }
-        currentEditedStick = nil;
-
-        [sticks addObject:[MMStick stickWithP0:startPoint andP1:endPoint]];
-    }else if(currentEditedStick){
-        currentEditedStick = [MMStick stickWithP0:currentEditedStick.p0
-                                            andP1:[MMPoint pointWithCGPoint:currLoc]];
-    }
-}
-
-
--(void) createPistonGesture:(InstantPanGestureRecognizer*)panGesture{
-    CGPoint currLoc = [panGesture locationInView:self];
-    if(panGesture.state == UIGestureRecognizerStateBegan){
-        currLoc = panGesture.initialLocationInWindow;
-
-        MMPoint* startPoint = [self getPointNear:currLoc];
-        
-        if(!startPoint){
-            startPoint = [MMPoint pointWithCGPoint:currLoc];
-        }
-        
-        currentEditedStick = [MMPiston pistonWithP0:startPoint
-                                            andP1:[MMPoint pointWithCGPoint:currLoc]];
-    }else if(panGesture.state == UIGestureRecognizerStateEnded ||
-             panGesture.state == UIGestureRecognizerStateFailed ||
-             panGesture.state == UIGestureRecognizerStateCancelled){
-        
-        MMPoint* startPoint = currentEditedStick.p0;
-        MMPoint* endPoint = [self getPointNear:currLoc];
-        if(!endPoint){
-            endPoint = currentEditedStick.p1;
-        }
-        if(![points containsObject:startPoint]){
-            [points addObject:startPoint];
-        }
-        if(![points containsObject:endPoint]){
-            [points addObject:endPoint];
-        }
-        currentEditedStick = nil;
-        
-        [sticks addObject:[MMPiston pistonWithP0:startPoint andP1:endPoint]];
-    }else if(currentEditedStick){
-        currentEditedStick = [MMPiston pistonWithP0:currentEditedStick.p0
-                                            andP1:[MMPoint pointWithCGPoint:currLoc]];
-    }
-}
-
--(void) createSpringGesture:(InstantPanGestureRecognizer*)panGesture{
-    CGPoint currLoc = [panGesture locationInView:self];
-    if(panGesture.state == UIGestureRecognizerStateBegan){
-        currLoc = panGesture.initialLocationInWindow;
-        
-        MMPoint* startPoint = [self getPointNear:currLoc];
-        
-        if(!startPoint){
-            startPoint = [MMPoint pointWithCGPoint:currLoc];
-        }
-        
-        currentEditedStick = [MMStick stickWithP0:startPoint
-                                            andP1:[MMPoint pointWithCGPoint:currLoc]];
-    }else if(panGesture.state == UIGestureRecognizerStateEnded ||
-             panGesture.state == UIGestureRecognizerStateFailed ||
-             panGesture.state == UIGestureRecognizerStateCancelled){
-        
-        MMPoint* startPoint = currentEditedStick.p0;
-        MMPoint* endPoint = [self getPointNear:currLoc];
-        if(!endPoint){
-            endPoint = currentEditedStick.p1;
-        }
-        if(![points containsObject:startPoint]){
-            [points addObject:startPoint];
-        }
-        if(![points containsObject:endPoint]){
-            [points addObject:endPoint];
-        }
-        currentEditedStick = nil;
-        
-        [sticks addObject:[MMSpring springWithP0:startPoint andP1:endPoint]];
-    }else if(currentEditedStick){
-        currentEditedStick = [MMStick stickWithP0:currentEditedStick.p0
-                                            andP1:[MMPoint pointWithCGPoint:currLoc]];
-    }
-}
-
-
--(void) createBalloonGesture:(UITapGestureRecognizer*)tapGesture{
-    CGPoint currLoc = [tapGesture locationInView:self];
-    if(tapGesture.state == UIGestureRecognizerStateRecognized){
-        MMBalloon* balloon = [MMBalloon balloonWithCGPoint:currLoc];
-        [points addObject:balloon.center];
-        [balloons addObject:balloon];
-    }
-}
-
--(void) createWheelGesture:(UITapGestureRecognizer*)tapGesture{
-    CGPoint currLoc = [tapGesture locationInView:self];
-    if(tapGesture.state == UIGestureRecognizerStateRecognized){
-        MMWheel* wheel = [MMWheel wheelWithCenter:[MMPoint pointWithCGPoint:currLoc]
-                                        andRadius:kWheelRadius];
-        [points addObject:wheel.center];
-        [points addObject:wheel.p0];
-        [points addObject:wheel.p1];
-        [points addObject:wheel.p2];
-        [points addObject:wheel.p3];
-        [sticks addObject:wheel];
-    }
-}
-
--(void) createEngineGesture:(InstantPanGestureRecognizer*)panGesture{
-    CGPoint currLoc = [panGesture locationInView:self];
-    if(panGesture.state == UIGestureRecognizerStateBegan){
-        currLoc = panGesture.initialLocationInWindow;
-
-        MMPoint* startPoint = [self getPointNear:currLoc];
-        
-        if(!startPoint){
-            startPoint = [MMPoint pointWithCGPoint:currLoc];
-        }
-        
-        currentEditedStick = [MMEngine engineWithP0:startPoint
-                                            andP1:[MMPoint pointWithCGPoint:currLoc]];
-    }else if(panGesture.state == UIGestureRecognizerStateEnded ||
-             panGesture.state == UIGestureRecognizerStateFailed ||
-             panGesture.state == UIGestureRecognizerStateCancelled){
-        
-        MMPoint* startPoint = currentEditedStick.p0;
-        MMPoint* endPoint = [self getPointNear:currLoc];
-        if(!endPoint){
-            endPoint = currentEditedStick.p1;
-        }
-        if(![points containsObject:startPoint]){
-            [points addObject:startPoint];
-        }
-        if(![points containsObject:endPoint]){
-            [points addObject:endPoint];
-        }
-        currentEditedStick = nil;
-        
-        MMEngine* engine = (MMEngine*)[MMEngine engineWithP0:startPoint
-                                                       andP1:endPoint];
-        [points addObject:engine.p2];
-        [sticks addObject:engine];
-    }else if(currentEditedStick){
-        currentEditedStick = [MMEngine engineWithP0:currentEditedStick.p0
-                                            andP1:[MMPoint pointWithCGPoint:currLoc]];
-    }
-}
-
 -(void) movePointGesture:(UIPanGestureRecognizer*)panGesture{
     if(panGesture.state == UIGestureRecognizerStateBegan){
         CGPoint currLoc = [panGesture locationInView:self];
         // find the point to grab
-        grabbedPoint = [self getPointNear:currLoc];
-        if(!grabbedPoint){
-            grabbedStick = [self getStickNear:currLoc];
-            grabbedStickOffsetP0 = CGPointMake(currLoc.x - grabbedStick.p0.x,
-                                               currLoc.y - grabbedStick.p0.y);
-            grabbedStickOffsetP1 = CGPointMake(currLoc.x - grabbedStick.p1.x,
-                                               currLoc.y - grabbedStick.p1.y);
+        MMStick* stick = [self getSidebarObject:currLoc];
+        if(stick){
+            NSLog(@"grabbed %@", [stick class]);
+            stick = [stick cloneObject];
+            // we just created a new object
+            [points addObjectsFromArray:[stick allPoints]];
+            if([stick isKindOfClass:[MMBalloon class]]){
+                [balloons addObject:stick];
+                grabbedPoint = [((MMBalloon*)stick) center];
+            }else{
+                [sticks addObject:stick];
+                grabbedStick = stick;
+                grabbedStickOffsetP0 = CGPointMake(currLoc.x - grabbedStick.p0.x,
+                                                   currLoc.y - grabbedStick.p0.y);
+                grabbedStickOffsetP1 = CGPointMake(currLoc.x - grabbedStick.p1.x,
+                                                   currLoc.y - grabbedStick.p1.y);
+            }
+        }else{
+            grabbedPoint = [self getPointNear:currLoc];
+            if(!grabbedPoint){
+                grabbedStick = [self getStickNear:currLoc];
+                grabbedStickOffsetP0 = CGPointMake(currLoc.x - grabbedStick.p0.x,
+                                                   currLoc.y - grabbedStick.p0.y);
+                grabbedStickOffsetP1 = CGPointMake(currLoc.x - grabbedStick.p1.x,
+                                                   currLoc.y - grabbedStick.p1.y);
+            }
         }
     }
     
@@ -712,6 +555,16 @@
 
 -(MMStick*) getStickNear:(CGPoint)point{
     MMStick* ret = [[sticks sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+        return [obj1 distanceFromPoint:point] < [obj2 distanceFromPoint:point] ? NSOrderedAscending : NSOrderedDescending;
+    }] firstObject];
+    if([ret distanceFromPoint:point] < 30){
+        return ret;
+    }
+    return nil;
+}
+
+-(MMStick*) getSidebarObject:(CGPoint)point{
+    MMStick* ret = [[defaultObjects sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
         return [obj1 distanceFromPoint:point] < [obj2 distanceFromPoint:point] ? NSOrderedAscending : NSOrderedDescending;
     }] firstObject];
     if([ret distanceFromPoint:point] < 30){

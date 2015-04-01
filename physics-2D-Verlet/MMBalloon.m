@@ -61,4 +61,16 @@
     }
 }
 
+-(CGFloat) distanceFromPoint:(CGPoint)point{
+    return [center distanceFromPoint:point];
+}
+
+-(MMBalloon*) cloneObject{
+    return [MMBalloon balloonWithCGPoint:center.asCGPoint];
+}
+
+-(NSArray*) allPoints{
+    return @[center];
+}
+
 @end

@@ -176,5 +176,29 @@
     [crossBar3 replacePoint:p withPoint:newP];
     [crossBar4 replacePoint:p withPoint:newP];
     [crossBar5 replacePoint:p withPoint:newP];
+    if(p == center){
+        center = newP;
+    }
+    if(p == p2){
+        p2 = newP;
+    }
+    if(p == p3){
+        p3 = newP;
+    }
 }
+
+
+-(CGFloat) distanceFromPoint:(CGPoint)point{
+    return MAX(0,[center distanceFromPoint:point] - radius);
+}
+
+-(MMStick*) cloneObject{
+    return [MMWheel wheelWithCenter:[MMPoint pointWithCGPoint:center.asCGPoint]
+                          andRadius:radius];
+}
+
+-(NSArray*) allPoints{
+    return [[super allPoints] arrayByAddingObjectsFromArray:@[self.p2, self.p3, self.center]];
+}
+
 @end

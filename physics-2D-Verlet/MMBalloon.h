@@ -20,4 +20,10 @@
 
 -(void) replacePoint:(MMPoint*)p withPoint:(MMPoint*)newP;
 
+-(CGFloat) distanceFromPoint:(CGPoint)point;
+
+-(MMBalloon*) cloneObject;
+
+-(NSArray*) allPoints;
+
 @end

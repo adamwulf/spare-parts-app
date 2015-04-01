@@ -33,7 +33,9 @@
 
 -(CGFloat) distanceFromPoint:(CGPoint)point;
 
+-(MMStick*) cloneObject;
 
+-(NSArray*) allPoints;
 
 // subclasses only please
 
