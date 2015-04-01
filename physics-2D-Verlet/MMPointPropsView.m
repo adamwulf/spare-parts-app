@@ -8,6 +8,7 @@
 
 #import "MMPointPropsView.h"
 #import "MMPoint.h"
+#import "MMStick.h"
 
 @implementation MMPointPropsView{
     UISwitch* immovableSwitch;

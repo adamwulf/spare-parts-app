@@ -9,6 +9,7 @@
 #import "MMPhysicsView.h"
 #import "InstantPanGestureRecognizer.h"
 #import "MMPointPropsView.h"
+#import "MMStickPropsView.h"
 #import "MMPoint.h"
 #import "MMStick.h"
 #import "MMPiston.h"
@@ -36,6 +37,7 @@
     MMPoint* grabbedPoint;
     
     // all of the gestures
+    UITapGestureRecognizer* selectGesture;
     UIPanGestureRecognizer* grabPointGesture;
     
     // toggle running the simulation on/off
@@ -45,8 +47,10 @@
     MMStick* currentEditedStick;
     
     
-    MMPointPropsView* propertiesView;
+    MMPointPropsView* pointPropertiesView;
+    MMStickPropsView* stickPropertiesView;
     MMPoint* selectedPoint;
+    MMStick* selectedStick;
     
     NSMutableSet* processedPoints;
     
@@ -70,8 +74,11 @@
         sticks = [NSMutableArray array];
         balloons = [NSMutableArray array];
         
-        propertiesView = [[MMPointPropsView alloc] initWithFrame:CGRectMake(20, 20, 200, 250)];
-        [self addSubview:propertiesView];
+        pointPropertiesView = [[MMPointPropsView alloc] initWithFrame:CGRectMake(20, 20, 200, 250)];
+        [self addSubview:pointPropertiesView];
+        
+        stickPropertiesView = [[MMStickPropsView alloc] initWithFrame:CGRectMake(20, 20, 200, 250)];
+        [self addSubview:stickPropertiesView];
         
         [self initializeData];
         
@@ -79,6 +86,9 @@
         displayLink.frameInterval = 2;
         [displayLink addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSDefaultRunLoopMode];
         
+        
+        selectGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapPointGesture:)];
+        [self addGestureRecognizer:selectGesture];
         
         grabPointGesture = [[InstantPanGestureRecognizer alloc] initWithTarget:self action:@selector(movePointGesture:)];
         [self addGestureRecognizer:grabPointGesture];
@@ -126,16 +136,24 @@
     button.selected = !button.selected;
 }
 
--(void) screenTapped:(UITapGestureRecognizer*)tapGesture{
-    selectedPoint = [self getPointNear:[tapGesture locationInView:self]];
-    [propertiesView showPointProperties:selectedPoint];
-    
-}
-
 -(void) clearObjects{
     [points removeAllObjects];
     [sticks removeAllObjects];
     [balloons removeAllObjects];
+}
+
+-(void) tapPointGesture:(UITapGestureRecognizer*)tapGesture{
+    CGPoint currLoc = [tapGesture locationInView:self];
+    if(tapGesture.state == UIGestureRecognizerStateRecognized){
+        selectedPoint = [self getPointNear:currLoc];
+        selectedStick = nil;
+        if(!selectedPoint){
+            selectedStick = [self getStickNear:currLoc];
+        }
+        [pointPropertiesView showPointProperties:selectedPoint];
+        [stickPropertiesView showObjectProperties:selectedStick];
+        NSLog(@"asdf");
+    }
 }
 
 -(void) movePointGesture:(UIPanGestureRecognizer*)panGesture{

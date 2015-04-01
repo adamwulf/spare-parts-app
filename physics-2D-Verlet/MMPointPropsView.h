@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "MMPoint.h"
+#import "MMStick.h"
 
 @interface MMPointPropsView : UIView
 
