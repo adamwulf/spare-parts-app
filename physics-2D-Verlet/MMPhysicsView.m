@@ -46,7 +46,7 @@
     UITapGestureRecognizer* selectPointGesture;
     
     // toggle running the simulation on/off
-    UISwitch* animationOnOffSwitch;
+    UIButton* animationOnOffSwitch;
     
     // the stick that's currently being made
     MMStick* currentEditedStick;
@@ -61,7 +61,8 @@
 
 -(id) initWithFrame:(CGRect)frame{
     if(self = [super initWithFrame:frame]){
-        self.backgroundColor = [UIColor whiteColor];
+        self.backgroundColor = [UIColor clearColor];
+        self.opaque = NO;
         
         bounce = 0.9;
         gravity = 0.5;
@@ -117,31 +118,28 @@
         
         
         
-        animationOnOffSwitch = [[UISwitch alloc] init];
-        animationOnOffSwitch.on = YES;
-        animationOnOffSwitch.center = CGPointMake(self.bounds.size.width - 80, 40);
-        
-        UILabel* onOff = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 150, animationOnOffSwitch.bounds.size.height)];
-        onOff.text = @"on/off";
-        onOff.textAlignment = NSTextAlignmentRight;
-        onOff.center = CGPointMake(animationOnOffSwitch.center.x - onOff.bounds.size.width, animationOnOffSwitch.center.y);
-        [self addSubview:onOff];
-
-        
         UISegmentedControl* createMode = [[UISegmentedControl alloc] initWithItems:@[@"make stick",@"make piston",@"make spring",@"make engine",@"make balloon",@"make wheel",@"move point"]];
         createMode.selectedSegmentIndex = 0;
-        createMode.center = CGPointMake(self.bounds.size.width - 350, 80);
+        createMode.center = CGPointMake(self.bounds.size.width - 350, 200);
         [createMode addTarget:self  action:@selector(modeChanged:) forControlEvents:UIControlEventValueChanged];
         [self addSubview:createMode];
+        
+        
+        animationOnOffSwitch = [UIButton buttonWithType:UIButtonTypeCustom];
+        [animationOnOffSwitch setImage:[UIImage imageNamed:@"play.png"] forState:UIControlStateNormal];
+        [animationOnOffSwitch setImage:[UIImage imageNamed:@"pause.png"] forState:UIControlStateSelected];
+        [animationOnOffSwitch sizeToFit];
+        animationOnOffSwitch.center = CGPointMake(self.bounds.size.width - 180, 80);
+        [animationOnOffSwitch addTarget:self action:@selector(toggleAnimation:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:animationOnOffSwitch];
-        
-        
+
+
         UIButton* clearButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-        [clearButton setTitle:@"Clear" forState:UIControlStateNormal];
+        [clearButton setImage:[UIImage imageNamed:@"trash.png"] forState:UIControlStateNormal];
         [clearButton sizeToFit];
         [clearButton addTarget:self action:@selector(clearObjects) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:clearButton];
-        clearButton.center = CGPointMake(self.bounds.size.width - 50, 200);
+        clearButton.center = CGPointMake(self.bounds.size.width - 80, 80);
         
     }
     return self;
@@ -149,6 +147,9 @@
 
 #pragma mark - Gesture
 
+-(void) toggleAnimation:(UIButton*)button{
+    button.selected = !button.selected;
+}
 
 -(void) screenTapped:(UITapGestureRecognizer*)tapGesture{
     selectedPoint = [self getPointNear:[tapGesture locationInView:self]];
@@ -423,11 +424,13 @@
     CGContextSaveGState(context);
     
     // clear
+    CGContextSetBlendMode(context, kCGBlendModeClear);
     [[UIColor whiteColor] setFill];
     CGContextFillRect(context, rect);
+    CGContextSetBlendMode(context, kCGBlendModeNormal);
     
 
-    if(animationOnOffSwitch.on){
+    if(animationOnOffSwitch.selected){
         // gravity + velocity etc
         [self updatePoints];
         [self tickMachines];
@@ -473,7 +476,7 @@
             grabbedPoint.x = [grabPointGesture locationInView:self].x;
             grabbedPoint.y = [grabPointGesture locationInView:self].y;
         }
-        if(!animationOnOffSwitch.on){
+        if(!animationOnOffSwitch.selected){
             for (MMPoint* p in points) {
                 [p nullVelocity];
             }
@@ -486,7 +489,7 @@
             grabbedStick.p1.x = [grabPointGesture locationInView:self].x - grabbedStickOffsetP1.x;
             grabbedStick.p1.y = [grabPointGesture locationInView:self].y - grabbedStickOffsetP1.y;
         }
-        if(!animationOnOffSwitch.on){
+        if(!animationOnOffSwitch.selected){
             for (MMPoint* p in points) {
                 [p nullVelocity];
             }

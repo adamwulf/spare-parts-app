@@ -24,6 +24,10 @@
 		66625FE51AC21E460025F441 /* MMPointPropsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 66625FE41AC21E460025F441 /* MMPointPropsView.m */; };
 		66625FE81AC220FE0025F441 /* MMPiston.m in Sources */ = {isa = PBXBuildFile; fileRef = 66625FE71AC220FE0025F441 /* MMPiston.m */; };
 		66625FEB1AC3496D0025F441 /* MMEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 66625FEA1AC3496D0025F441 /* MMEngine.m */; };
+		66677C5F1ACBA6D6003A6723 /* SidebarBackground.m in Sources */ = {isa = PBXBuildFile; fileRef = 66677C5E1ACBA6D6003A6723 /* SidebarBackground.m */; };
+		66677C611ACBA971003A6723 /* trash.png in Resources */ = {isa = PBXBuildFile; fileRef = 66677C601ACBA971003A6723 /* trash.png */; };
+		66677C631ACBAA9F003A6723 /* pause.png in Resources */ = {isa = PBXBuildFile; fileRef = 66677C621ACBAA9F003A6723 /* pause.png */; };
+		66677C651ACBAAA3003A6723 /* play.png in Resources */ = {isa = PBXBuildFile; fileRef = 66677C641ACBAAA3003A6723 /* play.png */; };
 		666E0A661AC0924D0018289C /* MMPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = 666E0A651AC0924D0018289C /* MMPoint.m */; };
 		666E0A691AC093A10018289C /* MMStick.m in Sources */ = {isa = PBXBuildFile; fileRef = 666E0A681AC093A10018289C /* MMStick.m */; };
 		66A08EFA1AC9D86700C670E5 /* screw2.png in Resources */ = {isa = PBXBuildFile; fileRef = 66A08EF91AC9D86700C670E5 /* screw2.png */; };
@@ -70,6 +74,11 @@
 		66625FE71AC220FE0025F441 /* MMPiston.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMPiston.m; sourceTree = "<group>"; };
 		66625FE91AC3496D0025F441 /* MMEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMEngine.h; sourceTree = "<group>"; };
 		66625FEA1AC3496D0025F441 /* MMEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMEngine.m; sourceTree = "<group>"; };
+		66677C5D1ACBA6D6003A6723 /* SidebarBackground.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SidebarBackground.h; sourceTree = "<group>"; };
+		66677C5E1ACBA6D6003A6723 /* SidebarBackground.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SidebarBackground.m; sourceTree = "<group>"; };
+		66677C601ACBA971003A6723 /* trash.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = trash.png; sourceTree = "<group>"; };
+		66677C621ACBAA9F003A6723 /* pause.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pause.png; sourceTree = "<group>"; };
+		66677C641ACBAAA3003A6723 /* play.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = play.png; sourceTree = "<group>"; };
 		666E0A641AC0924C0018289C /* MMPoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMPoint.h; sourceTree = "<group>"; };
 		666E0A651AC0924D0018289C /* MMPoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMPoint.m; sourceTree = "<group>"; };
 		666E0A671AC093A10018289C /* MMStick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMStick.h; sourceTree = "<group>"; };
@@ -197,6 +206,8 @@
 				66343C181ABF5BB500801962 /* AppDelegate.m */,
 				66343C1A1ABF5BB500801962 /* MMPhysicsViewController.h */,
 				66343C1B1ABF5BB500801962 /* MMPhysicsViewController.m */,
+				66677C5D1ACBA6D6003A6723 /* SidebarBackground.h */,
+				66677C5E1ACBA6D6003A6723 /* SidebarBackground.m */,
 			);
 			name = "App Delegate";
 			sourceTree = "<group>";
@@ -229,6 +240,9 @@
 		66A08EF81AC9D85E00C670E5 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				66677C601ACBA971003A6723 /* trash.png */,
+				66677C641ACBAAA3003A6723 /* play.png */,
+				66677C621ACBAA9F003A6723 /* pause.png */,
 				66A08F011AC9DACD00C670E5 /* board1.png */,
 				66A08EF91AC9D86700C670E5 /* screw2.png */,
 				66A08EFB1AC9D86B00C670E5 /* screw1.png */,
@@ -312,6 +326,7 @@
 			files = (
 				66343C451ABF5FE300801962 /* cat.jpg in Resources */,
 				66A08F091AC9E72800C670E5 /* piston-base.png in Resources */,
+				66677C611ACBA971003A6723 /* trash.png in Resources */,
 				66343C471ABF5FE300801962 /* index.html in Resources */,
 				66A08EFC1AC9D86B00C670E5 /* screw1.png in Resources */,
 				66A08F0B1AC9E9DD00C670E5 /* engine-end.png in Resources */,
@@ -321,8 +336,10 @@
 				66A08F051AC9E4A000C670E5 /* wheel.png in Resources */,
 				66A08F001AC9D87300C670E5 /* screw1@2x.png in Resources */,
 				66343C211ABF5BB500801962 /* Images.xcassets in Resources */,
+				66677C651ACBAAA3003A6723 /* play.png in Resources */,
 				66A08EFE1AC9D86F00C670E5 /* screw2@2x.png in Resources */,
 				66343C461ABF5FE300801962 /* image.js in Resources */,
+				66677C631ACBAA9F003A6723 /* pause.png in Resources */,
 				66343C481ABF5FE300801962 /* main.js in Resources */,
 				66A08F071AC9E72300C670E5 /* piston-head.png in Resources */,
 				66A08F021AC9DACD00C670E5 /* board1.png in Resources */,
@@ -360,6 +377,7 @@
 				66343C3D1ABF5D2900801962 /* MMPhysicsView.m in Sources */,
 				66309CFA1AC4942700FACEF9 /* MMWheel.m in Sources */,
 				66309CEF1AC484FC00FACEF9 /* MMEngineShaft.m in Sources */,
+				66677C5F1ACBA6D6003A6723 /* SidebarBackground.m in Sources */,
 				66A490041AC5EAE500CC21BA /* MMSpring.m in Sources */,
 				66625FE81AC220FE0025F441 /* MMPiston.m in Sources */,
 				66343C161ABF5BB500801962 /* main.m in Sources */,
