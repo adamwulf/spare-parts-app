@@ -30,7 +30,7 @@
 
 -(id) init{
     if(self = [super init]){
-        screwType = rand() % 2;
+        screwType = rand() % 9;
     }
     return self;
 }
@@ -108,7 +108,7 @@
 }
 
 -(void) renderAtZeroZero{
-    NSString* imageName = [NSString stringWithFormat:@"screw%d.png", (screwType+1)];
+    NSString* imageName = [NSString stringWithFormat:@"screw-%d.png", (screwType+1)];
     UIImage* dotImage = [UIImage imageNamed:imageName];
     
     CGSize sizeToRender = CGSizeMake(kPointRadius*2, kPointRadius*2);
