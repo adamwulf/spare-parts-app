@@ -63,6 +63,8 @@
 		666E0A661AC0924D0018289C /* MMPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = 666E0A651AC0924D0018289C /* MMPoint.m */; };
 		666E0A691AC093A10018289C /* MMStick.m in Sources */ = {isa = PBXBuildFile; fileRef = 666E0A681AC093A10018289C /* MMStick.m */; };
 		6695851F1ACC7BFC002C359C /* MMStickPropsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6695851E1ACC7BFC002C359C /* MMStickPropsView.m */; };
+		669585221ACC7FA5002C359C /* spring-component.png in Resources */ = {isa = PBXBuildFile; fileRef = 669585211ACC7FA5002C359C /* spring-component.png */; };
+		669585241ACC80F9002C359C /* spring-component-top.png in Resources */ = {isa = PBXBuildFile; fileRef = 669585231ACC80F9002C359C /* spring-component-top.png */; };
 		66A08F071AC9E72300C670E5 /* piston-head.png in Resources */ = {isa = PBXBuildFile; fileRef = 66A08F061AC9E72300C670E5 /* piston-head.png */; };
 		66A08F091AC9E72800C670E5 /* piston-base.png in Resources */ = {isa = PBXBuildFile; fileRef = 66A08F081AC9E72800C670E5 /* piston-base.png */; };
 		66A08F0B1AC9E9DD00C670E5 /* engine-end.png in Resources */ = {isa = PBXBuildFile; fileRef = 66A08F0A1AC9E9DD00C670E5 /* engine-end.png */; };
@@ -144,6 +146,8 @@
 		666E0A681AC093A10018289C /* MMStick.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMStick.m; sourceTree = "<group>"; };
 		6695851D1ACC7BFC002C359C /* MMStickPropsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMStickPropsView.h; sourceTree = "<group>"; };
 		6695851E1ACC7BFC002C359C /* MMStickPropsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMStickPropsView.m; sourceTree = "<group>"; };
+		669585211ACC7FA5002C359C /* spring-component.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "spring-component.png"; sourceTree = "<group>"; };
+		669585231ACC80F9002C359C /* spring-component-top.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "spring-component-top.png"; sourceTree = "<group>"; };
 		66A08F031AC9DF9200C670E5 /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		66A08F061AC9E72300C670E5 /* piston-head.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "piston-head.png"; sourceTree = "<group>"; };
 		66A08F081AC9E72800C670E5 /* piston-base.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "piston-base.png"; sourceTree = "<group>"; };
@@ -354,9 +358,19 @@
 			name = balloon;
 			sourceTree = "<group>";
 		};
+		669585201ACC7F57002C359C /* spring */ = {
+			isa = PBXGroup;
+			children = (
+				669585211ACC7FA5002C359C /* spring-component.png */,
+				669585231ACC80F9002C359C /* spring-component-top.png */,
+			);
+			name = spring;
+			sourceTree = "<group>";
+		};
 		66A08EF81AC9D85E00C670E5 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				669585201ACC7F57002C359C /* spring */,
 				6667408C1ACC734400750D6E /* balloon */,
 				666740871ACC72E200750D6E /* wheel */,
 				6667405E1ACC6E2200750D6E /* boards */,
@@ -454,6 +468,7 @@
 				6667407F1ACC716200750D6E /* board-1.png in Resources */,
 				6667405C1ACC6DE700750D6E /* screw-8.png in Resources */,
 				666740531ACC6DE700750D6E /* screw-3@2x.png in Resources */,
+				669585241ACC80F9002C359C /* spring-component-top.png in Resources */,
 				66677C611ACBA971003A6723 /* trash.png in Resources */,
 				6667407E1ACC716200750D6E /* board-0@2x.png in Resources */,
 				66343C471ABF5FE300801962 /* index.html in Resources */,
@@ -479,6 +494,7 @@
 				6667405D1ACC6DE700750D6E /* screw-8@2x.png in Resources */,
 				666740541ACC6DE700750D6E /* screw-4.png in Resources */,
 				66343C481ABF5FE300801962 /* main.js in Resources */,
+				669585221ACC7FA5002C359C /* spring-component.png in Resources */,
 				6667405B1ACC6DE700750D6E /* screw-7@2x.png in Resources */,
 				66A08F071AC9E72300C670E5 /* piston-head.png in Resources */,
 				666740821ACC716200750D6E /* board-2@2x.png in Resources */,

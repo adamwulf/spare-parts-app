@@ -12,6 +12,7 @@
 
 @interface MMStick : NSObject{
     CGFloat stress;
+    UIImage* image;
 }
 
 @property (readonly) MMPoint* p0;

@@ -10,9 +10,7 @@
 #import "Constants.h"
 
 
-@implementation MMStick{
-    UIImage* image;
-}
+@implementation MMStick
 
 @synthesize p0;
 @synthesize p1;
@@ -24,9 +22,6 @@
         p0 = [MMPoint point];
         p1 = [MMPoint point];
         length = [self calcLen];
-        int stickType = rand() % 5;
-        NSString* imageName = [NSString stringWithFormat:@"board-%d.png", stickType];
-        image = [UIImage imageNamed:imageName];
     }
     return self;
 }
