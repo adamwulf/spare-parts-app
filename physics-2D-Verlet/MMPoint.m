@@ -11,7 +11,7 @@
 
 @implementation MMPoint{
     CGFloat(^gravityModifier)(CGFloat);
-    int screwType;
+    UIImage* image;
 }
 
 @synthesize x;
@@ -30,7 +30,9 @@
 
 -(id) init{
     if(self = [super init]){
-        screwType = rand() % 9;
+        int screwType = rand() % 9;
+        NSString* imageName = [NSString stringWithFormat:@"screw-%d.png", screwType];
+        image = [UIImage imageNamed:imageName];
     }
     return self;
 }
@@ -108,13 +110,10 @@
 }
 
 -(void) renderAtZeroZero{
-    NSString* imageName = [NSString stringWithFormat:@"screw-%d.png", (screwType+1)];
-    UIImage* dotImage = [UIImage imageNamed:imageName];
-    
     CGSize sizeToRender = CGSizeMake(kPointRadius*2, kPointRadius*2);
     CGPoint center = CGPointZero;
     
-    [dotImage drawInRect:CGRectMake(center.x - sizeToRender.width/2, center.y - sizeToRender.height/2, sizeToRender.width, sizeToRender.height)];
+    [image drawInRect:CGRectMake(center.x - sizeToRender.width/2, center.y - sizeToRender.height/2, sizeToRender.width, sizeToRender.height)];
 }
 
 -(void) nullVelocity{

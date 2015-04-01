@@ -10,7 +10,9 @@
 #import "Constants.h"
 
 
-@implementation MMStick
+@implementation MMStick{
+    UIImage* image;
+}
 
 @synthesize p0;
 @synthesize p1;
@@ -22,6 +24,9 @@
         p0 = [MMPoint point];
         p1 = [MMPoint point];
         length = [self calcLen];
+        int stickType = rand() % 5;
+        NSString* imageName = [NSString stringWithFormat:@"board-%d.png", stickType];
+        image = [UIImage imageNamed:imageName];
     }
     return self;
 }
@@ -31,6 +36,9 @@
         p0 = _p0;
         p1 = _p1;
         length = [self calcLen];
+        int stickType = rand() % 5;
+        NSString* imageName = [NSString stringWithFormat:@"board-%d.png", stickType];
+        image = [UIImage imageNamed:imageName];
     }
     return self;
 }
@@ -82,8 +90,6 @@
 
 -(void) render{
     
-    UIImage* boardImage = [UIImage imageNamed:@"board1.png"];
-    
     CGContextRef context = UIGraphicsGetCurrentContext();
     CGContextSaveGState(context);
     
@@ -94,7 +100,7 @@
     CGContextRotateCTM(context, -angle + M_PI/2);
     
     // draw our board image
-    [boardImage drawInRect:CGRectMake(-kStickWidth/2, -kStickWidth/2, [self calcLen] + kStickWidth, kStickWidth)];
+    [image drawInRect:CGRectMake(-kStickWidth/2, -kStickWidth/2, [self calcLen] + kStickWidth, kStickWidth)];
     
     // render our nails / screws
     [p0 renderAtZeroZero];

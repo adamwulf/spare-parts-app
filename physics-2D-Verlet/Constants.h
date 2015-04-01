@@ -10,7 +10,7 @@
 #define physics_2D_Verlet_Header_h
 
 #define kStickWidth 30
-#define kPointRadius 10
+#define kPointRadius 6
 #define kWheelRadius 60
 
 #endif
