@@ -37,13 +37,6 @@
     
     // all of the gestures
     UIPanGestureRecognizer* grabPointGesture;
-    InstantPanGestureRecognizer* createStickGesture;
-    InstantPanGestureRecognizer* createPistonGesture;
-    InstantPanGestureRecognizer* createSpringGesture;
-    InstantPanGestureRecognizer* createEngineGesture;
-    UITapGestureRecognizer* createBalloonGesture;
-    UITapGestureRecognizer* createWheelGesture;
-    UITapGestureRecognizer* selectPointGesture;
     
     // toggle running the simulation on/off
     UIButton* animationOnOffSwitch;
@@ -55,8 +48,11 @@
     MMPointPropsView* propertiesView;
     MMPoint* selectedPoint;
     
-    
     NSMutableSet* processedPoints;
+    
+    
+    NSMutableArray* defaultObjects;
+    
 }
 
 -(id) initWithFrame:(CGRect)frame{
@@ -85,45 +81,7 @@
         
         
         grabPointGesture = [[InstantPanGestureRecognizer alloc] initWithTarget:self action:@selector(movePointGesture:)];
-        createStickGesture.enabled = NO;
         [self addGestureRecognizer:grabPointGesture];
-        
-        createStickGesture = [[InstantPanGestureRecognizer alloc] initWithTarget:self action:@selector(createStickGesture:)];
-        [self addGestureRecognizer:createStickGesture];
-        
-        createPistonGesture = [[InstantPanGestureRecognizer alloc] initWithTarget:self action:@selector(createPistonGesture:)];
-        createPistonGesture.enabled = NO;
-        [self addGestureRecognizer:createPistonGesture];
-        
-        createSpringGesture = [[InstantPanGestureRecognizer alloc] initWithTarget:self action:@selector(createSpringGesture:)];
-        createSpringGesture.enabled = NO;
-        [self addGestureRecognizer:createSpringGesture];
-        
-        createEngineGesture = [[InstantPanGestureRecognizer alloc] initWithTarget:self action:@selector(createEngineGesture:)];
-        createEngineGesture.enabled = NO;
-        [self addGestureRecognizer:createEngineGesture];
-        
-        
-        selectPointGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(screenTapped:)];
-        [self addGestureRecognizer:selectPointGesture];
-        
-        
-        createBalloonGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(createBalloonGesture:)];
-        createBalloonGesture.enabled = NO;
-        [self addGestureRecognizer:createBalloonGesture];
-        
-        createWheelGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(createWheelGesture:)];
-        createWheelGesture.enabled = NO;
-        [self addGestureRecognizer:createWheelGesture];
-        
-        
-        
-        UISegmentedControl* createMode = [[UISegmentedControl alloc] initWithItems:@[@"make stick",@"make piston",@"make spring",@"make engine",@"make balloon",@"make wheel",@"move point"]];
-        createMode.selectedSegmentIndex = 0;
-        createMode.center = CGPointMake(self.bounds.size.width - 350, 200);
-        [createMode addTarget:self  action:@selector(modeChanged:) forControlEvents:UIControlEventValueChanged];
-        [self addSubview:createMode];
-        
         
         animationOnOffSwitch = [UIButton buttonWithType:UIButtonTypeCustom];
         [animationOnOffSwitch setImage:[UIImage imageNamed:@"play.png"] forState:UIControlStateNormal];
@@ -141,6 +99,23 @@
         [self addSubview:clearButton];
         clearButton.center = CGPointMake(self.bounds.size.width - 80, 80);
         
+        
+        // initialize default objects in the sidebar
+        defaultObjects = [NSMutableArray array];
+        
+        CGFloat sidebarLeft = self.bounds.size.width - 230;
+        CGFloat sidebarRight = self.bounds.size.width - 60;
+        [defaultObjects addObject:[MMStick stickWithP0:[MMPoint pointWithX:sidebarLeft andY:200]
+                                                 andP1:[MMPoint pointWithX:sidebarRight andY:240]]];
+        [defaultObjects addObject:[MMPiston pistonWithP0:[MMPoint pointWithX:sidebarLeft andY:300]
+                                                   andP1:[MMPoint pointWithX:sidebarRight andY:340]]];
+        [defaultObjects addObject:[MMEngine engineWithP0:[MMPoint pointWithX:sidebarLeft andY:400]
+                                                   andP1:[MMPoint pointWithX:sidebarRight andY:440]]];
+        [defaultObjects addObject:[MMSpring springWithP0:[MMPoint pointWithX:sidebarLeft andY:500]
+                                                   andP1:[MMPoint pointWithX:sidebarRight andY:540]]];
+        [defaultObjects addObject:[MMBalloon balloonWithCGPoint:CGPointMake(sidebarLeft, 600)]];
+        [defaultObjects addObject:[MMWheel wheelWithCenter:[MMPoint pointWithX:sidebarLeft + 100 andY:680]
+                                                 andRadius:kWheelRadius]];
     }
     return self;
 }
@@ -161,18 +136,6 @@
     [points removeAllObjects];
     [sticks removeAllObjects];
     [balloons removeAllObjects];
-}
-
--(void) modeChanged:(UISegmentedControl*)modeSegmentControl{
-    createStickGesture.enabled = modeSegmentControl.selectedSegmentIndex == 0;
-    createPistonGesture.enabled = modeSegmentControl.selectedSegmentIndex == 1;
-    createSpringGesture.enabled = modeSegmentControl.selectedSegmentIndex == 2;
-    createEngineGesture.enabled = modeSegmentControl.selectedSegmentIndex == 3;
-    createBalloonGesture.enabled = modeSegmentControl.selectedSegmentIndex == 4;
-    createWheelGesture.enabled = modeSegmentControl.selectedSegmentIndex == 5;
-    grabPointGesture.enabled = modeSegmentControl.selectedSegmentIndex == 6;
-    selectPointGesture.enabled = !createWheelGesture.enabled &&
-                                 !createBalloonGesture.enabled;
 }
 
 -(void) createStickGesture:(InstantPanGestureRecognizer*)panGesture{
@@ -428,6 +391,12 @@
     [[UIColor whiteColor] setFill];
     CGContextFillRect(context, rect);
     CGContextSetBlendMode(context, kCGBlendModeNormal);
+    
+    
+    // render sidebar objects
+    for (MMStick* stick in defaultObjects){
+        [stick render];
+    }
     
 
     if(animationOnOffSwitch.selected){
