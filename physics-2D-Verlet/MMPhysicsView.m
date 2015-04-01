@@ -172,20 +172,22 @@
     }
     
     if(panGesture.state == UIGestureRecognizerStateEnded){
-        MMPoint* pointToReplace = [[points filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) {
-            return evaluatedObject != grabbedPoint && [evaluatedObject distanceFromPoint:grabbedPoint.asCGPoint] < 30;
-        }]] firstObject];
-        if(pointToReplace){
-            for(int i=0;i<[sticks count];i++){
-                MMStick* stick = [sticks objectAtIndex:i];
-                [stick replacePoint:pointToReplace withPoint:grabbedPoint];
-                [sticks replaceObjectAtIndex:i withObject:stick];
+        for (MMPoint* pointToSnap in (grabbedPoint ? @[grabbedPoint] : [grabbedStick allPoints])) {
+            MMPoint* pointToReplace = [[points filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) {
+                return evaluatedObject != pointToSnap && [evaluatedObject distanceFromPoint:pointToSnap.asCGPoint] < 30;
+            }]] firstObject];
+            if(pointToReplace){
+                for(int i=0;i<[sticks count];i++){
+                    MMStick* stick = [sticks objectAtIndex:i];
+                    [stick replacePoint:pointToReplace withPoint:pointToSnap];
+                    [sticks replaceObjectAtIndex:i withObject:stick];
+                }
+                for(int i=0;i<[balloons count];i++){
+                    MMBalloon* balloon = [balloons objectAtIndex:i];
+                    [balloon replacePoint:pointToReplace withPoint:pointToSnap];
+                }
+                [points removeObject:pointToReplace];
             }
-            for(int i=0;i<[balloons count];i++){
-                MMBalloon* balloon = [balloons objectAtIndex:i];
-                [balloon replacePoint:pointToReplace withPoint:grabbedPoint];
-            }
-            [points removeObject:pointToReplace];
         }
         grabbedPoint = nil;
         grabbedStick = nil;
