@@ -254,7 +254,7 @@
     // constrain everything
     for(int i = 0; i < 5; i++) {
         [self enforceGesture];
-        [self updateSticks];
+        [self constrainSticks];
         [self constrainWheels];
         [self constrainBalloons];
         [self constrainPoints];
@@ -318,7 +318,7 @@
     }
 }
 
--(void) updateSticks{
+-(void) constrainSticks{
     for(int i = 0; i < [sticks count]; i++) {
         MMStick* s = [sticks objectAtIndex:i];
         if(![s isKindOfClass:[MMWheel class]]){
@@ -423,6 +423,7 @@
                     b.center.oldy = b.center.y + vy * bounce;
                 }
             }
+            [b constrain];
             // make sure the balloon isn't hitting other balloons
             for(MMBalloon* otherB in balloons) {
                 if(otherB != b){
@@ -446,6 +447,7 @@
                     }
                 }
             }
+            [b constrain];
         }
     }
 }

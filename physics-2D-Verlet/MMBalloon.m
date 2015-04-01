@@ -7,19 +7,34 @@
 //
 
 #import "MMBalloon.h"
+#import "Constants.h"
+#import "MMStick.h"
 
-@implementation MMBalloon
+@implementation MMBalloon{
+    UIImage* texture;
+    MMStick* stick;
+}
 
 @synthesize center;
 @synthesize radius;
+@synthesize tail;
 
 -(id) init{
     if(self = [super init]){
+        radius = kBalloonRadius;
         center = [[MMPoint alloc] init];
         center.gravityModifier = ^(CGFloat g){
             return -g;
         };
-        radius = 25;
+        tail = [[MMPoint alloc] init];
+        tail.x = radius;
+        [tail nullVelocity];
+        tail.gravityModifier = ^(CGFloat g){
+            return g/10.0f;
+        };
+        texture = [UIImage imageNamed:@"balloon-texture.png"];
+        
+        stick = [MMStick stickWithP0:center andP1:tail];
     }
     return self;
 }
@@ -29,6 +44,9 @@
     ret.center.x = p.x;
     ret.center.y = p.y;
     [ret.center nullVelocity];
+    ret.tail.x = p.x;
+    ret.tail.y = p.y + ret.radius;
+    [ret.tail nullVelocity];
     return ret;
 }
 
@@ -40,16 +58,27 @@
 }
 
 -(void) render{
-    [center render];
-    
+//    [center render];
     UIBezierPath* balloon = [UIBezierPath bezierPathWithArcCenter:self.center.asCGPoint
                                                        radius:radius
                                                    startAngle:0
                                                      endAngle:2*M_PI
                                                     clockwise:YES];
     
-    [[UIColor greenColor] setStroke];
-    [balloon stroke];
+    [[UIColor colorWithRed:180/255.0 green:0 blue:0 alpha:1] setFill];
+    [balloon fill];
+    [texture drawInRect:CGRectMake(self.center.x-radius, self.center.y - radius, radius*2, radius*2)];
+    
+    UIBezierPath* triangle = [UIBezierPath bezierPath];
+    [triangle moveToPoint:CGPointZero];
+    [triangle addLineToPoint:CGPointMake(5, 10)];
+    [triangle addLineToPoint:CGPointMake(-5, 10)];
+    [triangle closePath];
+    CGPoint rot = CGPointMake(tail.x - center.x,
+                tail.y - center.y);
+    [triangle applyTransform:CGAffineTransformMakeRotation(-atan2f(rot.x, rot.y))];
+    [triangle applyTransform:CGAffineTransformMakeTranslation(tail.x, tail.y)];
+    [triangle fill];
 }
 
 -(void) replacePoint:(MMPoint*)p withPoint:(MMPoint*)newP{
@@ -59,10 +88,21 @@
             return -g;
         };
     }
+    if(p == tail){
+        tail = newP;
+        tail.gravityModifier = ^(CGFloat g){
+            return g/10.0f;
+        };
+    }
+    [stick replacePoint:p withPoint:newP];
 }
 
 -(CGFloat) distanceFromPoint:(CGPoint)point{
     return [center distanceFromPoint:point];
+}
+
+-(void) constrain{
+    [stick constrain];
 }
 
 -(MMBalloon*) cloneObject{
@@ -70,7 +110,7 @@
 }
 
 -(NSArray*) allPoints{
-    return @[center];
+    return @[center, tail];
 }
 
 @end

@@ -12,6 +12,7 @@
 @interface MMBalloon : NSObject
 
 @property (readonly) MMPoint* center;
+@property (readonly) MMPoint* tail;
 @property (readonly) CGFloat radius;
 
 +(MMBalloon*) balloonWithCGPoint:(CGPoint)p;
@@ -21,6 +22,8 @@
 -(void) replacePoint:(MMPoint*)p withPoint:(MMPoint*)newP;
 
 -(CGFloat) distanceFromPoint:(CGPoint)point;
+
+-(void) constrain;
 
 -(MMBalloon*) cloneObject;
 

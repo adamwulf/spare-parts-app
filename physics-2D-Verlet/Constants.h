@@ -12,5 +12,6 @@
 #define kStickWidth 30
 #define kPointRadius 6
 #define kWheelRadius 60
+#define kBalloonRadius 40
 
 #endif

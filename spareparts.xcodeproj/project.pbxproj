@@ -52,13 +52,16 @@
 		666740841ACC716200750D6E /* board-3@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6667407A1ACC716200750D6E /* board-3@2x.png */; };
 		666740851ACC716200750D6E /* board-4.png in Resources */ = {isa = PBXBuildFile; fileRef = 6667407B1ACC716200750D6E /* board-4.png */; };
 		666740861ACC716200750D6E /* board-4@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6667407C1ACC716200750D6E /* board-4@2x.png */; };
+		6667408A1ACC72F500750D6E /* wheel.png in Resources */ = {isa = PBXBuildFile; fileRef = 666740881ACC72F500750D6E /* wheel.png */; };
+		6667408B1ACC72F500750D6E /* wheel@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 666740891ACC72F500750D6E /* wheel@2x.png */; };
+		6667408F1ACC747400750D6E /* balloon-texture.png in Resources */ = {isa = PBXBuildFile; fileRef = 6667408D1ACC747400750D6E /* balloon-texture.png */; };
+		666740901ACC747400750D6E /* balloon-texture@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6667408E1ACC747400750D6E /* balloon-texture@2x.png */; };
 		66677C5F1ACBA6D6003A6723 /* SidebarBackground.m in Sources */ = {isa = PBXBuildFile; fileRef = 66677C5E1ACBA6D6003A6723 /* SidebarBackground.m */; };
 		66677C611ACBA971003A6723 /* trash.png in Resources */ = {isa = PBXBuildFile; fileRef = 66677C601ACBA971003A6723 /* trash.png */; };
 		66677C631ACBAA9F003A6723 /* pause.png in Resources */ = {isa = PBXBuildFile; fileRef = 66677C621ACBAA9F003A6723 /* pause.png */; };
 		66677C651ACBAAA3003A6723 /* play.png in Resources */ = {isa = PBXBuildFile; fileRef = 66677C641ACBAAA3003A6723 /* play.png */; };
 		666E0A661AC0924D0018289C /* MMPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = 666E0A651AC0924D0018289C /* MMPoint.m */; };
 		666E0A691AC093A10018289C /* MMStick.m in Sources */ = {isa = PBXBuildFile; fileRef = 666E0A681AC093A10018289C /* MMStick.m */; };
-		66A08F051AC9E4A000C670E5 /* wheel.png in Resources */ = {isa = PBXBuildFile; fileRef = 66A08F041AC9E4A000C670E5 /* wheel.png */; };
 		66A08F071AC9E72300C670E5 /* piston-head.png in Resources */ = {isa = PBXBuildFile; fileRef = 66A08F061AC9E72300C670E5 /* piston-head.png */; };
 		66A08F091AC9E72800C670E5 /* piston-base.png in Resources */ = {isa = PBXBuildFile; fileRef = 66A08F081AC9E72800C670E5 /* piston-base.png */; };
 		66A08F0B1AC9E9DD00C670E5 /* engine-end.png in Resources */ = {isa = PBXBuildFile; fileRef = 66A08F0A1AC9E9DD00C670E5 /* engine-end.png */; };
@@ -125,6 +128,10 @@
 		6667407A1ACC716200750D6E /* board-3@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "board-3@2x.png"; sourceTree = "<group>"; };
 		6667407B1ACC716200750D6E /* board-4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "board-4.png"; sourceTree = "<group>"; };
 		6667407C1ACC716200750D6E /* board-4@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "board-4@2x.png"; sourceTree = "<group>"; };
+		666740881ACC72F500750D6E /* wheel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wheel.png; sourceTree = "<group>"; };
+		666740891ACC72F500750D6E /* wheel@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "wheel@2x.png"; sourceTree = "<group>"; };
+		6667408D1ACC747400750D6E /* balloon-texture.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "balloon-texture.png"; sourceTree = "<group>"; };
+		6667408E1ACC747400750D6E /* balloon-texture@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "balloon-texture@2x.png"; sourceTree = "<group>"; };
 		66677C5D1ACBA6D6003A6723 /* SidebarBackground.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SidebarBackground.h; sourceTree = "<group>"; };
 		66677C5E1ACBA6D6003A6723 /* SidebarBackground.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SidebarBackground.m; sourceTree = "<group>"; };
 		66677C601ACBA971003A6723 /* trash.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = trash.png; sourceTree = "<group>"; };
@@ -135,7 +142,6 @@
 		666E0A671AC093A10018289C /* MMStick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMStick.h; sourceTree = "<group>"; };
 		666E0A681AC093A10018289C /* MMStick.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMStick.m; sourceTree = "<group>"; };
 		66A08F031AC9DF9200C670E5 /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
-		66A08F041AC9E4A000C670E5 /* wheel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wheel.png; sourceTree = "<group>"; };
 		66A08F061AC9E72300C670E5 /* piston-head.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "piston-head.png"; sourceTree = "<group>"; };
 		66A08F081AC9E72800C670E5 /* piston-base.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "piston-base.png"; sourceTree = "<group>"; };
 		66A08F0A1AC9E9DD00C670E5 /* engine-end.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "engine-end.png"; sourceTree = "<group>"; };
@@ -325,9 +331,29 @@
 			name = boards;
 			sourceTree = "<group>";
 		};
+		666740871ACC72E200750D6E /* wheel */ = {
+			isa = PBXGroup;
+			children = (
+				666740881ACC72F500750D6E /* wheel.png */,
+				666740891ACC72F500750D6E /* wheel@2x.png */,
+			);
+			name = wheel;
+			sourceTree = "<group>";
+		};
+		6667408C1ACC734400750D6E /* balloon */ = {
+			isa = PBXGroup;
+			children = (
+				6667408D1ACC747400750D6E /* balloon-texture.png */,
+				6667408E1ACC747400750D6E /* balloon-texture@2x.png */,
+			);
+			name = balloon;
+			sourceTree = "<group>";
+		};
 		66A08EF81AC9D85E00C670E5 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				6667408C1ACC734400750D6E /* balloon */,
+				666740871ACC72E200750D6E /* wheel */,
 				6667405E1ACC6E2200750D6E /* boards */,
 				666740151ACC6C8000750D6E /* screws */,
 				66677C601ACBA971003A6723 /* trash.png */,
@@ -337,7 +363,6 @@
 				66A08F0A1AC9E9DD00C670E5 /* engine-end.png */,
 				66A08F0C1AC9E9E100C670E5 /* engine-back.png */,
 				66A08F081AC9E72800C670E5 /* piston-base.png */,
-				66A08F041AC9E4A000C670E5 /* wheel.png */,
 			);
 			name = images;
 			sourceTree = "<group>";
@@ -414,10 +439,12 @@
 				666740811ACC716200750D6E /* board-2.png in Resources */,
 				66343C451ABF5FE300801962 /* cat.jpg in Resources */,
 				666740591ACC6DE700750D6E /* screw-6@2x.png in Resources */,
+				6667408A1ACC72F500750D6E /* wheel.png in Resources */,
 				666740561ACC6DE700750D6E /* screw-5.png in Resources */,
 				666740521ACC6DE700750D6E /* screw-3.png in Resources */,
 				6667404F1ACC6DE700750D6E /* screw-1@2x.png in Resources */,
 				666740831ACC716200750D6E /* board-3.png in Resources */,
+				6667408B1ACC72F500750D6E /* wheel@2x.png in Resources */,
 				66A08F091AC9E72800C670E5 /* piston-base.png in Resources */,
 				6667407F1ACC716200750D6E /* board-1.png in Resources */,
 				6667405C1ACC6DE700750D6E /* screw-8.png in Resources */,
@@ -432,17 +459,18 @@
 				666740571ACC6DE700750D6E /* screw-5@2x.png in Resources */,
 				666740581ACC6DE700750D6E /* screw-6.png in Resources */,
 				66343C491ABF5FE300801962 /* ragdoll.js in Resources */,
-				66A08F051AC9E4A000C670E5 /* wheel.png in Resources */,
 				6667404D1ACC6DE700750D6E /* screw-0@2x.png in Resources */,
 				666740851ACC716200750D6E /* board-4.png in Resources */,
 				6667407D1ACC716200750D6E /* board-0.png in Resources */,
 				66343C211ABF5BB500801962 /* Images.xcassets in Resources */,
 				666740841ACC716200750D6E /* board-3@2x.png in Resources */,
 				6667404E1ACC6DE700750D6E /* screw-1.png in Resources */,
+				666740901ACC747400750D6E /* balloon-texture@2x.png in Resources */,
 				66677C651ACBAAA3003A6723 /* play.png in Resources */,
 				666740551ACC6DE700750D6E /* screw-4@2x.png in Resources */,
 				66343C461ABF5FE300801962 /* image.js in Resources */,
 				66677C631ACBAA9F003A6723 /* pause.png in Resources */,
+				6667408F1ACC747400750D6E /* balloon-texture.png in Resources */,
 				6667405D1ACC6DE700750D6E /* screw-8@2x.png in Resources */,
 				666740541ACC6DE700750D6E /* screw-4.png in Resources */,
 				66343C481ABF5FE300801962 /* main.js in Resources */,
