@@ -13,5 +13,6 @@
 #define kPointRadius 6
 #define kWheelRadius 60
 #define kBalloonRadius 40
+#define kSidebarWidth 320
 
 #endif

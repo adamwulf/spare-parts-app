@@ -21,6 +21,8 @@
 		66343C471ABF5FE300801962 /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = 66343C421ABF5FE300801962 /* index.html */; };
 		66343C481ABF5FE300801962 /* main.js in Resources */ = {isa = PBXBuildFile; fileRef = 66343C431ABF5FE300801962 /* main.js */; };
 		66343C491ABF5FE300801962 /* ragdoll.js in Resources */ = {isa = PBXBuildFile; fileRef = 66343C441ABF5FE300801962 /* ragdoll.js */; };
+		6651B8B31ACDC47C008B1016 /* backyard.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6651B8B21ACDC47C008B1016 /* backyard.jpg */; };
+		6651B8B71ACDC74A008B1016 /* wood-texture.png in Resources */ = {isa = PBXBuildFile; fileRef = 6651B8B61ACDC74A008B1016 /* wood-texture.png */; };
 		66625FE51AC21E460025F441 /* MMPointPropsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 66625FE41AC21E460025F441 /* MMPointPropsView.m */; };
 		66625FE81AC220FE0025F441 /* MMPiston.m in Sources */ = {isa = PBXBuildFile; fileRef = 66625FE71AC220FE0025F441 /* MMPiston.m */; };
 		66625FEB1AC3496D0025F441 /* MMEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 66625FEA1AC3496D0025F441 /* MMEngine.m */; };
@@ -97,6 +99,8 @@
 		66343C421ABF5FE300801962 /* index.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = index.html; path = codingmath/episode38/index.html; sourceTree = SOURCE_ROOT; };
 		66343C431ABF5FE300801962 /* main.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = main.js; path = codingmath/episode38/main.js; sourceTree = SOURCE_ROOT; };
 		66343C441ABF5FE300801962 /* ragdoll.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = ragdoll.js; path = codingmath/episode38/ragdoll.js; sourceTree = SOURCE_ROOT; };
+		6651B8B21ACDC47C008B1016 /* backyard.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = backyard.jpg; sourceTree = "<group>"; };
+		6651B8B61ACDC74A008B1016 /* wood-texture.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "wood-texture.png"; sourceTree = "<group>"; };
 		66625FE31AC21E460025F441 /* MMPointPropsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMPointPropsView.h; sourceTree = "<group>"; };
 		66625FE41AC21E460025F441 /* MMPointPropsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMPointPropsView.m; sourceTree = "<group>"; };
 		66625FE61AC220FE0025F441 /* MMPiston.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMPiston.h; sourceTree = "<group>"; };
@@ -237,6 +241,7 @@
 		66343C121ABF5BB500801962 /* physics-2D-Verlet */ = {
 			isa = PBXGroup;
 			children = (
+				6651B8B11ACDC472008B1016 /* textures */,
 				66A08F031AC9DF9200C670E5 /* Constants.h */,
 				66A08EF81AC9D85E00C670E5 /* images */,
 				66A48FFE1AC5E90400CC21BA /* Gesture */,
@@ -296,6 +301,15 @@
 				66343C441ABF5FE300801962 /* ragdoll.js */,
 			);
 			name = "Reference from CodingMath";
+			sourceTree = "<group>";
+		};
+		6651B8B11ACDC472008B1016 /* textures */ = {
+			isa = PBXGroup;
+			children = (
+				6651B8B21ACDC47C008B1016 /* backyard.jpg */,
+				6651B8B61ACDC74A008B1016 /* wood-texture.png */,
+			);
+			name = textures;
 			sourceTree = "<group>";
 		};
 		666740151ACC6C8000750D6E /* screws */ = {
@@ -457,6 +471,7 @@
 				666740801ACC716200750D6E /* board-1@2x.png in Resources */,
 				666740811ACC716200750D6E /* board-2.png in Resources */,
 				66343C451ABF5FE300801962 /* cat.jpg in Resources */,
+				6651B8B71ACDC74A008B1016 /* wood-texture.png in Resources */,
 				666740591ACC6DE700750D6E /* screw-6@2x.png in Resources */,
 				6667408A1ACC72F500750D6E /* wheel.png in Resources */,
 				666740561ACC6DE700750D6E /* screw-5.png in Resources */,
@@ -477,6 +492,7 @@
 				66A08F0B1AC9E9DD00C670E5 /* engine-end.png in Resources */,
 				66A08F0D1AC9E9E100C670E5 /* engine-back.png in Resources */,
 				666740571ACC6DE700750D6E /* screw-5@2x.png in Resources */,
+				6651B8B31ACDC47C008B1016 /* backyard.jpg in Resources */,
 				666740581ACC6DE700750D6E /* screw-6.png in Resources */,
 				66343C491ABF5FE300801962 /* ragdoll.js in Resources */,
 				6667404D1ACC6DE700750D6E /* screw-0@2x.png in Resources */,

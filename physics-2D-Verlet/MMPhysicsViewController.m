@@ -9,6 +9,7 @@
 #import "MMPhysicsViewController.h"
 #import "MMPhysicsView.h"
 #import "SidebarBackground.h"
+#import "Constants.h"
 
 @interface MMPhysicsViewController ()
 
@@ -16,6 +17,7 @@
 
 @implementation MMPhysicsViewController{
     MMPhysicsView* physicsView;
+    SidebarBackground* sidebar;
 }
 
 - (void)viewDidLoad {
@@ -23,9 +25,14 @@
     // Do any additional setup after loading the view, typically from a nib.
     self.view.backgroundColor = [UIColor whiteColor];
     
-    SidebarBackground* sidebar = [[SidebarBackground alloc] initWithFrame:CGRectMake(self.view.bounds.size.width-150, 0, 150, self.view.bounds.size.height)];
+    UIImageView* backyard = [[UIImageView alloc] initWithFrame:self.view.bounds];
+    backyard.contentMode = UIViewContentModeScaleAspectFill;
+    backyard.image = [UIImage imageNamed:@"backyard.jpg"];
+    [self.view addSubview:backyard];
+
+    sidebar = [[SidebarBackground alloc] initWithFrame:CGRectMake(self.view.bounds.size.width-kSidebarWidth, 0, kSidebarWidth, self.view.bounds.size.height)];
     sidebar.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
-    [self.view addSubview:sidebar];
+    [backyard addSubview:sidebar];
     
     physicsView = [[MMPhysicsView alloc] initWithFrame:self.view.bounds];
     physicsView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
