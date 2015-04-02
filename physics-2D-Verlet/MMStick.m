@@ -108,13 +108,14 @@
 
 #pragma mark - create stick that matches our type
 
--(void) replacePoint:(MMPoint*)p withPoint:(MMPoint*)newP{
+-(BOOL) replacePoint:(MMPoint*)p withPoint:(MMPoint*)newP{
     if(p == p0){
         p0 = newP;
     }
     if(p == p1){
         p1 = newP;
     }
+    return YES;
 }
 
 // return the distance from the input point

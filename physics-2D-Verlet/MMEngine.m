@@ -83,16 +83,17 @@
     CGContextRestoreGState(context);
 }
 
--(void) replacePoint:(MMPoint*)p withPoint:(MMPoint*)newP{
+-(BOOL) replacePoint:(MMPoint*)p withPoint:(MMPoint*)newP{
     if([[self allPoints] containsObject:p] &&
        [[self allPoints] containsObject:newP]){
         // skip replacing, we would be replacing
         // points within ourself
-    }else{
-        [super replacePoint:p withPoint:newP];
-        [piston replacePoint:p withPoint:newP];
-        [shaft replacePoint:p withPoint:newP];
+        return NO;
     }
+    [super replacePoint:p withPoint:newP];
+    [piston replacePoint:p withPoint:newP];
+    [shaft replacePoint:p withPoint:newP];
+    return YES;
 }
 
 -(MMStick*) cloneObject{

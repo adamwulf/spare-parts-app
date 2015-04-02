@@ -165,7 +165,7 @@
 
 }
 
--(void) replacePoint:(MMPoint*)p withPoint:(MMPoint*)newP{
+-(BOOL) replacePoint:(MMPoint*)p withPoint:(MMPoint*)newP{
     [super replacePoint:p withPoint:newP];
     [spoke1 replacePoint:p withPoint:newP];
     [spoke2 replacePoint:p withPoint:newP];
@@ -185,6 +185,7 @@
     if(p == p3){
         p3 = newP;
     }
+    return YES;
 }
 
 

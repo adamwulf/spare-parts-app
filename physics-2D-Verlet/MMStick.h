@@ -30,7 +30,7 @@
 
 -(void) constrain;
 
--(void) replacePoint:(MMPoint*)p withPoint:(MMPoint*)newP;
+-(BOOL) replacePoint:(MMPoint*)p withPoint:(MMPoint*)newP;
 
 -(CGFloat) distanceFromPoint:(CGPoint)point;
 

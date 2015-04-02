@@ -193,16 +193,19 @@
             MMPoint* pointToReplace = [[points filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) {
                 return evaluatedObject != pointToSnap && [evaluatedObject distanceFromPoint:pointToSnap.asCGPoint] < 30;
             }]] firstObject];
+            BOOL didReplaceAllPoints = YES;
             if(pointToReplace && pointToReplace.attachable && pointToSnap.attachable){
                 for(int i=0;i<[sticks count];i++){
                     MMStick* stick = [sticks objectAtIndex:i];
-                    [stick replacePoint:pointToReplace withPoint:pointToSnap];
+                    didReplaceAllPoints = didReplaceAllPoints && [stick replacePoint:pointToReplace withPoint:pointToSnap];
                 }
                 for(int i=0;i<[balloons count];i++){
                     MMBalloon* balloon = [balloons objectAtIndex:i];
                     [balloon replacePoint:pointToReplace withPoint:pointToSnap];
                 }
-                [points removeObject:pointToReplace];
+                if(didReplaceAllPoints){
+                    [points removeObject:pointToReplace];
+                }
             }
         }
         grabbedPoint = nil;
