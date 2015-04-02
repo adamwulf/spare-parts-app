@@ -19,6 +19,7 @@
 @synthesize oldx;
 @synthesize oldy;
 @synthesize immovable;
+@synthesize attachable;
 
 -(void) setGravityModifier:(CGFloat (^)(CGFloat))_gravityModifier{
     gravityModifier = _gravityModifier;
@@ -33,6 +34,7 @@
         int screwType = rand() % 9;
         NSString* imageName = [NSString stringWithFormat:@"screw-%d.png", screwType];
         image = [UIImage imageNamed:imageName];
+        attachable = YES;
     }
     return self;
 }
@@ -151,6 +153,10 @@
     CGFloat dx = p1.x - p0.x,
     dy = p1.y - p0.y;
     return sqrtf(dx * dx + dy * dy);
+}
+
+-(NSString*) description{
+    return [NSString stringWithFormat:@"[Point %f %f]", x, y];
 }
 
 @end

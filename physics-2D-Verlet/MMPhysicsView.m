@@ -150,18 +150,15 @@
         }
         [pointPropertiesView showPointProperties:selectedPoint];
         [stickPropertiesView showObjectProperties:selectedStick];
-        NSLog(@"asdf");
     }
 }
 
--(void) movePointGesture:(UIPanGestureRecognizer*)panGesture{
+-(void) movePointGesture:(InstantPanGestureRecognizer*)panGesture{
     if(panGesture.state == UIGestureRecognizerStateBegan){
-        CGPoint currLoc = [panGesture locationInView:self];
-        NSLog(@"trying to grab item at %f %f", currLoc.x, currLoc.y);
+        CGPoint currLoc = panGesture.initialLocationInWindow;
         // find the point to grab
         MMStick* stick = [self getSidebarObject:currLoc];
         if(stick){
-            NSLog(@"grabbed sidebar item %@", [stick class]);
             stick = [stick cloneObject];
             // we just created a new object
             [points addObjectsFromArray:[stick allPoints]];
@@ -177,7 +174,6 @@
                                                    currLoc.y - grabbedStick.p1.y);
             }
         }else{
-            NSLog(@"missed sidebar item %@", [stick class]);
             grabbedPoint = [self getPointNear:currLoc];
             if(!grabbedPoint){
                 grabbedStick = [self getStickNear:currLoc];
@@ -197,7 +193,7 @@
             MMPoint* pointToReplace = [[points filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) {
                 return evaluatedObject != pointToSnap && [evaluatedObject distanceFromPoint:pointToSnap.asCGPoint] < 30;
             }]] firstObject];
-            if(pointToReplace){
+            if(pointToReplace && pointToReplace.attachable && pointToSnap.attachable){
                 for(int i=0;i<[sticks count];i++){
                     MMStick* stick = [sticks objectAtIndex:i];
                     [stick replacePoint:pointToReplace withPoint:pointToSnap];
@@ -290,7 +286,7 @@
     
     // render edit
     [currentEditedStick render];
-
+    
     CGContextRestoreGState(context);
 }
 
@@ -569,9 +565,9 @@
 
 -(MMPoint*) getPointNear:(CGPoint)point{
     MMPoint* ret = [[points sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
-        return [obj1 distanceFromPoint:point] < [obj2 distanceFromPoint:point] ? NSOrderedAscending : NSOrderedDescending;
+        return [obj1 distanceFromPoint:point] < [obj2 distanceFromPoint:point] && [obj1 attachable] ? NSOrderedAscending : NSOrderedDescending;
     }] firstObject];
-    if([ret distanceFromPoint:point] < 30){
+    if([ret distanceFromPoint:point] < 30 && ret.attachable){
         return ret;
     }
     return nil;
@@ -584,9 +580,13 @@
     NSLog(@"closest stick is: %f", [ret distanceFromPoint:point]);
     if([ret distanceFromPoint:point] < 30){
         return ret;
-    }else{
-        // definitely fails
-        [ret distanceFromPoint:point];
+    }
+    MMBalloon* balloon = [[balloons sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+        return [obj1 distanceFromPoint:point] < [obj2 distanceFromPoint:point] ? NSOrderedAscending : NSOrderedDescending;
+    }] firstObject];
+    NSLog(@"closest stick is: %f", [ret distanceFromPoint:point]);
+    if([balloon distanceFromPoint:point] < balloon.radius){
+        return balloon.stick;
     }
     return nil;
 }

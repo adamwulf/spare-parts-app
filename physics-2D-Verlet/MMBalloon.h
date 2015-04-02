@@ -7,13 +7,14 @@
 //
 
 #import "MMPoint.h"
-#import "MMPoint.h"
+#import "MMStick.h"
 
 @interface MMBalloon : NSObject
 
 @property (readonly) MMPoint* center;
 @property (readonly) MMPoint* tail;
 @property (readonly) CGFloat radius;
+@property (readonly) MMStick* stick;
 
 +(MMBalloon*) balloonWithCGPoint:(CGPoint)p;
 

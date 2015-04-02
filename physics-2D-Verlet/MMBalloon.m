@@ -12,17 +12,18 @@
 
 @implementation MMBalloon{
     UIImage* texture;
-    MMStick* stick;
 }
 
 @synthesize center;
 @synthesize radius;
 @synthesize tail;
+@synthesize stick;
 
 -(id) init{
     if(self = [super init]){
         radius = kBalloonRadius;
         center = [[MMPoint alloc] init];
+        center.attachable = NO;
         center.gravityModifier = ^(CGFloat g){
             return -g;
         };
@@ -84,6 +85,7 @@
 -(void) replacePoint:(MMPoint*)p withPoint:(MMPoint*)newP{
     if(p == center){
         center = newP;
+        center.attachable = NO;
         center.gravityModifier = ^(CGFloat g){
             return -g;
         };
@@ -98,7 +100,8 @@
 }
 
 -(CGFloat) distanceFromPoint:(CGPoint)point{
-    return [center distanceFromPoint:point];
+    CGFloat dst = [center distanceFromPoint:point];
+    return dst;
 }
 
 -(void) constrain{
