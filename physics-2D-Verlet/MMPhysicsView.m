@@ -18,6 +18,8 @@
 #import "MMBalloon.h"
 #import "MMWheel.h"
 #import "Constants.h"
+#import "MMPhysicsViewController.h"
+#import "SaveLoadManager.h"
 
 #define kMaxStress 0.5
 
@@ -26,6 +28,9 @@
     CGFloat gravity;
     CGFloat friction;
     
+    UIAlertAction *saveAction;
+    
+    // state
     NSMutableArray* points;
     NSMutableArray* sticks;
     NSMutableArray* balloons;
@@ -41,7 +46,7 @@
     UIPanGestureRecognizer* grabPointGesture;
     
     // toggle running the simulation on/off
-    UIButton* animationOnOffSwitch;
+    UIButton* playPauseButton;
     
     // the stick that's currently being made
     MMStick* currentEditedStick;
@@ -56,6 +61,8 @@
     
     NSMutableArray* defaultObjects;
 }
+
+@synthesize controller;
 
 -(id) initWithFrame:(CGRect)frame{
     if(self = [super initWithFrame:frame]){
@@ -91,13 +98,13 @@
         grabPointGesture = [[InstantPanGestureRecognizer alloc] initWithTarget:self action:@selector(movePointGesture:)];
         [self addGestureRecognizer:grabPointGesture];
         
-        animationOnOffSwitch = [UIButton buttonWithType:UIButtonTypeCustom];
-        [animationOnOffSwitch setImage:[UIImage imageNamed:@"play.png"] forState:UIControlStateNormal];
-        [animationOnOffSwitch setImage:[UIImage imageNamed:@"pause.png"] forState:UIControlStateSelected];
-        [animationOnOffSwitch sizeToFit];
-        animationOnOffSwitch.center = CGPointMake(self.bounds.size.width - 180, 80);
-        [animationOnOffSwitch addTarget:self action:@selector(toggleAnimation:) forControlEvents:UIControlEventTouchUpInside];
-        [self addSubview:animationOnOffSwitch];
+        playPauseButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [playPauseButton setImage:[UIImage imageNamed:@"play.png"] forState:UIControlStateNormal];
+        [playPauseButton setImage:[UIImage imageNamed:@"pause.png"] forState:UIControlStateSelected];
+        [playPauseButton sizeToFit];
+        playPauseButton.center = CGPointMake(self.bounds.size.width - 180, 80);
+        [playPauseButton addTarget:self action:@selector(toggleAnimation:) forControlEvents:UIControlEventTouchUpInside];
+        [self addSubview:playPauseButton];
 
 
         UIButton* clearButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -107,7 +114,21 @@
         [self addSubview:clearButton];
         clearButton.center = CGPointMake(self.bounds.size.width - 80, 80);
         
+        UIButton* saveButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+        [saveButton setTitle:@"Save" forState:UIControlStateNormal];
+        [saveButton sizeToFit];
+        [saveButton addTarget:self action:@selector(saveObjects) forControlEvents:UIControlEventTouchUpInside];
+        [self addSubview:saveButton];
+        saveButton.center = CGPointMake(self.bounds.size.width - 180, 140);
         
+        UIButton* loadButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+        [loadButton setTitle:@"Load" forState:UIControlStateNormal];
+        [loadButton sizeToFit];
+        [loadButton addTarget:self action:@selector(loadObjects) forControlEvents:UIControlEventTouchUpInside];
+        [self addSubview:loadButton];
+        loadButton.center = CGPointMake(self.bounds.size.width - 80, 140);
+        
+       
         // initialize default objects in the sidebar
         defaultObjects = [NSMutableArray array];
         
@@ -263,7 +284,7 @@
     }
     
 
-    if(animationOnOffSwitch.selected){
+    if(playPauseButton.selected){
         // gravity + velocity etc
         [self updatePoints];
         [self tickMachines];
@@ -308,7 +329,7 @@
             grabbedPoint.x = [grabPointGesture locationInView:self].x;
             grabbedPoint.y = [grabPointGesture locationInView:self].y;
         }
-        if(!animationOnOffSwitch.selected){
+        if(!playPauseButton.selected){
             for (MMPoint* p in points) {
                 [p nullVelocity];
             }
@@ -321,7 +342,7 @@
             grabbedStick.p1.x = [grabPointGesture locationInView:self].x - grabbedStickOffsetP1.x;
             grabbedStick.p1.y = [grabPointGesture locationInView:self].y - grabbedStickOffsetP1.y;
         }
-        if(!animationOnOffSwitch.selected){
+        if(!playPauseButton.selected){
             for (MMPoint* p in points) {
                 [p nullVelocity];
             }
@@ -601,6 +622,59 @@
         return ret;
     }
     return nil;
+}
+
+#pragma mark - Save and Load
+
+-(void) saveObjects{
+    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Save!" message:@"Name your contraption!" preferredStyle:UIAlertControllerStyleAlert];
+    [alert addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(alertTextFieldDidChange:)
+                                                     name:UITextFieldTextDidChangeNotification
+                                                   object:textField];
+    }];
+    [controller presentViewController:alert animated:YES completion:nil];
+    
+    
+    saveAction = [UIAlertAction
+                                 actionWithTitle:@"Save"
+                                 style:UIAlertActionStyleDefault
+                                 handler:^(UIAlertAction *action)
+                                 {
+                                     [[NSNotificationCenter defaultCenter] removeObserver:self];
+                                     saveAction = nil;
+                                     
+                                     NSString* name = [[alert.textFields firstObject] text];
+                                     NSLog(@"Save action: %@", name);
+                                     [[SaveLoadManager sharedInstance] savePoints:points andSticks:sticks andBallons:balloons forName:name];
+                                 }];
+    saveAction.enabled = NO;
+    [alert addAction:saveAction];
+
+    UIAlertAction *cancelAction = [UIAlertAction
+                                 actionWithTitle:@"Cancel"
+                                 style:UIAlertActionStyleCancel
+                                 handler:^(UIAlertAction *action)
+                                 {
+                                     [[NSNotificationCenter defaultCenter] removeObserver:self];
+                                     saveAction = nil;
+                                 }];
+    [alert addAction:cancelAction];
+    
+}
+
+-(void) loadObjects{
+    
+}
+
+-(void) alertTextFieldDidChange:(NSNotification*)note{
+    // did change
+    if([[note.object text] length]){
+        saveAction.enabled = YES;
+    }else{
+        saveAction.enabled = NO;
+    }
 }
 
 @end

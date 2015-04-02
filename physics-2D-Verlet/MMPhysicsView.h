@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+@class MMPhysicsViewController;
+
 @interface MMPhysicsView : UIView
+
+@property (weak) MMPhysicsViewController* controller;
 
 @end

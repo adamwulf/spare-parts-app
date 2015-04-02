@@ -10,7 +10,7 @@
 #import "MMPoint.h"
 
 
-@interface MMStick : NSObject{
+@interface MMStick : NSObject<NSCoding>{
     CGFloat stress;
     UIImage* image;
 }

@@ -70,4 +70,19 @@
                             andP1:[MMPoint pointWithCGPoint:self.p1.asCGPoint]];
 }
 
+
+#pragma mark - NSCoding
+
+-(void) encodeWithCoder:(NSCoder *)aCoder{
+    [super encodeWithCoder:aCoder];
+    [aCoder encodeObject:[NSNumber numberWithFloat:angle] forKey:@"angle"];
+}
+
+-(id) initWithCoder:(NSCoder *)aDecoder{
+    if(self = [super initWithCoder:aDecoder]){
+        angle = [[aDecoder decodeObjectForKey:@"angle"] floatValue];
+    }
+    return self;
+}
+
 @end

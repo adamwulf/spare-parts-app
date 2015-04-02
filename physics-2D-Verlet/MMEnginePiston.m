@@ -10,10 +10,10 @@
 #import "MMEngine.h"
 
 @implementation MMEnginePiston{
-    CGFloat angle;
     MMEngine* engine;
 }
 
+@synthesize angle;
 @synthesize engine;
 
 -(id) initForEngine:(MMEngine *)_engine{

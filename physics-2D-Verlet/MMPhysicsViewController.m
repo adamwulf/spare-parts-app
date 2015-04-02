@@ -35,6 +35,7 @@
     [backyard addSubview:sidebar];
     
     physicsView = [[MMPhysicsView alloc] initWithFrame:self.view.bounds];
+    physicsView.controller = self;
     physicsView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
     [self.view addSubview:physicsView];
 }

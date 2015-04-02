@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-@interface MMPoint : NSObject
+@interface MMPoint : NSObject<NSCoding>
 
 @property (nonatomic) CGFloat x;
 @property (nonatomic) CGFloat y;

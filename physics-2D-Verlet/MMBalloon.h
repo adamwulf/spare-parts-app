@@ -9,7 +9,7 @@
 #import "MMPoint.h"
 #import "MMStick.h"
 
-@interface MMBalloon : NSObject
+@interface MMBalloon : NSObject<NSCoding>
 
 @property (readonly) MMPoint* center;
 @property (readonly) MMPoint* tail;

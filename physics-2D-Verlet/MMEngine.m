@@ -105,4 +105,24 @@
     return [[super allPoints] arrayByAddingObject:self.p2];
 }
 
+#pragma mark - NSCoding
+
+-(void) encodeWithCoder:(NSCoder *)aCoder{
+    [aCoder encodeObject:self.p2 forKey:@"p2"];
+    [aCoder encodeObject:[NSNumber numberWithFloat:piston.angle] forKey:@"angle"];
+    
+}
+
+-(id) initWithCoder:(NSCoder *)aDecoder{
+    MMPoint* _p2 = [aDecoder decodeObjectForKey:@"p2"];
+    if(self = [super initWithCoder:aDecoder]){
+        piston.p1.x = _p2.x;
+        piston.p1.y = _p2.y;
+        piston.p1.oldx = _p2.oldx;
+        piston.p1.oldy = _p2.oldy;
+        piston.angle = [[aDecoder decodeObjectForKey:@"angle"] floatValue];
+    }
+    return self;
+}
+
 @end

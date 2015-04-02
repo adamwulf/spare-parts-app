@@ -159,4 +159,27 @@
     return [NSString stringWithFormat:@"[Point %f %f]", x, y];
 }
 
+#pragma mark - NSCoding
+
+-(void) encodeWithCoder:(NSCoder *)aCoder{
+    [aCoder encodeObject:[NSNumber numberWithFloat:x] forKey:@"x"];
+    [aCoder encodeObject:[NSNumber numberWithFloat:y] forKey:@"y"];
+    [aCoder encodeObject:[NSNumber numberWithFloat:oldx] forKey:@"oldx"];
+    [aCoder encodeObject:[NSNumber numberWithFloat:oldy] forKey:@"oldy"];
+    [aCoder encodeObject:[NSNumber numberWithBool:immovable] forKey:@"immovable"];
+    [aCoder encodeObject:[NSNumber numberWithBool:attachable] forKey:@"attachable"];
+}
+
+- (id)initWithCoder:(NSCoder *)aDecoder{
+    if(self = [super init]){
+        x = [[aDecoder decodeObjectForKey:@"x"] floatValue];
+        y = [[aDecoder decodeObjectForKey:@"y"] floatValue];
+        oldx = [[aDecoder decodeObjectForKey:@"oldx"] floatValue];
+        oldy = [[aDecoder decodeObjectForKey:@"oldy"] floatValue];
+        immovable = [[aDecoder decodeObjectForKey:@"immovable"] boolValue];
+        attachable = [[aDecoder decodeObjectForKey:@"attachable"] boolValue];
+    }
+    return self;
+}
+
 @end

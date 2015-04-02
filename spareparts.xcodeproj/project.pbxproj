@@ -23,6 +23,7 @@
 		66343C491ABF5FE300801962 /* ragdoll.js in Resources */ = {isa = PBXBuildFile; fileRef = 66343C441ABF5FE300801962 /* ragdoll.js */; };
 		6651B8B31ACDC47C008B1016 /* backyard.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6651B8B21ACDC47C008B1016 /* backyard.jpg */; };
 		6651B8B71ACDC74A008B1016 /* wood-texture.png in Resources */ = {isa = PBXBuildFile; fileRef = 6651B8B61ACDC74A008B1016 /* wood-texture.png */; };
+		6651B8BB1ACDCEEA008B1016 /* SaveLoadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 6651B8BA1ACDCEEA008B1016 /* SaveLoadManager.m */; };
 		66625FE51AC21E460025F441 /* MMPointPropsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 66625FE41AC21E460025F441 /* MMPointPropsView.m */; };
 		66625FE81AC220FE0025F441 /* MMPiston.m in Sources */ = {isa = PBXBuildFile; fileRef = 66625FE71AC220FE0025F441 /* MMPiston.m */; };
 		66625FEB1AC3496D0025F441 /* MMEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 66625FEA1AC3496D0025F441 /* MMEngine.m */; };
@@ -101,6 +102,8 @@
 		66343C441ABF5FE300801962 /* ragdoll.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = ragdoll.js; path = codingmath/episode38/ragdoll.js; sourceTree = SOURCE_ROOT; };
 		6651B8B21ACDC47C008B1016 /* backyard.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = backyard.jpg; sourceTree = "<group>"; };
 		6651B8B61ACDC74A008B1016 /* wood-texture.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "wood-texture.png"; sourceTree = "<group>"; };
+		6651B8B91ACDCEEA008B1016 /* SaveLoadManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SaveLoadManager.h; sourceTree = "<group>"; };
+		6651B8BA1ACDCEEA008B1016 /* SaveLoadManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SaveLoadManager.m; sourceTree = "<group>"; };
 		66625FE31AC21E460025F441 /* MMPointPropsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMPointPropsView.h; sourceTree = "<group>"; };
 		66625FE41AC21E460025F441 /* MMPointPropsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMPointPropsView.m; sourceTree = "<group>"; };
 		66625FE61AC220FE0025F441 /* MMPiston.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMPiston.h; sourceTree = "<group>"; };
@@ -241,6 +244,7 @@
 		66343C121ABF5BB500801962 /* physics-2D-Verlet */ = {
 			isa = PBXGroup;
 			children = (
+				6651B8B81ACDCEDB008B1016 /* Managers */,
 				6651B8B11ACDC472008B1016 /* textures */,
 				66A08F031AC9DF9200C670E5 /* Constants.h */,
 				66A08EF81AC9D85E00C670E5 /* images */,
@@ -310,6 +314,15 @@
 				6651B8B61ACDC74A008B1016 /* wood-texture.png */,
 			);
 			name = textures;
+			sourceTree = "<group>";
+		};
+		6651B8B81ACDCEDB008B1016 /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				6651B8B91ACDCEEA008B1016 /* SaveLoadManager.h */,
+				6651B8BA1ACDCEEA008B1016 /* SaveLoadManager.m */,
+			);
+			name = Managers;
 			sourceTree = "<group>";
 		};
 		666740151ACC6C8000750D6E /* screws */ = {
@@ -556,6 +569,7 @@
 				66625FE81AC220FE0025F441 /* MMPiston.m in Sources */,
 				66343C161ABF5BB500801962 /* main.m in Sources */,
 				66309CEC1AC484E900FACEF9 /* MMEnginePiston.m in Sources */,
+				6651B8BB1ACDCEEA008B1016 /* SaveLoadManager.m in Sources */,
 				66625FEB1AC3496D0025F441 /* MMEngine.m in Sources */,
 				666E0A691AC093A10018289C /* MMStick.m in Sources */,
 				666E0A661AC0924D0018289C /* MMPoint.m in Sources */,

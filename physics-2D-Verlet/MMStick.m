@@ -176,4 +176,20 @@ CGPoint		NearestPointOnLine( const CGPoint inPoint, const CGPoint a, const CGPoi
     return @[p0, p1];
 }
 
+#pragma mark - NSCoding
+
+-(void) encodeWithCoder:(NSCoder *)aCoder{
+    [aCoder encodeObject:p0 forKey:@"p0"];
+    [aCoder encodeObject:p1 forKey:@"p1"];
+}
+
+-(id) initWithCoder:(NSCoder *)aDecoder{
+    MMPoint* _p0 = [aDecoder decodeObjectForKey:@"p0"];
+    MMPoint* _p1 = [aDecoder decodeObjectForKey:@"p1"];
+    if(self = [self initWithP0:_p0 andP1:_p1]){
+        // noop
+    }
+    return self;
+}
+
 @end

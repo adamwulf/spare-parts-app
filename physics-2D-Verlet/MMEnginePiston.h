@@ -13,6 +13,7 @@
 @interface MMEnginePiston : MMStick
 
 @property (readonly) MMEngine* engine;
+@property (nonatomic) CGFloat angle;
 
 -(id) initForEngine:(MMEngine*)engine;
 
