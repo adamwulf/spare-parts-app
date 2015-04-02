@@ -54,9 +54,7 @@
     
     NSMutableSet* processedPoints;
     
-    
     NSMutableArray* defaultObjects;
-    
 }
 
 -(id) initWithFrame:(CGRect)frame{
@@ -159,10 +157,11 @@
 -(void) movePointGesture:(UIPanGestureRecognizer*)panGesture{
     if(panGesture.state == UIGestureRecognizerStateBegan){
         CGPoint currLoc = [panGesture locationInView:self];
+        NSLog(@"trying to grab item at %f %f", currLoc.x, currLoc.y);
         // find the point to grab
         MMStick* stick = [self getSidebarObject:currLoc];
         if(stick){
-            NSLog(@"grabbed %@", [stick class]);
+            NSLog(@"grabbed sidebar item %@", [stick class]);
             stick = [stick cloneObject];
             // we just created a new object
             [points addObjectsFromArray:[stick allPoints]];
@@ -178,13 +177,17 @@
                                                    currLoc.y - grabbedStick.p1.y);
             }
         }else{
+            NSLog(@"missed sidebar item %@", [stick class]);
             grabbedPoint = [self getPointNear:currLoc];
             if(!grabbedPoint){
                 grabbedStick = [self getStickNear:currLoc];
+                NSLog(@"got stick %@", [grabbedStick class]);
                 grabbedStickOffsetP0 = CGPointMake(currLoc.x - grabbedStick.p0.x,
                                                    currLoc.y - grabbedStick.p0.y);
                 grabbedStickOffsetP1 = CGPointMake(currLoc.x - grabbedStick.p1.x,
                                                    currLoc.y - grabbedStick.p1.y);
+            }else{
+                NSLog(@"got point %@", [grabbedPoint class]);
             }
         }
     }
@@ -287,7 +290,6 @@
     
     // render edit
     [currentEditedStick render];
-
 
     CGContextRestoreGState(context);
 }
@@ -579,8 +581,12 @@
     MMStick* ret = [[sticks sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
         return [obj1 distanceFromPoint:point] < [obj2 distanceFromPoint:point] ? NSOrderedAscending : NSOrderedDescending;
     }] firstObject];
+    NSLog(@"closest stick is: %f", [ret distanceFromPoint:point]);
     if([ret distanceFromPoint:point] < 30){
         return ret;
+    }else{
+        // definitely fails
+        [ret distanceFromPoint:point];
     }
     return nil;
 }

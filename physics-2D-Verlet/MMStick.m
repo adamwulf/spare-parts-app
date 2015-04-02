@@ -121,17 +121,18 @@
 // to this line segment of p0 -> p1
 -(CGFloat) distanceFromPoint:(CGPoint)point{
     CGPoint pointOnLine = NearestPointOnLine(point, self.p0.asCGPoint, self.p1.asCGPoint);
-    
-    if([self.p0 distanceFromPoint:pointOnLine] + [self.p1 distanceFromPoint:pointOnLine] <=
-       [self.p0 distanceFromPoint:self.p1.asCGPoint]){
-        // found a point inside the line segment
-        // so, the distance from point to pointOnLine
-        // is the distance to the line
-        return [MMPoint distance:point and:pointOnLine];
-    }else{
-        // found a point outside the line segment
-        return MIN([MMPoint distance:point and:self.p0.asCGPoint], [MMPoint distance:point and:self.p1.asCGPoint]);
+
+    if((self.p0.x <= pointOnLine.x && pointOnLine.x <= self.p1.x) ||
+       (self.p0.x >= pointOnLine.x && pointOnLine.x >= self.p1.x)){
+        // it's X coordinate is between p0 and p1
+        if((self.p0.y <= pointOnLine.y && pointOnLine.y <= self.p1.y) ||
+           (self.p0.y >= pointOnLine.y && pointOnLine.y >= self.p1.y)){
+            // it's Y coordinates are also between p0 and p1
+            return [MMPoint distance:point and:pointOnLine];
+        }
     }
+    // found a point outside the line segment
+    return MIN([MMPoint distance:point and:self.p0.asCGPoint], [MMPoint distance:point and:self.p1.asCGPoint]);
 }
 
 
