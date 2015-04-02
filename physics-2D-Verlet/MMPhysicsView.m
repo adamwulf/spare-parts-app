@@ -197,7 +197,6 @@
                 for(int i=0;i<[sticks count];i++){
                     MMStick* stick = [sticks objectAtIndex:i];
                     [stick replacePoint:pointToReplace withPoint:pointToSnap];
-                    [sticks replaceObjectAtIndex:i withObject:stick];
                 }
                 for(int i=0;i<[balloons count];i++){
                     MMBalloon* balloon = [balloons objectAtIndex:i];
