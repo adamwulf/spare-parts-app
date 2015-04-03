@@ -18,4 +18,8 @@
 
 -(NSDictionary*) loadName:(NSString*)name;
 
+-(void) deleteItemForName:(NSString*)name;
+
+-(NSArray*) allSavedItems;
+
 @end

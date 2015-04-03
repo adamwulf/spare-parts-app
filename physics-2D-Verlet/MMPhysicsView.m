@@ -20,8 +20,14 @@
 #import "Constants.h"
 #import "MMPhysicsViewController.h"
 #import "SaveLoadManager.h"
+#import "LoadingDeviceView.h"
+#import "LoadingDeviceViewDelegate.h"
 
 #define kMaxStress 0.5
+
+@interface MMPhysicsView ()<LoadingDeviceViewDelegate>
+
+@end
 
 @implementation MMPhysicsView{
     CGFloat bounce;
@@ -664,15 +670,13 @@
 }
 
 -(void) loadObjects{
-    NSDictionary* loadedInfo = [[SaveLoadManager sharedInstance] loadName:@"m"];
-    NSLog(@"loaded: %@", loadedInfo);
-    [points removeAllObjects];
-    [balloons removeAllObjects];
-    [sticks removeAllObjects];
-    
-    [points addObjectsFromArray:[loadedInfo objectForKey:@"points"]];
-    [sticks addObjectsFromArray:[loadedInfo objectForKey:@"sticks"]];
-    [balloons addObjectsFromArray:[loadedInfo objectForKey:@"balloons"]];
+    LoadingDeviceView* loadingView = [[LoadingDeviceView alloc] initWithFrame:self.bounds];
+    loadingView.delegate = self;
+    [self addSubview:loadingView];
+    [loadingView reloadData];
+
+    selectGesture.enabled = NO;
+    grabPointGesture.enabled = NO;
 }
 
 -(void) alertTextFieldDidChange:(NSNotification*)note{
@@ -682,6 +686,24 @@
     }else{
         saveAction.enabled = NO;
     }
+}
+
+
+#pragma mark - LoadingDeviceViewDelegate
+
+-(void) loadDeviceNamed:(NSString*)name{
+    NSDictionary* loadedInfo = [[SaveLoadManager sharedInstance] loadName:name];
+    
+    [points removeAllObjects];
+    [balloons removeAllObjects];
+    [sticks removeAllObjects];
+    
+    [points addObjectsFromArray:[loadedInfo objectForKey:@"points"]];
+    [sticks addObjectsFromArray:[loadedInfo objectForKey:@"sticks"]];
+    [balloons addObjectsFromArray:[loadedInfo objectForKey:@"balloons"]];
+    
+    selectGesture.enabled = YES;
+    grabPointGesture.enabled = YES;
 }
 
 @end

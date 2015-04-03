@@ -8,6 +8,7 @@
 
 #import "SaveLoadManager.h"
 #import "MMStick.h"
+#import "Constants.h"
 
 @implementation SaveLoadManager
 
@@ -67,7 +68,7 @@ static SaveLoadManager* _instance;
     maxP.x += 40;
     maxP.y += 40;
     CGSize deviceSize = CGSizeMake(maxP.x - translate.x, maxP.y - translate.y);
-    CGSize targetSize = CGSizeMake(100, 100);
+    CGSize targetSize = CGSizeMake(kThumbnailSize, kThumbnailSize);
     CGFloat scale = MIN(targetSize.width / deviceSize.width,
                         targetSize.height / deviceSize.height);
     
@@ -75,7 +76,7 @@ static SaveLoadManager* _instance;
     transCenter.x = (targetSize.width - transCenter.x)/2;
     transCenter.y = (targetSize.height - transCenter.y)/2;
     
-    UIGraphicsBeginImageContext(CGSizeMake(100, 100));
+    UIGraphicsBeginImageContext(targetSize);
     CGContextRef context = UIGraphicsGetCurrentContext();
     CGContextScaleCTM(context, scale, scale);
     CGContextTranslateCTM(context, -translate.x + transCenter.x/scale,
@@ -114,5 +115,30 @@ static SaveLoadManager* _instance;
     
     return data;
 }
+
+
+-(NSArray*) allSavedItems{
+    NSArray* contents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:[self documentsPath] error:nil];
+    
+    contents = [contents filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) {
+        return [evaluatedObject hasSuffix:@".parts"];
+    }]];
+    
+    NSMutableArray* output = [NSMutableArray array];
+    for(NSString* path in contents){
+        NSString* name = [[path lastPathComponent] stringByDeletingPathExtension];
+        [output addObject:@{ @"name" : name,
+                             @"thumb" : [self thumbForName:name] }];
+    }
+    return output;
+}
+
+
+-(void) deleteItemForName:(NSString*)name{
+    [[NSFileManager defaultManager] removeItemAtPath:[self pathForName:name] error:nil];
+    [[NSFileManager defaultManager] removeItemAtPath:[self thumbForName:name] error:nil];
+}
+
+
 
 @end

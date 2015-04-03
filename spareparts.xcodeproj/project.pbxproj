@@ -65,6 +65,7 @@
 		66677C651ACBAAA3003A6723 /* play.png in Resources */ = {isa = PBXBuildFile; fileRef = 66677C641ACBAAA3003A6723 /* play.png */; };
 		666E0A661AC0924D0018289C /* MMPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = 666E0A651AC0924D0018289C /* MMPoint.m */; };
 		666E0A691AC093A10018289C /* MMStick.m in Sources */ = {isa = PBXBuildFile; fileRef = 666E0A681AC093A10018289C /* MMStick.m */; };
+		668337FE1ACF1EAB00FEE908 /* LoadingDeviceView.m in Sources */ = {isa = PBXBuildFile; fileRef = 668337FD1ACF1EAB00FEE908 /* LoadingDeviceView.m */; };
 		6695851F1ACC7BFC002C359C /* MMStickPropsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6695851E1ACC7BFC002C359C /* MMStickPropsView.m */; };
 		669585221ACC7FA5002C359C /* spring-component.png in Resources */ = {isa = PBXBuildFile; fileRef = 669585211ACC7FA5002C359C /* spring-component.png */; };
 		669585241ACC80F9002C359C /* spring-component-top.png in Resources */ = {isa = PBXBuildFile; fileRef = 669585231ACC80F9002C359C /* spring-component-top.png */; };
@@ -151,6 +152,9 @@
 		666E0A651AC0924D0018289C /* MMPoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMPoint.m; sourceTree = "<group>"; };
 		666E0A671AC093A10018289C /* MMStick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMStick.h; sourceTree = "<group>"; };
 		666E0A681AC093A10018289C /* MMStick.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMStick.m; sourceTree = "<group>"; };
+		668337FC1ACF1EAB00FEE908 /* LoadingDeviceView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadingDeviceView.h; sourceTree = "<group>"; };
+		668337FD1ACF1EAB00FEE908 /* LoadingDeviceView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoadingDeviceView.m; sourceTree = "<group>"; };
+		668337FF1ACF279500FEE908 /* LoadingDeviceViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadingDeviceViewDelegate.h; sourceTree = "<group>"; };
 		6695851D1ACC7BFC002C359C /* MMStickPropsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMStickPropsView.h; sourceTree = "<group>"; };
 		6695851E1ACC7BFC002C359C /* MMStickPropsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMStickPropsView.m; sourceTree = "<group>"; };
 		669585211ACC7FA5002C359C /* spring-component.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "spring-component.png"; sourceTree = "<group>"; };
@@ -244,9 +248,9 @@
 		66343C121ABF5BB500801962 /* physics-2D-Verlet */ = {
 			isa = PBXGroup;
 			children = (
+				66A08F031AC9DF9200C670E5 /* Constants.h */,
 				6651B8B81ACDCEDB008B1016 /* Managers */,
 				6651B8B11ACDC472008B1016 /* textures */,
-				66A08F031AC9DF9200C670E5 /* Constants.h */,
 				66A08EF81AC9D85E00C670E5 /* images */,
 				66A48FFE1AC5E90400CC21BA /* Gesture */,
 				66343C3A1ABF5D1300801962 /* PhysicsView */,
@@ -285,6 +289,9 @@
 			children = (
 				66343C3B1ABF5D2900801962 /* MMPhysicsView.h */,
 				66343C3C1ABF5D2900801962 /* MMPhysicsView.m */,
+				668337FC1ACF1EAB00FEE908 /* LoadingDeviceView.h */,
+				668337FD1ACF1EAB00FEE908 /* LoadingDeviceView.m */,
+				668337FF1ACF279500FEE908 /* LoadingDeviceViewDelegate.h */,
 				66625FE31AC21E460025F441 /* MMPointPropsView.h */,
 				66625FE41AC21E460025F441 /* MMPointPropsView.m */,
 				6695851D1ACC7BFC002C359C /* MMStickPropsView.h */,
@@ -570,6 +577,7 @@
 				66343C161ABF5BB500801962 /* main.m in Sources */,
 				66309CEC1AC484E900FACEF9 /* MMEnginePiston.m in Sources */,
 				6651B8BB1ACDCEEA008B1016 /* SaveLoadManager.m in Sources */,
+				668337FE1ACF1EAB00FEE908 /* LoadingDeviceView.m in Sources */,
 				66625FEB1AC3496D0025F441 /* MMEngine.m in Sources */,
 				666E0A691AC093A10018289C /* MMStick.m in Sources */,
 				666E0A661AC0924D0018289C /* MMPoint.m in Sources */,

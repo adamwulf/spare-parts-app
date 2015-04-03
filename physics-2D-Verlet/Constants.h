@@ -14,5 +14,6 @@
 #define kWheelRadius 60
 #define kBalloonRadius 40
 #define kSidebarWidth 320
+#define kThumbnailSize 300
 
 #endif
