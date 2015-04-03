@@ -136,6 +136,7 @@
 }
 
 -(void) cancelButtonPressed:(id)button{
+    [self.delegate cancelLoadingDevice];
     [self removeFromSuperview];
 }
 

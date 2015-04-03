@@ -12,4 +12,6 @@
 
 -(void) loadDeviceNamed:(NSString*)name;
 
+-(void) cancelLoadingDevice;
+
 @end

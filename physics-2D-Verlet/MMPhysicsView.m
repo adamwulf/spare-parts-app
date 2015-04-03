@@ -702,4 +702,9 @@
     grabPointGesture.enabled = YES;
 }
 
+-(void) cancelLoadingDevice{
+    selectGesture.enabled = YES;
+    grabPointGesture.enabled = YES;
+}
+
 @end
