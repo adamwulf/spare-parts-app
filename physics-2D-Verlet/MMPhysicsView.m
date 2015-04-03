@@ -694,10 +694,6 @@
 -(void) loadDeviceNamed:(NSString*)name{
     NSDictionary* loadedInfo = [[SaveLoadManager sharedInstance] loadName:name];
     
-    [points removeAllObjects];
-    [balloons removeAllObjects];
-    [sticks removeAllObjects];
-    
     [points addObjectsFromArray:[loadedInfo objectForKey:@"points"]];
     [sticks addObjectsFromArray:[loadedInfo objectForKey:@"sticks"]];
     [balloons addObjectsFromArray:[loadedInfo objectForKey:@"balloons"]];
