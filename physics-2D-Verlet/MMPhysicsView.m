@@ -661,7 +661,6 @@
                                      saveAction = nil;
                                  }];
     [alert addAction:cancelAction];
-    
 }
 
 -(void) loadObjects{
