@@ -124,17 +124,9 @@
 }
 
 -(id) initWithCoder:(NSCoder *)aDecoder{
-    MMPoint* _center = [aDecoder decodeObjectForKey:@"center"];
-    MMPoint* _tail = [aDecoder decodeObjectForKey:@"tail"];
     if(self = [self init]){
-        self.center.x = _center.x;
-        self.center.y = _center.y;
-        self.center.oldx = _center.oldx;
-        self.center.oldy = _center.oldy;
-        self.tail.x = _tail.x;
-        self.tail.y = _tail.y;
-        self.tail.oldx = _tail.oldx;
-        self.tail.oldy = _tail.oldy;
+        [self replacePoint:center withPoint:[aDecoder decodeObjectForKey:@"center"]];
+        [self replacePoint:tail withPoint:[aDecoder decodeObjectForKey:@"tail"]];
     }
     return self;
 }

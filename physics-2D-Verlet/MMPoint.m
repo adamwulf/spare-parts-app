@@ -171,7 +171,7 @@
 }
 
 - (id)initWithCoder:(NSCoder *)aDecoder{
-    if(self = [super init]){
+    if(self = [self init]){
         x = [[aDecoder decodeObjectForKey:@"x"] floatValue];
         y = [[aDecoder decodeObjectForKey:@"y"] floatValue];
         oldx = [[aDecoder decodeObjectForKey:@"oldx"] floatValue];

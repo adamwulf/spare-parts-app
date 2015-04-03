@@ -7,6 +7,7 @@
 //
 
 #import "SaveLoadManager.h"
+#import "MMStick.h"
 
 @implementation SaveLoadManager
 
@@ -31,6 +32,10 @@ static SaveLoadManager* _instance;
     return [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
 }
 
+-(NSString*) pathForName:(NSString*)name{
+    return [[[self documentsPath] stringByAppendingPathComponent:name] stringByAppendingPathExtension:@".parts"];
+}
+
 -(void) savePoints:(NSArray*)points andSticks:(NSArray*)sticks andBallons:(NSArray*)balloons forName:(NSString*)name{
     NSDictionary* infoToSave = @{
                                  @"points" : points,
@@ -38,9 +43,30 @@ static SaveLoadManager* _instance;
                                  @"balloons" : balloons
                                  };
     
-    NSString* pathToSaveTo = [[[self documentsPath] stringByAppendingPathComponent:name] stringByAppendingPathExtension:@".parts"];
+    NSString* pathToSaveTo = [self pathForName:name];
     
     [NSKeyedArchiver archiveRootObject:infoToSave toFile:pathToSaveTo];
+}
+
+-(NSDictionary*) loadName:(NSString*)name{
+    NSString* pathToLoadFrom = [self pathForName:name];
+    NSDictionary* data = [NSKeyedUnarchiver unarchiveObjectWithFile:pathToLoadFrom];
+    
+    
+    NSArray* points = [data objectForKey:@"points"];
+    NSArray* sticks = [data objectForKey:@"sticks"];
+    NSArray* balloons = [data objectForKey:@"balloons"];
+    for(MMStick* stick in [sticks arrayByAddingObjectsFromArray:balloons]){
+        for (MMPoint* p in [stick allPoints]) {
+            if([points containsObject:p]){
+                // good to go
+            }else{
+                @throw [NSException exceptionWithName:@"LoadContraptionException" reason:@"unknown point loaded" userInfo:nil];
+            }
+        }
+    }
+    
+    return data;
 }
 
 @end

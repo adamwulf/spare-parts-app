@@ -16,4 +16,6 @@
 
 -(void) savePoints:(NSArray*)points andSticks:(NSArray*)sticks andBallons:(NSArray*)balloons forName:(NSString*)name;
 
+-(NSDictionary*) loadName:(NSString*)name;
+
 @end

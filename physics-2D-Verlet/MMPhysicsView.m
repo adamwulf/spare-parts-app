@@ -665,7 +665,15 @@
 }
 
 -(void) loadObjects{
+    NSDictionary* loadedInfo = [[SaveLoadManager sharedInstance] loadName:@"m"];
+    NSLog(@"loaded: %@", loadedInfo);
+    [points removeAllObjects];
+    [balloons removeAllObjects];
+    [sticks removeAllObjects];
     
+    [points addObjectsFromArray:[loadedInfo objectForKey:@"points"]];
+    [sticks addObjectsFromArray:[loadedInfo objectForKey:@"sticks"]];
+    [balloons addObjectsFromArray:[loadedInfo objectForKey:@"balloons"]];
 }
 
 -(void) alertTextFieldDidChange:(NSNotification*)note{

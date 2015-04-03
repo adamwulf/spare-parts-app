@@ -100,6 +100,7 @@
     // render our nails / screws
     [p0 renderAtZeroZero];
     CGContextTranslateCTM(context, [self calcLen], 0);
+
     [p1 renderAtZeroZero];
     
     CGContextRestoreGState(context);

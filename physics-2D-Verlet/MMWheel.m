@@ -202,4 +202,27 @@
     return [[super allPoints] arrayByAddingObjectsFromArray:@[self.p2, self.p3, self.center]];
 }
 
+#pragma mark - NSCoding
+
+-(void) encodeWithCoder:(NSCoder *)aCoder{
+    [super encodeWithCoder:aCoder];
+    [aCoder encodeObject:self.center forKey:@"center"];
+    [aCoder encodeObject:self.p2 forKey:@"p2"];
+    [aCoder encodeObject:self.p3 forKey:@"p3"];
+    [aCoder encodeObject:[NSNumber numberWithFloat:radius] forKey:@"radius"];
+}
+
+-(id) initWithCoder:(NSCoder *)aDecoder{
+    MMPoint* _center = [aDecoder decodeObjectForKey:@"center"];
+    CGFloat _radius = [[aDecoder decodeObjectForKey:@"radius"] floatValue];
+    if(self = [self initWithCenter:_center andRadius:_radius]){
+        // noop
+        [self replacePoint:self.p0 withPoint:[aDecoder decodeObjectForKey:@"p0"]];
+        [self replacePoint:self.p1 withPoint:[aDecoder decodeObjectForKey:@"p1"]];
+        [self replacePoint:self.p2 withPoint:[aDecoder decodeObjectForKey:@"p2"]];
+        [self replacePoint:self.p3 withPoint:[aDecoder decodeObjectForKey:@"p3"]];
+    }
+    return self;
+}
+
 @end
