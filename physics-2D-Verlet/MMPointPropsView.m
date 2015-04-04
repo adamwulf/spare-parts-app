@@ -23,17 +23,26 @@
         self.layer.cornerRadius = 10;
         self.hidden = YES;
         
+        UILabel* titleLbl = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.bounds.size.width, 40)];
+        titleLbl.text = @"Properties";
+        titleLbl.font = [UIFont boldSystemFontOfSize:titleLbl.font.pointSize];
+        titleLbl.textAlignment = NSTextAlignmentCenter;
+        [self addSubview:titleLbl];
+        
         immovableSwitch = [[UISwitch alloc] init];
         immovableSwitch.on = NO;
-        immovableSwitch.center = CGPointMake(50, 50);
+        immovableSwitch.center = CGPointMake(50, 60);
         [immovableSwitch addTarget:self action:@selector(immovableChanged) forControlEvents:UIControlEventValueChanged];
         [self addSubview:immovableSwitch];
         
-        UILabel* lbl = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, 50)];
+        UILabel* lbl = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, 60)];
         lbl.text = @"immovable";
         [lbl sizeToFit];
-        lbl.center = CGPointMake(120, 50);
+        lbl.center = CGPointMake(120, 60);
         [self addSubview:lbl];
+        
+        UISlider* gravitySlider = [[UISlider alloc] initWithFrame:CGRectMake(20, 110, self.bounds.size.width-40, 40)];
+        [self addSubview:gravitySlider];
         
         UIView* bitsOfWhite = [[UIView alloc] initWithFrame:self.bounds];
         bitsOfWhite.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:.5];

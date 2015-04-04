@@ -233,6 +233,10 @@
                 if(didReplaceAllPoints){
                     [points removeObject:pointToReplace];
                 }
+                if(pointToReplace == selectedPoint){
+                    selectedPoint = pointToSnap;
+                    [pointPropertiesView showPointProperties:pointToSnap];
+                }
             }
         }
         grabbedPoint = nil;
