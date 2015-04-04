@@ -189,6 +189,10 @@
         MMStick* stick = [self getSidebarObject:currLoc];
         if(stick){
             stick = [stick cloneObject];
+            selectedPoint = nil;
+            selectedStick = stick;
+            [pointPropertiesView showPointProperties:selectedPoint];
+            [stickPropertiesView showObjectProperties:selectedStick];
             // we just created a new object
             [points addObjectsFromArray:[stick allPoints]];
             if([stick isKindOfClass:[MMBalloon class]]){
@@ -214,6 +218,11 @@
             }else{
                 NSLog(@"got point %@", [grabbedPoint class]);
             }
+            selectedPoint = grabbedPoint;
+            selectedStick = grabbedStick;
+            [pointPropertiesView showPointProperties:selectedPoint];
+            [stickPropertiesView showObjectProperties:selectedStick];
+
         }
     }
     
@@ -555,7 +564,7 @@
 -(void) cullSticks{
     for(int i = 0; i < [sticks count]; i++) {
         MMStick* s = [sticks objectAtIndex:i];
-        if(s.stress >= kMaxStress){
+        if(s.stress >= kMaxStress && !grabbedStick && !grabbedPoint){
             // break stick
             [sticks removeObject:s];
             
