@@ -83,6 +83,14 @@
     stress = MIN(.1, percDiff) * 10;
 }
 
+-(void) renderWithHighlight{
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    CGContextSaveGState(context);
+    CGContextSetShadowWithColor(context, CGSizeZero, kShadowWidth, [[UIColor whiteColor] colorWithAlphaComponent:kShadowOpacity].CGColor);
+    [self render];
+    CGContextRestoreGState(context);
+}
+
 -(void) render{
     
     CGContextRef context = UIGraphicsGetCurrentContext();

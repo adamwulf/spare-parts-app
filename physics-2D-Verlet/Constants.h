@@ -16,4 +16,7 @@
 #define kSidebarWidth 320
 #define kThumbnailSize 300
 
+#define kShadowWidth 30
+#define kShadowOpacity .9
+
 #endif

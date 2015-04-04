@@ -45,7 +45,6 @@
 
         UIView* bitsOfWhite = [[UIView alloc] initWithFrame:self.bounds];
         bitsOfWhite.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:.5];
-        
         UIBlurEffect * blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
         UIVisualEffectView *beView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
         beView.frame = self.bounds;

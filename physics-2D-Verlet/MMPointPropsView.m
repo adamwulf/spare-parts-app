@@ -17,6 +17,7 @@
 
 -(id) initWithFrame:(CGRect)frame{
     if(self = [super initWithFrame:frame]){
+        self.clipsToBounds = YES;
         self.layer.borderColor = [UIColor blackColor].CGColor;
         self.layer.borderWidth = 1;
         self.layer.cornerRadius = 10;
@@ -33,6 +34,16 @@
         [lbl sizeToFit];
         lbl.center = CGPointMake(120, 50);
         [self addSubview:lbl];
+        
+        
+        
+        UIView* bitsOfWhite = [[UIView alloc] initWithFrame:self.bounds];
+        bitsOfWhite.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:.5];
+        UIBlurEffect * blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
+        UIVisualEffectView *beView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
+        beView.frame = self.bounds;
+        [beView.contentView addSubview:bitsOfWhite];
+        [self insertSubview:beView atIndex:0];
     }
     return self;
 }

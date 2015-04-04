@@ -51,11 +51,28 @@
     return ret;
 }
 
+-(MMPoint*) p0{
+    return center;
+}
+
+-(MMPoint*) p1{
+    return tail;
+}
+
 
 #pragma mark - Update
 
 -(void) updateWithGravity:(CGFloat)gravity andFriction:(CGFloat)friction{
     [center updateWithGravity:-gravity andFriction:friction];
+}
+
+
+-(void) renderWithHighlight{
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    CGContextSaveGState(context);
+    CGContextSetShadowWithColor(context, CGSizeZero, kShadowWidth, [[UIColor whiteColor] colorWithAlphaComponent:kShadowOpacity].CGColor);
+    [self render];
+    CGContextRestoreGState(context);
 }
 
 -(void) render{

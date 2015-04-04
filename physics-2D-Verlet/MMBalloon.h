@@ -15,8 +15,12 @@
 @property (readonly) MMPoint* tail;
 @property (readonly) CGFloat radius;
 @property (readonly) MMStick* stick;
+@property (readonly) MMPoint* p0;
+@property (readonly) MMPoint* p1;
 
 +(MMBalloon*) balloonWithCGPoint:(CGPoint)p;
+
+-(void) renderWithHighlight;
 
 -(void) render;
 

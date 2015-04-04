@@ -313,6 +313,10 @@
     [self renderSticks];
     [self renderBalloons];
     
+    if(selectedStick){
+        [selectedStick renderWithHighlight];
+    }
+    
     // render edit
     [currentEditedStick render];
     
@@ -624,7 +628,7 @@
     }] firstObject];
     NSLog(@"closest stick is: %f", [ret distanceFromPoint:point]);
     if([balloon distanceFromPoint:point] < balloon.radius){
-        return balloon.stick;
+        return (MMStick*) balloon;
     }
     return nil;
 }
