@@ -316,6 +316,9 @@
     if(selectedStick){
         [selectedStick renderWithHighlight];
     }
+    if(selectedPoint){
+        [selectedPoint renderWithHighlight];
+    }
     
     // render edit
     [currentEditedStick render];

@@ -35,8 +35,6 @@
         lbl.center = CGPointMake(120, 50);
         [self addSubview:lbl];
         
-        
-        
         UIView* bitsOfWhite = [[UIView alloc] initWithFrame:self.bounds];
         bitsOfWhite.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:.5];
         UIBlurEffect * blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];

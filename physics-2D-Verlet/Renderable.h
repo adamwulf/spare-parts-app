@@ -6,9 +6,12 @@
 //  Copyright (c) 2015 Milestone made. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
 @interface Renderable : NSObject
+
+@property (nonatomic) CGFloat shadowSize;
+@property (nonatomic) CGFloat shadowOpacity;
 
 -(void) renderWithHighlight;
 

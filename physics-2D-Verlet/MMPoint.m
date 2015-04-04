@@ -35,6 +35,9 @@
         NSString* imageName = [NSString stringWithFormat:@"screw-%d.png", screwType];
         image = [UIImage imageNamed:imageName];
         attachable = YES;
+        
+        self.shadowOpacity = 1;
+        self.shadowSize = 15;
     }
     return self;
 }
