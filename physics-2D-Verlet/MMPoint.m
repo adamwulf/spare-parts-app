@@ -10,7 +10,6 @@
 #import "Constants.h"
 
 @implementation MMPoint{
-    CGFloat(^gravityModifier)(CGFloat);
     UIImage* image;
 }
 
@@ -20,14 +19,8 @@
 @synthesize oldy;
 @synthesize immovable;
 @synthesize attachable;
+@synthesize gravityModifier;
 
--(void) setGravityModifier:(CGFloat (^)(CGFloat))_gravityModifier{
-    gravityModifier = _gravityModifier;
-}
-
--(CGFloat(^)(CGFloat))gravityModifier{
-    return gravityModifier;
-}
 
 -(id) init{
     if(self = [super init]){
@@ -36,6 +29,7 @@
         image = [UIImage imageNamed:imageName];
         attachable = YES;
         
+        self.gravityModifier = 1;
         self.shadowOpacity = 1;
         self.shadowSize = 15;
     }
@@ -129,9 +123,7 @@
 #pragma mark - Update
 
 -(void) updateWithGravity:(CGFloat)gravity andFriction:(CGFloat)friction{
-    if(gravityModifier){
-        gravity = gravityModifier(gravity);
-    }
+    gravity = gravity * gravityModifier;
     if(!self.immovable){
         CGFloat vx = (self.x - self.oldx) * friction;
         CGFloat vy = (self.y - self.oldy) * friction;

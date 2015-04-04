@@ -11,6 +11,7 @@
 #import "MMStick.h"
 
 @implementation MMPointPropsView{
+    UISlider* gravitySlider;
     UISwitch* immovableSwitch;
     MMPoint* selectedPoint;
 }
@@ -41,7 +42,11 @@
         lbl.center = CGPointMake(120, 60);
         [self addSubview:lbl];
         
-        UISlider* gravitySlider = [[UISlider alloc] initWithFrame:CGRectMake(20, 110, self.bounds.size.width-40, 40)];
+        gravitySlider = [[UISlider alloc] initWithFrame:CGRectMake(20, 110, self.bounds.size.width-40, 40)];
+        gravitySlider.minimumValue = -2;
+        gravitySlider.maximumValue = 2;
+        gravitySlider.continuous = YES;
+        [gravitySlider addTarget:self action:@selector(gravityChanged:) forControlEvents:UIControlEventValueChanged];
         [self addSubview:gravitySlider];
         
         UIView* bitsOfWhite = [[UIView alloc] initWithFrame:self.bounds];
@@ -59,10 +64,15 @@
     self.hidden = !point;
     selectedPoint = point;
     immovableSwitch.on = point.immovable;
+    gravitySlider.value = point.gravityModifier;
 }
 
 -(void) immovableChanged{
     [selectedPoint setImmovable:immovableSwitch.on];
+}
+
+-(void) gravityChanged:(UISlider*)_slider{
+    selectedPoint.gravityModifier = _slider.value;
 }
 
 @end

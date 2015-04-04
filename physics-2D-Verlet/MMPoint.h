@@ -18,7 +18,7 @@
 @property (nonatomic) CGFloat oldy;
 @property (nonatomic) BOOL immovable;
 @property (nonatomic) BOOL attachable;
-@property (nonatomic) CGFloat(^gravityModifier)(CGFloat);
+@property (nonatomic) CGFloat gravityModifier;
 
 +(MMPoint*) point;
 

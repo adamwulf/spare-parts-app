@@ -24,15 +24,11 @@
         radius = kBalloonRadius;
         center = [[MMPoint alloc] init];
         center.attachable = NO;
-        center.gravityModifier = ^(CGFloat g){
-            return -g;
-        };
+        center.gravityModifier = -1;
         tail = [[MMPoint alloc] init];
         tail.x = radius;
         [tail nullVelocity];
-        tail.gravityModifier = ^(CGFloat g){
-            return g/10.0f;
-        };
+        tail.gravityModifier = .1;
         texture = [UIImage imageNamed:@"balloon-texture.png"];
         
         stick = [MMStick stickWithP0:center andP1:tail];
@@ -95,15 +91,11 @@
     if(p == center){
         center = newP;
         center.attachable = NO;
-        center.gravityModifier = ^(CGFloat g){
-            return -g;
-        };
+        newP.gravityModifier = center.gravityModifier;
     }
     if(p == tail){
         tail = newP;
-        tail.gravityModifier = ^(CGFloat g){
-            return g/10.0f;
-        };
+        newP.gravityModifier = tail.gravityModifier;
     }
     [stick replacePoint:p withPoint:newP];
 }
