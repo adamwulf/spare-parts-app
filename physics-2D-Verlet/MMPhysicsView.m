@@ -165,6 +165,8 @@
     [points removeAllObjects];
     [sticks removeAllObjects];
     [balloons removeAllObjects];
+    selectedPoint = nil;
+    selectedStick = nil;
 }
 
 -(void) tapPointGesture:(UITapGestureRecognizer*)tapGesture{

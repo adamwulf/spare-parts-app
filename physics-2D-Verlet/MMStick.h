@@ -17,7 +17,7 @@
 
 @property (readonly) MMPoint* p0;
 @property (readonly) MMPoint* p1;
-@property (readonly) CGFloat length;
+@property (nonatomic) CGFloat length;
 @property (readonly) CGFloat stress;
 
 -(id) initWithP0:(MMPoint*)_p0 andP1:(MMPoint*)_p1;

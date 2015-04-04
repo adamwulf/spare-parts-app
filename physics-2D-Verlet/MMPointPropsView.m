@@ -65,7 +65,6 @@
         lbl.textAlignment = NSTextAlignmentCenter;
         lbl.center = CGPointMake(15, gravitySlider.center.y);
         
-        
         lbl = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 40, 40)];
         lbl.text = @"+2";
         [lbl sizeToFit];

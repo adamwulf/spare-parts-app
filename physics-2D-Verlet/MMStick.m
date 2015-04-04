@@ -15,7 +15,6 @@
 @synthesize p0;
 @synthesize p1;
 @synthesize length;
-@synthesize stress;
 
 -(id) init{
     if(self = [super init]){
@@ -48,6 +47,11 @@
     return sqrtf(dx * dx + dy * dy);
 }
 
+-(void) setLength:(CGFloat)_length{
+    length = _length;
+    [self constrain];
+}
+
 -(void) tick{
     // noop
 }
@@ -72,7 +76,9 @@
         self.p1.x += offsetX;
         self.p1.y += offsetY;
     }
-    
+}
+
+-(CGFloat) stress{
     // calculate stress
     CGFloat idealLenth = [self length];
     CGFloat currLength = [self calcLen];
@@ -80,7 +86,7 @@
     
     // .0 => blue
     // .1 => red
-    stress = MIN(.1, percDiff) * 10;
+    return MIN(.1, percDiff) * 10;
 }
 
 -(void) render{
