@@ -8,8 +8,9 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+#import "Renderable.h"
 
-@interface MMPoint : NSObject<NSCoding>
+@interface MMPoint : Renderable<NSCoding>
 
 @property (nonatomic) CGFloat x;
 @property (nonatomic) CGFloat y;
@@ -38,8 +39,6 @@
 -(CGPoint) velocityForFriction:(CGFloat)friction;
 
 -(void) bumpBy:(CGPoint)diff;
-
--(void) render;
 
 -(void) renderAtZeroZero;
 

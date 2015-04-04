@@ -8,9 +8,9 @@
 
 #import <Foundation/Foundation.h>
 #import "MMPoint.h"
+#import "Renderable.h"
 
-
-@interface MMStick : NSObject<NSCoding>{
+@interface MMStick : Renderable<NSCoding>{
     CGFloat stress;
     UIImage* image;
 }
@@ -23,10 +23,6 @@
 -(id) initWithP0:(MMPoint*)_p0 andP1:(MMPoint*)_p1;
 
 +(MMStick*) stickWithP0:(MMPoint*)p0 andP1:(MMPoint*)p1;
-
--(void) renderWithHighlight;
-
--(void) render;
 
 -(void) tick;
 

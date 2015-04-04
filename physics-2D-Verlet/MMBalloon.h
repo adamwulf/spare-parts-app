@@ -8,8 +8,9 @@
 
 #import "MMPoint.h"
 #import "MMStick.h"
+#import "Renderable.h"
 
-@interface MMBalloon : NSObject<NSCoding>
+@interface MMBalloon : Renderable<NSCoding>
 
 @property (readonly) MMPoint* center;
 @property (readonly) MMPoint* tail;
@@ -19,10 +20,6 @@
 @property (readonly) MMPoint* p1;
 
 +(MMBalloon*) balloonWithCGPoint:(CGPoint)p;
-
--(void) renderWithHighlight;
-
--(void) render;
 
 -(void) replacePoint:(MMPoint*)p withPoint:(MMPoint*)newP;
 

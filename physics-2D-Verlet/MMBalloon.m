@@ -67,14 +67,6 @@
 }
 
 
--(void) renderWithHighlight{
-    CGContextRef context = UIGraphicsGetCurrentContext();
-    CGContextSaveGState(context);
-    CGContextSetShadowWithColor(context, CGSizeZero, kShadowWidth, [[UIColor whiteColor] colorWithAlphaComponent:kShadowOpacity].CGColor);
-    [self render];
-    CGContextRestoreGState(context);
-}
-
 -(void) render{
 //    [center render];
     UIBezierPath* balloon = [UIBezierPath bezierPathWithArcCenter:self.center.asCGPoint

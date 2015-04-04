@@ -83,16 +83,7 @@
     stress = MIN(.1, percDiff) * 10;
 }
 
--(void) renderWithHighlight{
-    CGContextRef context = UIGraphicsGetCurrentContext();
-    CGContextSaveGState(context);
-    CGContextSetShadowWithColor(context, CGSizeZero, kShadowWidth, [[UIColor whiteColor] colorWithAlphaComponent:kShadowOpacity].CGColor);
-    [self render];
-    CGContextRestoreGState(context);
-}
-
 -(void) render{
-    
     CGContextRef context = UIGraphicsGetCurrentContext();
     CGContextSaveGState(context);
     
@@ -102,15 +93,23 @@
     CGFloat angle = atan2f(self.p1.x - self.p0.x, self.p1.y - self.p0.y);
     CGContextRotateCTM(context, -angle + M_PI/2);
     
+    [self renderAtZeroZero];
+    
+    CGContextRestoreGState(context);
+}
+
+
+-(void) renderAtZeroZero{
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    CGContextSaveGState(context);
     // draw our board image
     [image drawInRect:CGRectMake(-kStickWidth/2, -kStickWidth/2, [self calcLen] + kStickWidth, kStickWidth)];
     
     // render our nails / screws
     [p0 renderAtZeroZero];
     CGContextTranslateCTM(context, [self calcLen], 0);
-
-    [p1 renderAtZeroZero];
     
+    [p1 renderAtZeroZero];
     CGContextRestoreGState(context);
 }
 
