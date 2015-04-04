@@ -7,6 +7,8 @@
 //
 
 #import "MMStickPropsView.h"
+#import "MMWheel.h"
+#import "MMBalloon.h"
 
 @implementation MMStickPropsView{
     UILabel* lengthLbl;
@@ -29,14 +31,14 @@
         [self addSubview:titleLbl];
         
 
-        lengthLbl = [[UILabel alloc] initWithFrame:CGRectMake(20, 110, 100, 40)];
+        lengthLbl = [[UILabel alloc] initWithFrame:CGRectMake(20, 50, 100, 40)];
         lengthLbl.text = @"Length: 0";
         [lengthLbl sizeToFit];
         CGRect fr = lengthLbl.frame;
         fr.size.width = self.bounds.size.width;
         lengthLbl.frame = fr;
         [self addSubview:lengthLbl];
-        lengthSlider = [[UISlider alloc] initWithFrame:CGRectMake(30, 110 + lengthLbl.bounds.size.height, self.bounds.size.width-60, 40)];
+        lengthSlider = [[UISlider alloc] initWithFrame:CGRectMake(30, 50 + lengthLbl.bounds.size.height, self.bounds.size.width-60, 40)];
         lengthSlider.minimumValue = 20;
         lengthSlider.maximumValue = 400;
         lengthSlider.continuous = YES;
@@ -56,16 +58,43 @@
 }
 
 -(void) showObjectProperties:(MMStick*)stick{
+    lengthSlider.minimumValue = 20;
+    lengthSlider.maximumValue = 400;
+    
     selectedStick = stick;
     self.hidden = !stick;
-    lengthLbl.text = [NSString stringWithFormat:@"Length: %.0f", stick.length];
-    lengthSlider.value = stick.length;
+    if([stick isKindOfClass:[MMWheel class]]){
+        lengthSlider.minimumValue = 40;
+        lengthSlider.maximumValue = 100;
+        MMWheel* w = (MMWheel*)stick;
+        lengthLbl.text = [NSString stringWithFormat:@"Radius: %.0f", w.radius];
+        lengthSlider.value = w.radius;
+    }else if([stick isKindOfClass:[MMBalloon class]]){
+        lengthSlider.minimumValue = 20;
+        lengthSlider.maximumValue = 70;
+        MMBalloon* b = (MMBalloon*)stick;
+        lengthLbl.text = [NSString stringWithFormat:@"Radius: %.0f", b.radius];
+        lengthSlider.value = b.radius;
+    }else{
+        lengthLbl.text = [NSString stringWithFormat:@"Length: %.0f", stick.length];
+        lengthSlider.value = stick.length;
+    }
 }
 
 
 -(void) lengthChanged:(UISlider*)slider{
-    selectedStick.length = slider.value;
-    lengthLbl.text = [NSString stringWithFormat:@"Length: %.0f", selectedStick.length];
+    if([selectedStick isKindOfClass:[MMWheel class]]){
+        MMWheel* w = (MMWheel*)selectedStick;
+        w.radius = lengthSlider.value;
+        lengthLbl.text = [NSString stringWithFormat:@"Radius: %.0f", w.radius];
+    }else if([selectedStick isKindOfClass:[MMBalloon class]]){
+        MMBalloon* b = (MMBalloon*)selectedStick;
+        b.radius = lengthSlider.value;
+        lengthLbl.text = [NSString stringWithFormat:@"Radius: %.0f", b.radius];
+    }else{
+        selectedStick.length = lengthSlider.value;
+        lengthLbl.text = [NSString stringWithFormat:@"Length: %.0f", selectedStick.length];
+    }
 }
 
 

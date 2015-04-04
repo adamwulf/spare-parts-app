@@ -69,6 +69,21 @@
     return self;
 }
 
+-(void) setRadius:(CGFloat)_radius{
+    radius = _radius;
+    self.length = 2*radius;
+    crossBar1.length = 2*radius;
+    CGFloat sqrttwo = sqrtf(2.0f);
+    crossBar2.length = radius*sqrttwo;
+    crossBar3.length = radius*sqrttwo;
+    crossBar4.length = radius*sqrttwo;
+    crossBar5.length = radius*sqrttwo;
+    spoke1.length = radius;
+    spoke2.length = radius;
+    spoke3.length = radius;
+    spoke4.length = radius;
+}
+
 
 -(void) tick{
     [super tick];
@@ -145,7 +160,9 @@
     [self.p3 renderAtZeroZero];
     CGContextRestoreGState(context);
     
-   
+    CGContextRestoreGState(context);
+
+    
 //    [super render];
 //    [spoke1 render];
 //    [spoke2 render];
@@ -156,13 +173,7 @@
 //    [crossBar3 render];
 //    [crossBar4 render];
 //    [crossBar5 render];
-
     
-    [[UIColor blueColor] setStroke];
-    [wheel stroke];
-    
-    CGContextRestoreGState(context);
-
 }
 
 -(BOOL) replacePoint:(MMPoint*)p withPoint:(MMPoint*)newP{

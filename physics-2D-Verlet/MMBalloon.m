@@ -12,6 +12,7 @@
 
 @implementation MMBalloon{
     UIImage* texture;
+    NSInteger color;
 }
 
 @synthesize center;
@@ -21,6 +22,7 @@
 
 -(id) init{
     if(self = [super init]){
+        color = rand() % 4;
         radius = kBalloonRadius;
         center = [[MMPoint alloc] init];
         center.attachable = NO;
@@ -45,6 +47,10 @@
     ret.tail.y = p.y + ret.radius;
     [ret.tail nullVelocity];
     return ret;
+}
+-(void) setRadius:(CGFloat)_radius{
+    radius = _radius;
+    stick.length = _radius;
 }
 
 -(MMPoint*) p0{
@@ -71,7 +77,15 @@
                                                      endAngle:2*M_PI
                                                     clockwise:YES];
     
-    [[UIColor colorWithRed:180/255.0 green:0 blue:0 alpha:1] setFill];
+    if(color == 0){
+        [[UIColor colorWithRed:180/255.0 green:0 blue:0 alpha:1] setFill];
+    }else if(color == 1){
+        [[UIColor colorWithRed:0 green:180/255.0 blue:0 alpha:1] setFill];
+    }else if(color == 2){
+        [[UIColor colorWithRed:0 green:0 blue:180/255.0 alpha:1] setFill];
+    }else if(color == 3){
+        [[UIColor colorWithRed:180/255.0 green:180/255.0 blue:.2 alpha:1] setFill];
+    }
     [balloon fill];
     [texture drawInRect:CGRectMake(self.center.x-radius, self.center.y - radius, radius*2, radius*2)];
     
@@ -122,12 +136,16 @@
 -(void) encodeWithCoder:(NSCoder *)aCoder{
     [aCoder encodeObject:center forKey:@"center"];
     [aCoder encodeObject:tail forKey:@"tail"];
+    [aCoder encodeObject:[NSNumber numberWithFloat:radius] forKey:@"radius"];
+    [aCoder encodeObject:[NSNumber numberWithInt:color] forKey:@"color"];
 }
 
 -(id) initWithCoder:(NSCoder *)aDecoder{
     if(self = [self init]){
         [self replacePoint:center withPoint:[aDecoder decodeObjectForKey:@"center"]];
         [self replacePoint:tail withPoint:[aDecoder decodeObjectForKey:@"tail"]];
+        color = [[aDecoder decodeObjectForKey:@"color"] intValue];
+        radius = [[aDecoder decodeObjectForKey:@"radius"] floatValue];
     }
     return self;
 }

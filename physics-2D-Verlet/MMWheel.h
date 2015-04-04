@@ -10,7 +10,7 @@
 
 @interface MMWheel : MMStick
 
-@property (readonly) CGFloat radius;
+@property (nonatomic) CGFloat radius;
 @property (readonly) MMPoint* center;
 @property (readonly) MMPoint* p2;
 @property (readonly) MMPoint* p3;

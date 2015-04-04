@@ -14,7 +14,7 @@
 
 @property (readonly) MMPoint* center;
 @property (readonly) MMPoint* tail;
-@property (readonly) CGFloat radius;
+@property (nonatomic) CGFloat radius;
 @property (readonly) MMStick* stick;
 @property (readonly) MMPoint* p0;
 @property (readonly) MMPoint* p1;
