@@ -506,6 +506,7 @@
                 CGFloat vx = (p.x - p.oldx) * friction;
                 CGFloat vy = (p.y - p.oldy) * friction;
                 
+                // bounce off the edge of window
                 if(p.x > self.bounds.size.width - kStickWidth/2) {
                     p.x = self.bounds.size.width - kStickWidth/2;
                     p.oldx = p.x + vx * bounce;
@@ -521,6 +522,14 @@
                 else if(p.y < kStickWidth/2) {
                     p.y = kStickWidth/2;
                     p.oldy = p.y + vy * bounce;
+                }
+                
+                // push away from sidebar
+                if(p.x > self.bounds.size.width - kSidebarWidth) {
+                    p.x = p.x - 5;
+                    if(!playPauseButton.selected){
+                        [p nullVelocity];
+                    }
                 }
             }
         }
