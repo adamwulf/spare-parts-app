@@ -146,6 +146,7 @@
         [self replacePoint:tail withPoint:[aDecoder decodeObjectForKey:@"tail"]];
         color = [[aDecoder decodeObjectForKey:@"color"] intValue];
         radius = [[aDecoder decodeObjectForKey:@"radius"] floatValue];
+        stick.length = radius;
     }
     return self;
 }

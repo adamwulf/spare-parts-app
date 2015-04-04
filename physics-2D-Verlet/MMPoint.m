@@ -163,6 +163,7 @@
     [aCoder encodeObject:[NSNumber numberWithFloat:oldy] forKey:@"oldy"];
     [aCoder encodeObject:[NSNumber numberWithBool:immovable] forKey:@"immovable"];
     [aCoder encodeObject:[NSNumber numberWithBool:attachable] forKey:@"attachable"];
+    [aCoder encodeObject:[NSNumber numberWithFloat:gravityModifier] forKey:@"gravityModifier"];
 }
 
 - (id)initWithCoder:(NSCoder *)aDecoder{
@@ -173,6 +174,7 @@
         oldy = [[aDecoder decodeObjectForKey:@"oldy"] floatValue];
         immovable = [[aDecoder decodeObjectForKey:@"immovable"] boolValue];
         attachable = [[aDecoder decodeObjectForKey:@"attachable"] boolValue];
+        gravityModifier = [[aDecoder decodeObjectForKey:@"gravityModifier"] floatValue];
     }
     return self;
 }
