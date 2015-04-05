@@ -7,10 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "PropertiesView.h"
 #import "MMPoint.h"
 #import "MMStick.h"
 
-@interface MMPointPropsView : UIView
+@interface MMPointPropsView : PropertiesView
 
 -(void) showPointProperties:(MMPoint*)point;
 

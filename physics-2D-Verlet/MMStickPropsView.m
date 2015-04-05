@@ -18,19 +18,7 @@
 
 -(id) initWithFrame:(CGRect)frame{
     if(self = [super initWithFrame:frame]){
-        self.clipsToBounds = YES;
-        self.layer.borderColor = [UIColor blackColor].CGColor;
-        self.layer.borderWidth = 1;
-        self.layer.cornerRadius = 10;
-        self.hidden = YES;
         
-        UILabel* titleLbl = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.bounds.size.width, 40)];
-        titleLbl.text = @"Properties";
-        titleLbl.font = [UIFont boldSystemFontOfSize:titleLbl.font.pointSize];
-        titleLbl.textAlignment = NSTextAlignmentCenter;
-        [self addSubview:titleLbl];
-        
-
         lengthLbl = [[UILabel alloc] initWithFrame:CGRectMake(20, 50, 100, 40)];
         lengthLbl.text = @"Length: 0";
         [lengthLbl sizeToFit];
@@ -45,14 +33,6 @@
         [lengthSlider addTarget:self action:@selector(lengthChanged:) forControlEvents:UIControlEventValueChanged];
         [self addSubview:lengthSlider];
         
-        
-        UIView* bitsOfWhite = [[UIView alloc] initWithFrame:self.bounds];
-        bitsOfWhite.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:.5];
-        UIBlurEffect * blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
-        UIVisualEffectView *beView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
-        beView.frame = self.bounds;
-        [beView.contentView addSubview:bitsOfWhite];
-        [self insertSubview:beView atIndex:0];
     }
     return self;
 }
@@ -95,15 +75,6 @@
         selectedStick.length = lengthSlider.value;
         lengthLbl.text = [NSString stringWithFormat:@"Length: %.0f", selectedStick.length];
     }
-}
-
--(UIView*)hitTest:(CGPoint)point withEvent:(UIEvent *)event{
-    UIView* ret = [super hitTest:point withEvent:event];
-    if(!ret) return nil;
-    if([ret isKindOfClass:[UIControl class]]){
-        return ret;
-    }
-    return self;
 }
 
 

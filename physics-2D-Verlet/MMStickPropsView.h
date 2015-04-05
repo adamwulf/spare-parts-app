@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "MMStick.h"
+#import "PropertiesView.h"
 
-@interface MMStickPropsView : UIView
+@interface MMStickPropsView : PropertiesView
 
 -(void) showObjectProperties:(MMStick*)stick;
 

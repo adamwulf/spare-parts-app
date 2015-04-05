@@ -76,6 +76,7 @@
 		66A08F0D1AC9E9E100C670E5 /* engine-back.png in Resources */ = {isa = PBXBuildFile; fileRef = 66A08F0C1AC9E9E100C670E5 /* engine-back.png */; };
 		66A490011AC5E91500CC21BA /* InstantPanGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 66A490001AC5E91500CC21BA /* InstantPanGestureRecognizer.m */; };
 		66A490041AC5EAE500CC21BA /* MMSpring.m in Sources */ = {isa = PBXBuildFile; fileRef = 66A490031AC5EAE500CC21BA /* MMSpring.m */; };
+		66D210E11AD1D729001E733C /* PropertiesView.m in Sources */ = {isa = PBXBuildFile; fileRef = 66D210E01AD1D729001E733C /* PropertiesView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -171,6 +172,8 @@
 		66A490001AC5E91500CC21BA /* InstantPanGestureRecognizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InstantPanGestureRecognizer.m; sourceTree = "<group>"; };
 		66A490021AC5EAE500CC21BA /* MMSpring.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMSpring.h; sourceTree = "<group>"; };
 		66A490031AC5EAE500CC21BA /* MMSpring.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMSpring.m; sourceTree = "<group>"; };
+		66D210DF1AD1D729001E733C /* PropertiesView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PropertiesView.h; sourceTree = "<group>"; };
+		66D210E01AD1D729001E733C /* PropertiesView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PropertiesView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -290,16 +293,13 @@
 		66343C3A1ABF5D1300801962 /* PhysicsView */ = {
 			isa = PBXGroup;
 			children = (
+				66D210E21AD1D732001E733C /* Properties View */,
 				66664E9E1AD06D63001D1C3D /* Renderable */,
 				66343C3B1ABF5D2900801962 /* MMPhysicsView.h */,
 				66343C3C1ABF5D2900801962 /* MMPhysicsView.m */,
 				668337FC1ACF1EAB00FEE908 /* LoadingDeviceView.h */,
 				668337FD1ACF1EAB00FEE908 /* LoadingDeviceView.m */,
 				668337FF1ACF279500FEE908 /* LoadingDeviceViewDelegate.h */,
-				66625FE31AC21E460025F441 /* MMPointPropsView.h */,
-				66625FE41AC21E460025F441 /* MMPointPropsView.m */,
-				6695851D1ACC7BFC002C359C /* MMStickPropsView.h */,
-				6695851E1ACC7BFC002C359C /* MMStickPropsView.m */,
 				66309CF31AC48EA000FACEF9 /* Points Obs */,
 				66309CF41AC48EA700FACEF9 /* Stick Objs */,
 			);
@@ -440,6 +440,19 @@
 				66A490001AC5E91500CC21BA /* InstantPanGestureRecognizer.m */,
 			);
 			name = Gesture;
+			sourceTree = "<group>";
+		};
+		66D210E21AD1D732001E733C /* Properties View */ = {
+			isa = PBXGroup;
+			children = (
+				66D210DF1AD1D729001E733C /* PropertiesView.h */,
+				66D210E01AD1D729001E733C /* PropertiesView.m */,
+				66625FE31AC21E460025F441 /* MMPointPropsView.h */,
+				66625FE41AC21E460025F441 /* MMPointPropsView.m */,
+				6695851D1ACC7BFC002C359C /* MMStickPropsView.h */,
+				6695851E1ACC7BFC002C359C /* MMStickPropsView.m */,
+			);
+			name = "Properties View";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -587,6 +600,7 @@
 				66677C5F1ACBA6D6003A6723 /* SidebarBackground.m in Sources */,
 				66A490041AC5EAE500CC21BA /* MMSpring.m in Sources */,
 				66625FE81AC220FE0025F441 /* MMPiston.m in Sources */,
+				66D210E11AD1D729001E733C /* PropertiesView.m in Sources */,
 				66343C161ABF5BB500801962 /* main.m in Sources */,
 				66309CEC1AC484E900FACEF9 /* MMEnginePiston.m in Sources */,
 				6651B8BB1ACDCEEA008B1016 /* SaveLoadManager.m in Sources */,
