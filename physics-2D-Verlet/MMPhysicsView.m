@@ -261,10 +261,10 @@
 #pragma mark - Data
 
 -(void) initializeData{
-    [points addObject:[MMPoint pointWithX:100 andY:100]];
-    [points addObject:[MMPoint pointWithX:200 andY:100]];
-    [points addObject:[MMPoint pointWithX:200 andY:200]];
-    [points addObject:[MMPoint pointWithX:100 andY:200]];
+    [points addObject:[MMPoint pointWithX:300 andY:100]];
+    [points addObject:[MMPoint pointWithX:400 andY:100]];
+    [points addObject:[MMPoint pointWithX:400 andY:200]];
+    [points addObject:[MMPoint pointWithX:300 andY:200]];
     
     [sticks addObject:[MMStick stickWithP0:[points objectAtIndex:0]
                                      andP1:[points objectAtIndex:1]]];
