@@ -100,4 +100,15 @@
     gravityLbl.text = [NSString stringWithFormat:@"Gravity: %.1f", selectedPoint.gravityModifier];
 }
 
+
+-(UIView*)hitTest:(CGPoint)point withEvent:(UIEvent *)event{
+    UIView* ret = [super hitTest:point withEvent:event];
+    if(!ret) return nil;
+    if([ret isKindOfClass:[UIControl class]]){
+        return ret;
+    }
+    return self;
+}
+
+
 @end
