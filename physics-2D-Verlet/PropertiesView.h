@@ -7,7 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "PropertiesViewDelegate.h"
 
 @interface PropertiesView : UIView
+
+@property (weak) NSObject<PropertiesViewDelegate>* delegate;
+
+
+-(void) startEditingProperties;
+
+-(void) stopEditingProperties;
 
 @end

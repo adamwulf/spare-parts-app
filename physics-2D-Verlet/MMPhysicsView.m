@@ -22,10 +22,11 @@
 #import "SaveLoadManager.h"
 #import "LoadingDeviceView.h"
 #import "LoadingDeviceViewDelegate.h"
+#import "PropertiesViewDelegate.h"
 
 #define kMaxStress 0.5
 
-@interface MMPhysicsView ()<LoadingDeviceViewDelegate, UIGestureRecognizerDelegate>
+@interface MMPhysicsView ()<LoadingDeviceViewDelegate, UIGestureRecognizerDelegate,PropertiesViewDelegate>
 
 @end
 
@@ -66,6 +67,8 @@
     NSMutableSet* processedPoints;
     
     NSMutableArray* defaultObjects;
+    
+    BOOL isActivelyEditingProperties;
 }
 
 @synthesize controller;
@@ -86,9 +89,11 @@
         balloons = [NSMutableArray array];
         
         pointPropertiesView = [[MMPointPropsView alloc] initWithFrame:CGRectMake(20, 20, 200, 250)];
+        pointPropertiesView.delegate = self;
         [self addSubview:pointPropertiesView];
         
         stickPropertiesView = [[MMStickPropsView alloc] initWithFrame:CGRectMake(20, 20, 200, 250)];
+        stickPropertiesView.delegate = self;
         [self addSubview:stickPropertiesView];
         
         [self initializeData];
@@ -323,8 +328,10 @@
         [self constrainPoints];
     }
     
-    // remove stressed objects
-    [self cullSticks];
+    if(!isActivelyEditingProperties){
+        // remove stressed objects
+        [self cullSticks];
+    }
     
     // render everything
     [self renderSticks];
@@ -750,5 +757,17 @@
     }
     return YES;
 }
+
+
+#pragma mark - PropertiesViewDelegate
+
+-(void) didStartEditingProperties{
+    isActivelyEditingProperties = YES;
+}
+
+-(void) didStopEditingProperties{
+    isActivelyEditingProperties = NO;
+}
+
 
 @end

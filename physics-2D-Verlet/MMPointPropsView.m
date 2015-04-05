@@ -24,6 +24,8 @@
         immovableSwitch.on = NO;
         immovableSwitch.center = CGPointMake(50, 60);
         [immovableSwitch addTarget:self action:@selector(immovableChanged) forControlEvents:UIControlEventValueChanged];
+        [immovableSwitch addTarget:self action:@selector(startEditingProperties) forControlEvents:UIControlEventTouchDown];
+        [immovableSwitch addTarget:self action:@selector(stopEditingProperties) forControlEvents:UIControlEventTouchUpInside | UIControlEventTouchUpOutside];
         [self addSubview:immovableSwitch];
         
         UILabel* lbl = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, 60)];
@@ -45,6 +47,8 @@
         gravitySlider.maximumValue = 2;
         gravitySlider.continuous = YES;
         [gravitySlider addTarget:self action:@selector(gravityChanged:) forControlEvents:UIControlEventValueChanged];
+        [gravitySlider addTarget:self action:@selector(startEditingProperties) forControlEvents:UIControlEventTouchDown];
+        [gravitySlider addTarget:self action:@selector(stopEditingProperties) forControlEvents:UIControlEventTouchUpInside | UIControlEventTouchUpOutside];
         [self addSubview:gravitySlider];
         
         lbl = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 40, 40)];
@@ -80,6 +84,7 @@
     selectedPoint.gravityModifier = _slider.value;
     gravityLbl.text = [NSString stringWithFormat:@"Gravity: %.1f", selectedPoint.gravityModifier];
 }
+
 
 
 @end

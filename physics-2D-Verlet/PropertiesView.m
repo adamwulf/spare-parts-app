@@ -10,6 +10,8 @@
 
 @implementation PropertiesView
 
+@synthesize delegate;
+
 -(id) initWithFrame:(CGRect)frame{
     if(self = [super initWithFrame:frame]){
         self.clipsToBounds = YES;
@@ -44,5 +46,13 @@
     return self;
 }
 
+
+-(void) startEditingProperties{
+    [self.delegate didStartEditingProperties];
+}
+
+-(void) stopEditingProperties{
+    [self.delegate didStopEditingProperties];
+}
 
 @end

@@ -31,6 +31,8 @@
         lengthSlider.maximumValue = 400;
         lengthSlider.continuous = YES;
         [lengthSlider addTarget:self action:@selector(lengthChanged:) forControlEvents:UIControlEventValueChanged];
+        [lengthSlider addTarget:self action:@selector(startEditingProperties) forControlEvents:UIControlEventTouchDown];
+        [lengthSlider addTarget:self action:@selector(stopEditingProperties) forControlEvents:UIControlEventTouchUpInside | UIControlEventTouchUpOutside];
         [self addSubview:lengthSlider];
         
     }
