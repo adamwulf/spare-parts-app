@@ -137,14 +137,14 @@
     [aCoder encodeObject:center forKey:@"center"];
     [aCoder encodeObject:tail forKey:@"tail"];
     [aCoder encodeObject:[NSNumber numberWithFloat:radius] forKey:@"radius"];
-    [aCoder encodeObject:[NSNumber numberWithInt:color] forKey:@"color"];
+    [aCoder encodeObject:[NSNumber numberWithInteger:color] forKey:@"color"];
 }
 
 -(id) initWithCoder:(NSCoder *)aDecoder{
     if(self = [self init]){
         [self replacePoint:center withPoint:[aDecoder decodeObjectForKey:@"center"]];
         [self replacePoint:tail withPoint:[aDecoder decodeObjectForKey:@"tail"]];
-        color = [[aDecoder decodeObjectForKey:@"color"] intValue];
+        color = [[aDecoder decodeObjectForKey:@"color"] integerValue];
         radius = [[aDecoder decodeObjectForKey:@"radius"] floatValue];
         stick.length = radius;
     }
