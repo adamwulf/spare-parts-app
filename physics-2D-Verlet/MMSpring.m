@@ -76,6 +76,12 @@
     stress = MIN(.1, percDiff) * 2;
 }
 
+-(CGFloat) stress{
+    // .0 => blue
+    // .1 => red
+    return [super stress] / 5;
+}
+
 -(MMStick*) cloneObject{
     return [MMSpring springWithP0:[MMPoint pointWithCGPoint:self.p0.asCGPoint]
                             andP1:[MMPoint pointWithCGPoint:self.p1.asCGPoint]];
