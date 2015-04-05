@@ -25,7 +25,7 @@
 
 #define kMaxStress 0.5
 
-@interface MMPhysicsView ()<LoadingDeviceViewDelegate>
+@interface MMPhysicsView ()<LoadingDeviceViewDelegate, UIGestureRecognizerDelegate>
 
 @end
 
@@ -99,9 +99,11 @@
         
         
         selectGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapPointGesture:)];
+        selectGesture.delegate = self;
         [self addGestureRecognizer:selectGesture];
         
         grabPointGesture = [[InstantPanGestureRecognizer alloc] initWithTarget:self action:@selector(movePointGesture:)];
+        grabPointGesture.delegate = self;
         [self addGestureRecognizer:grabPointGesture];
         
         playPauseButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -736,6 +738,17 @@
 -(void) cancelLoadingDevice{
     selectGesture.enabled = YES;
     grabPointGesture.enabled = YES;
+}
+
+#pragma mark - UIGestureRecognizerDelegate
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch{
+    if([touch.view isKindOfClass:[UIControl class]] ||
+       touch.view == pointPropertiesView ||
+       touch.view == stickPropertiesView){
+        return NO;
+    }
+    return YES;
 }
 
 @end
