@@ -77,6 +77,7 @@
 		66A490011AC5E91500CC21BA /* InstantPanGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 66A490001AC5E91500CC21BA /* InstantPanGestureRecognizer.m */; };
 		66A490041AC5EAE500CC21BA /* MMSpring.m in Sources */ = {isa = PBXBuildFile; fileRef = 66A490031AC5EAE500CC21BA /* MMSpring.m */; };
 		66D210E11AD1D729001E733C /* PropertiesView.m in Sources */ = {isa = PBXBuildFile; fileRef = 66D210E01AD1D729001E733C /* PropertiesView.m */; };
+		66DCB8C71AD22B4600538276 /* TutorialView.m in Sources */ = {isa = PBXBuildFile; fileRef = 66DCB8C61AD22B4600538276 /* TutorialView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -175,6 +176,9 @@
 		66D210DF1AD1D729001E733C /* PropertiesView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PropertiesView.h; sourceTree = "<group>"; };
 		66D210E01AD1D729001E733C /* PropertiesView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PropertiesView.m; sourceTree = "<group>"; };
 		66D210E31AD1D7C2001E733C /* PropertiesViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PropertiesViewDelegate.h; sourceTree = "<group>"; };
+		66DCB8C51AD22B4600538276 /* TutorialView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TutorialView.h; sourceTree = "<group>"; };
+		66DCB8C61AD22B4600538276 /* TutorialView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TutorialView.m; sourceTree = "<group>"; };
+		66DCB8C81AD22BEC00538276 /* TutorialViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TutorialViewDelegate.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -294,6 +298,7 @@
 		66343C3A1ABF5D1300801962 /* PhysicsView */ = {
 			isa = PBXGroup;
 			children = (
+				66DCB8C41AD22B2400538276 /* Tutorial */,
 				66D210E21AD1D732001E733C /* Properties View */,
 				66664E9E1AD06D63001D1C3D /* Renderable */,
 				66343C3B1ABF5D2900801962 /* MMPhysicsView.h */,
@@ -457,6 +462,16 @@
 			name = "Properties View";
 			sourceTree = "<group>";
 		};
+		66DCB8C41AD22B2400538276 /* Tutorial */ = {
+			isa = PBXGroup;
+			children = (
+				66DCB8C51AD22B4600538276 /* TutorialView.h */,
+				66DCB8C61AD22B4600538276 /* TutorialView.m */,
+				66DCB8C81AD22BEC00538276 /* TutorialViewDelegate.h */,
+			);
+			name = Tutorial;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -608,6 +623,7 @@
 				6651B8BB1ACDCEEA008B1016 /* SaveLoadManager.m in Sources */,
 				668337FE1ACF1EAB00FEE908 /* LoadingDeviceView.m in Sources */,
 				66625FEB1AC3496D0025F441 /* MMEngine.m in Sources */,
+				66DCB8C71AD22B4600538276 /* TutorialView.m in Sources */,
 				666E0A691AC093A10018289C /* MMStick.m in Sources */,
 				666E0A661AC0924D0018289C /* MMPoint.m in Sources */,
 				66664EA11AD06D7E001D1C3D /* Renderable.m in Sources */,

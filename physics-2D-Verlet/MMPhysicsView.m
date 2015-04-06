@@ -66,12 +66,11 @@
     
     NSMutableSet* processedPoints;
     
-    NSMutableArray* defaultObjects;
-    
     BOOL isActivelyEditingProperties;
 }
 
 @synthesize controller;
+@synthesize defaultObjects;
 
 -(id) initWithFrame:(CGRect)frame{
     if(self = [super initWithFrame:frame]){
@@ -145,19 +144,6 @@
         // initialize default objects in the sidebar
         defaultObjects = [NSMutableArray array];
         
-        CGFloat sidebarLeft = self.bounds.size.width - 230;
-        CGFloat sidebarRight = self.bounds.size.width - 60;
-        [defaultObjects addObject:[MMStick stickWithP0:[MMPoint pointWithX:sidebarLeft andY:200]
-                                                 andP1:[MMPoint pointWithX:sidebarRight andY:240]]];
-        [defaultObjects addObject:[MMPiston pistonWithP0:[MMPoint pointWithX:sidebarLeft andY:300]
-                                                   andP1:[MMPoint pointWithX:sidebarRight andY:340]]];
-        [defaultObjects addObject:[MMEngine engineWithP0:[MMPoint pointWithX:sidebarLeft andY:400]
-                                                   andP1:[MMPoint pointWithX:sidebarRight andY:440]]];
-        [defaultObjects addObject:[MMSpring springWithP0:[MMPoint pointWithX:sidebarLeft andY:500]
-                                                   andP1:[MMPoint pointWithX:sidebarRight andY:540]]];
-        [defaultObjects addObject:[MMBalloon balloonWithCGPoint:CGPointMake(sidebarLeft, 600)]];
-        [defaultObjects addObject:[MMWheel wheelWithCenter:[MMPoint pointWithX:sidebarLeft + 100 andY:680]
-                                                 andRadius:kWheelRadius]];
     }
     return self;
 }

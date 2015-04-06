@@ -13,5 +13,6 @@
 @interface MMPhysicsView : UIView
 
 @property (weak) MMPhysicsViewController* controller;
+@property (readonly) NSMutableArray* defaultObjects;
 
 @end
