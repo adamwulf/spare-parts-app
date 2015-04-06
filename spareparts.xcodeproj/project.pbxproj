@@ -179,6 +179,7 @@
 		66DCB8C51AD22B4600538276 /* TutorialView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TutorialView.h; sourceTree = "<group>"; };
 		66DCB8C61AD22B4600538276 /* TutorialView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TutorialView.m; sourceTree = "<group>"; };
 		66DCB8C81AD22BEC00538276 /* TutorialViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TutorialViewDelegate.h; sourceTree = "<group>"; };
+		66DCB8C91AD22FF100538276 /* PhysicsViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhysicsViewDelegate.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -303,6 +304,7 @@
 				66664E9E1AD06D63001D1C3D /* Renderable */,
 				66343C3B1ABF5D2900801962 /* MMPhysicsView.h */,
 				66343C3C1ABF5D2900801962 /* MMPhysicsView.m */,
+				66DCB8C91AD22FF100538276 /* PhysicsViewDelegate.h */,
 				668337FC1ACF1EAB00FEE908 /* LoadingDeviceView.h */,
 				668337FD1ACF1EAB00FEE908 /* LoadingDeviceView.m */,
 				668337FF1ACF279500FEE908 /* LoadingDeviceViewDelegate.h */,

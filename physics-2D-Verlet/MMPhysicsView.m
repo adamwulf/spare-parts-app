@@ -70,7 +70,8 @@
 }
 
 @synthesize controller;
-@synthesize defaultObjects;
+@synthesize staticObjects;
+@synthesize delegate;
 
 -(id) initWithFrame:(CGRect)frame{
     if(self = [super initWithFrame:frame]){
@@ -142,7 +143,7 @@
         
        
         // initialize default objects in the sidebar
-        defaultObjects = [NSMutableArray array];
+        staticObjects = [NSMutableArray array];
         
     }
     return self;
@@ -252,25 +253,9 @@
 #pragma mark - Data
 
 -(void) initializeData{
-    [points addObject:[MMPoint pointWithX:300 andY:100]];
-    [points addObject:[MMPoint pointWithX:400 andY:100]];
-    [points addObject:[MMPoint pointWithX:400 andY:200]];
-    [points addObject:[MMPoint pointWithX:300 andY:200]];
-    
-    [sticks addObject:[MMStick stickWithP0:[points objectAtIndex:0]
-                                     andP1:[points objectAtIndex:1]]];
-    [sticks addObject:[MMStick stickWithP0:[points objectAtIndex:1]
-                                     andP1:[points objectAtIndex:2]]];
-    [sticks addObject:[MMStick stickWithP0:[points objectAtIndex:2]
-                                     andP1:[points objectAtIndex:3]]];
-    [sticks addObject:[MMStick stickWithP0:[points objectAtIndex:3]
-                                     andP1:[points objectAtIndex:0]]];
-    [sticks addObject:[MMStick stickWithP0:[points objectAtIndex:0]
-                                     andP1:[points objectAtIndex:2]]];
-    [sticks addObject:[MMStick stickWithP0:[points objectAtIndex:1]
-                                     andP1:[points objectAtIndex:3]]];
-    
-    [points makeObjectsPerformSelector:@selector(bump)];
+    [self.delegate initializePhysicsDataIntoPoints:points
+                                         andSticks:sticks
+                                       andBalloons:balloons];
 }
 
 
@@ -293,7 +278,7 @@
     
     
     // render sidebar objects
-    for (MMStick* stick in defaultObjects){
+    for (MMStick* stick in staticObjects){
         [stick render];
     }
     
@@ -647,7 +632,7 @@
 }
 
 -(MMStick*) getSidebarObject:(CGPoint)point{
-    MMStick* ret = [[defaultObjects sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+    MMStick* ret = [[staticObjects sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
         return [obj1 distanceFromPoint:point] < [obj2 distanceFromPoint:point] ? NSOrderedAscending : NSOrderedDescending;
     }] firstObject];
     if([ret distanceFromPoint:point] < 30){

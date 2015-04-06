@@ -9,10 +9,21 @@
 #import "TutorialView.h"
 #import "Constants.h"
 #import "MMPhysicsView.h"
+#import "MMStick.h"
+#import "MMEngine.h"
+#import "MMPiston.h"
+#import "MMWheel.h"
+#import "MMBalloon.h"
+#import "MMSpring.h"
+#import "PhysicsViewDelegate.h"
+
+@interface TutorialView ()<PhysicsViewDelegate>
+
+@end
 
 @implementation TutorialView{
     UIScrollView* scrollView;
-    MMPhysicsView* physics;
+    MMPhysicsView* physicsView;
 }
 
 @synthesize delegate;
@@ -55,7 +66,21 @@
         [scrollView addSubview:closeTutorialButton];
         scrollView.contentSize = CGSizeMake(1200, scrollView.bounds.size.height);
         
-        physics = [[MMPhysicsView alloc] initWithFrame:CGRectMake(0, 0, scrollView.contentSize.width, scrollView.contentSize.height)];
+        physicsView = [[MMPhysicsView alloc] initWithFrame:CGRectMake(0, 0, scrollView.contentSize.width, scrollView.contentSize.height)];
+        physicsView.delegate = self;
+
+        [physicsView.staticObjects addObject:[MMStick stickWithP0:[MMPoint pointWithX:100 andY:200]
+                                                             andP1:[MMPoint pointWithX:300 andY:240]]];
+        [physicsView.staticObjects addObject:[MMPiston pistonWithP0:[MMPoint pointWithX:100 andY:300]
+                                                               andP1:[MMPoint pointWithX:300 andY:340]]];
+        [physicsView.staticObjects addObject:[MMEngine engineWithP0:[MMPoint pointWithX:100 andY:400]
+                                                               andP1:[MMPoint pointWithX:300 andY:440]]];
+        [physicsView.staticObjects addObject:[MMSpring springWithP0:[MMPoint pointWithX:100 andY:500]
+                                                               andP1:[MMPoint pointWithX:300 andY:540]]];
+        [physicsView.staticObjects addObject:[MMBalloon balloonWithCGPoint:CGPointMake(100, 600)]];
+        [physicsView.staticObjects addObject:[MMWheel wheelWithCenter:[MMPoint pointWithX:100 + 100 andY:680]
+                                                             andRadius:kWheelRadius]];
+        [scrollView addSubview:physicsView];
         
     }
     return self;
@@ -66,5 +91,12 @@
     [delegate tutorialViewClosed];
 }
 
+#pragma mark - PhysicsViewDelegate
+
+-(void) initializePhysicsDataIntoPoints:(NSMutableArray *)points
+                              andSticks:(NSMutableArray *)sticks
+                            andBalloons:(NSMutableArray *)balloons{
+    // noop
+}
 
 @end

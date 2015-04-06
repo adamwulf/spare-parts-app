@@ -7,12 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "PhysicsViewDelegate.h"
 
 @class MMPhysicsViewController;
 
 @interface MMPhysicsView : UIView
 
 @property (weak) MMPhysicsViewController* controller;
-@property (readonly) NSMutableArray* defaultObjects;
+@property (weak) NSObject<PhysicsViewDelegate>* delegate;
+@property (readonly) NSMutableArray* staticObjects;
 
 @end

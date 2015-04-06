@@ -18,8 +18,9 @@
 #import "MMWheel.h"
 #import "MMBalloon.h"
 #import "MMSpring.h"
+#import "PhysicsViewDelegate.h"
 
-@interface MMPhysicsViewController ()<TutorialViewDelegate>
+@interface MMPhysicsViewController ()<TutorialViewDelegate,PhysicsViewDelegate>
 
 @end
 
@@ -51,6 +52,7 @@
     
     physicsView = [[MMPhysicsView alloc] initWithFrame:self.view.bounds];
     physicsView.controller = self;
+    physicsView.delegate = self;
     physicsView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
     [self.view addSubview:physicsView];
     
@@ -58,16 +60,16 @@
     
     CGFloat sidebarLeft = self.view.bounds.size.width - 230;
     CGFloat sidebarRight = self.view.bounds.size.width - 60;
-    [physicsView.defaultObjects addObject:[MMStick stickWithP0:[MMPoint pointWithX:sidebarLeft andY:200]
+    [physicsView.staticObjects addObject:[MMStick stickWithP0:[MMPoint pointWithX:sidebarLeft andY:200]
                                              andP1:[MMPoint pointWithX:sidebarRight andY:240]]];
-    [physicsView.defaultObjects addObject:[MMPiston pistonWithP0:[MMPoint pointWithX:sidebarLeft andY:300]
+    [physicsView.staticObjects addObject:[MMPiston pistonWithP0:[MMPoint pointWithX:sidebarLeft andY:300]
                                                andP1:[MMPoint pointWithX:sidebarRight andY:340]]];
-    [physicsView.defaultObjects addObject:[MMEngine engineWithP0:[MMPoint pointWithX:sidebarLeft andY:400]
+    [physicsView.staticObjects addObject:[MMEngine engineWithP0:[MMPoint pointWithX:sidebarLeft andY:400]
                                                andP1:[MMPoint pointWithX:sidebarRight andY:440]]];
-    [physicsView.defaultObjects addObject:[MMSpring springWithP0:[MMPoint pointWithX:sidebarLeft andY:500]
+    [physicsView.staticObjects addObject:[MMSpring springWithP0:[MMPoint pointWithX:sidebarLeft andY:500]
                                                andP1:[MMPoint pointWithX:sidebarRight andY:540]]];
-    [physicsView.defaultObjects addObject:[MMBalloon balloonWithCGPoint:CGPointMake(sidebarLeft, 600)]];
-    [physicsView.defaultObjects addObject:[MMWheel wheelWithCenter:[MMPoint pointWithX:sidebarLeft + 100 andY:680]
+    [physicsView.staticObjects addObject:[MMBalloon balloonWithCGPoint:CGPointMake(sidebarLeft, 600)]];
+    [physicsView.staticObjects addObject:[MMWheel wheelWithCenter:[MMPoint pointWithX:sidebarLeft + 100 andY:680]
                                              andRadius:kWheelRadius]];
     
     
@@ -97,6 +99,33 @@
     } completion:^(BOOL finished) {
         [tutorial removeFromSuperview];
     }];
+}
+
+
+#pragma mark - PhysicsViewDelegate
+
+-(void) initializePhysicsDataIntoPoints:(NSMutableArray *)points
+                              andSticks:(NSMutableArray *)sticks
+                            andBalloons:(NSMutableArray *)balloons{
+    [points addObject:[MMPoint pointWithX:300 andY:100]];
+    [points addObject:[MMPoint pointWithX:400 andY:100]];
+    [points addObject:[MMPoint pointWithX:400 andY:200]];
+    [points addObject:[MMPoint pointWithX:300 andY:200]];
+    
+    [sticks addObject:[MMStick stickWithP0:[points objectAtIndex:0]
+                                     andP1:[points objectAtIndex:1]]];
+    [sticks addObject:[MMStick stickWithP0:[points objectAtIndex:1]
+                                     andP1:[points objectAtIndex:2]]];
+    [sticks addObject:[MMStick stickWithP0:[points objectAtIndex:2]
+                                     andP1:[points objectAtIndex:3]]];
+    [sticks addObject:[MMStick stickWithP0:[points objectAtIndex:3]
+                                     andP1:[points objectAtIndex:0]]];
+    [sticks addObject:[MMStick stickWithP0:[points objectAtIndex:0]
+                                     andP1:[points objectAtIndex:2]]];
+    [sticks addObject:[MMStick stickWithP0:[points objectAtIndex:1]
+                                     andP1:[points objectAtIndex:3]]];
+    
+    [points makeObjectsPerformSelector:@selector(bump)];
 }
 
 @end
