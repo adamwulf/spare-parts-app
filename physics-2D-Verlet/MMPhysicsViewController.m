@@ -33,7 +33,7 @@
 - (void)viewDidLoad {
     
 #ifdef DEBUG
-//    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"hasCompletedTutorial"];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"hasCompletedTutorial"];
 #endif
 
     
@@ -50,9 +50,8 @@
     sidebar.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
     [backyard addSubview:sidebar];
     
-    physicsView = [[MMPhysicsView alloc] initWithFrame:self.view.bounds];
+    physicsView = [[MMPhysicsView alloc] initWithFrame:self.view.bounds andDelegate:self];
     physicsView.controller = self;
-    physicsView.delegate = self;
     physicsView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
     [self.view addSubview:physicsView];
     

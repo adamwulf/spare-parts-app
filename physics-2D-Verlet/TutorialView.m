@@ -56,21 +56,22 @@
         [self addSubview:scrollView];
         
         
-        scrollView.contentSize = CGSizeMake(2000, scrollView.bounds.size.height);
+        scrollView.contentSize = CGSizeMake(2000 + scrollView.bounds.size.width, scrollView.bounds.size.height);
         
-        physicsView = [[MMPhysicsView alloc] initWithFrame:CGRectMake(0, 0, scrollView.contentSize.width, scrollView.contentSize.height)];
-        physicsView.delegate = self;
+        physicsView = [[MMPhysicsView alloc] initWithFrame:CGRectMake(0, 0, scrollView.contentSize.width, scrollView.contentSize.height) andDelegate:self];
+        
+        CGFloat startOfPartsTutorial = scrollView.bounds.size.width;
 
-        [physicsView.staticObjects addObject:[MMStick stickWithP0:[MMPoint pointWithX:100 andY:50]
-                                                             andP1:[MMPoint pointWithX:300 andY:70]]];
-        [physicsView.staticObjects addObject:[MMPiston pistonWithP0:[MMPoint pointWithX:400 andY:50]
-                                                               andP1:[MMPoint pointWithX:600 andY:70]]];
-        [physicsView.staticObjects addObject:[MMEngine engineWithP0:[MMPoint pointWithX:700 andY:50]
-                                                               andP1:[MMPoint pointWithX:900 andY:70]]];
-        [physicsView.staticObjects addObject:[MMSpring springWithP0:[MMPoint pointWithX:1000 andY:50]
-                                                               andP1:[MMPoint pointWithX:1200 andY:70]]];
-        [physicsView.staticObjects addObject:[MMBalloon balloonWithCGPoint:CGPointMake(1370, 80)]];
-        [physicsView.staticObjects addObject:[MMWheel wheelWithCenter:[MMPoint pointWithX:1580 andY:80]
+        [physicsView.staticObjects addObject:[MMStick stickWithP0:[MMPoint pointWithX:startOfPartsTutorial+100 andY:50]
+                                                             andP1:[MMPoint pointWithX:startOfPartsTutorial+300 andY:70]]];
+        [physicsView.staticObjects addObject:[MMPiston pistonWithP0:[MMPoint pointWithX:startOfPartsTutorial+400 andY:50]
+                                                               andP1:[MMPoint pointWithX:startOfPartsTutorial+600 andY:70]]];
+        [physicsView.staticObjects addObject:[MMEngine engineWithP0:[MMPoint pointWithX:startOfPartsTutorial+700 andY:50]
+                                                               andP1:[MMPoint pointWithX:startOfPartsTutorial+900 andY:70]]];
+        [physicsView.staticObjects addObject:[MMSpring springWithP0:[MMPoint pointWithX:startOfPartsTutorial+1000 andY:50]
+                                                               andP1:[MMPoint pointWithX:startOfPartsTutorial+1200 andY:70]]];
+        [physicsView.staticObjects addObject:[MMBalloon balloonWithCGPoint:CGPointMake(startOfPartsTutorial+1370, 80)]];
+        [physicsView.staticObjects addObject:[MMWheel wheelWithCenter:[MMPoint pointWithX:startOfPartsTutorial+1580 andY:80]
                                                              andRadius:kWheelRadius]];
         [physicsView turnOffGestures];
         [physicsView hideSidebar];
@@ -83,14 +84,33 @@
         [closeTutorialButton setAttributedTitle:title forState:UIControlStateNormal];
         [closeTutorialButton addTarget:self action:@selector(closeTutorialPressed:) forControlEvents:UIControlEventTouchUpInside];
         [closeTutorialButton sizeToFit];
-        closeTutorialButton.center = CGPointMake(1830, scrollView.bounds.size.height/2);
+        closeTutorialButton.center = CGPointMake(startOfPartsTutorial+1830, scrollView.bounds.size.height/2);
         [scrollView addSubview:closeTutorialButton];
         
+        
+        
+        UILabel* lbl = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 400, 200)];
+        lbl.numberOfLines = 3;
+        lbl.text = @"Spare Parts is a fun sandbox contraption building game where the only limit is your imagination!";
+        [self sizeLabelAndKeepWidth:lbl];
+        lbl.textAlignment = NSTextAlignmentCenter;
+        lbl.center = CGPointMake(scrollView.bounds.size.width/2, scrollView.bounds.size.height/2);
+        [scrollView addSubview:lbl];
+        
+        lbl = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 400, 200)];
+        lbl.numberOfLines = 1;
+        lbl.attributedText = [[NSAttributedString alloc] initWithString:@"Hello, Builder!"
+                                                             attributes:@{ NSFontAttributeName : [UIFont boldSystemFontOfSize:28] }];
+        [self sizeLabelAndKeepWidth:lbl];
+        lbl.textAlignment = NSTextAlignmentCenter;
+        lbl.center = CGPointMake(scrollView.bounds.size.width/2, scrollView.bounds.size.height/2 - 100);
+        [scrollView addSubview:lbl];
+        
         // planks
-        UILabel* lbl = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 200)];
+        lbl = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 200)];
         lbl.numberOfLines = 0;
         lbl.text = @"Drag these planks from the sidebar to start building your contraption! Careful that they don't flex or bend, or they'll break!\n\n Connect planks together at their end points!";
-        lbl.center = CGPointMake(200, 200);
+        lbl.center = CGPointMake(startOfPartsTutorial+200, 200);
         [self sizeLabelAndKeepWidth:lbl];
         [scrollView addSubview:lbl];
         
@@ -99,7 +119,7 @@
         lbl = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 200)];
         lbl.numberOfLines = 0;
         lbl.text = @"Pistons expand and contract to add motion and movement to your machine!";
-        lbl.center = CGPointMake(500, 220);
+        lbl.center = CGPointMake(startOfPartsTutorial+500, 220);
         [self sizeLabelAndKeepWidth:lbl];
         [scrollView addSubview:lbl];
         
@@ -107,7 +127,7 @@
         lbl = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 200)];
         lbl.numberOfLines = 0;
         lbl.text = @"Engines have 3 connection points! The center point will slide between the two endpoints of the engine!";
-        lbl.center = CGPointMake(800, 220);
+        lbl.center = CGPointMake(startOfPartsTutorial+800, 220);
         [self sizeLabelAndKeepWidth:lbl];
         [scrollView addSubview:lbl];
         
@@ -115,7 +135,7 @@
         lbl = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 200)];
         lbl.numberOfLines = 0;
         lbl.text = @"The spring can stretch and add some suspension to your machine! Perfect to help ease stress on planks and pistons!";
-        lbl.center = CGPointMake(1100, 220);
+        lbl.center = CGPointMake(startOfPartsTutorial+1100, 220);
         [self sizeLabelAndKeepWidth:lbl];
         [scrollView addSubview:lbl];
         
@@ -123,7 +143,7 @@
         lbl = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 200)];
         lbl.numberOfLines = 0;
         lbl.text = @"Balloons can be attached to the endpoint of any plank, piston, engine, or spring, and will lift it up! Larger balloons can lift heavier objects!";
-        lbl.center = CGPointMake(1380, 260);
+        lbl.center = CGPointMake(startOfPartsTutorial+1380, 260);
         [self sizeLabelAndKeepWidth:lbl];
         [scrollView addSubview:lbl];
         
@@ -131,7 +151,7 @@
         lbl = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 200)];
         lbl.numberOfLines = 0;
         lbl.text = @"Wheels can spin around their center point, and offer five attachment points for other objects!";
-        lbl.center = CGPointMake(1600, 260);
+        lbl.center = CGPointMake(startOfPartsTutorial+1600, 260);
         [self sizeLabelAndKeepWidth:lbl];
         [scrollView addSubview:lbl];
         

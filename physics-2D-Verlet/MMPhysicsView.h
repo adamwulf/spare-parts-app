@@ -17,6 +17,10 @@
 @property (weak) NSObject<PhysicsViewDelegate>* delegate;
 @property (readonly) NSMutableArray* staticObjects;
 
+-(id) initWithFrame:(CGRect)frame NS_UNAVAILABLE;
+
+-(id) initWithFrame:(CGRect)frame andDelegate:(NSObject<PhysicsViewDelegate>*)_delegate;
+
 -(void) turnOffGestures;
 
 -(void) hideSidebar;

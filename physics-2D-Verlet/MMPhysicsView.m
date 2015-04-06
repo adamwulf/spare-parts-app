@@ -73,10 +73,11 @@
 @synthesize staticObjects;
 @synthesize delegate;
 
--(id) initWithFrame:(CGRect)frame{
+-(id) initWithFrame:(CGRect)frame andDelegate:(NSObject<PhysicsViewDelegate>*)_delegate{
     if(self = [super initWithFrame:frame]){
         self.backgroundColor = [UIColor clearColor];
         self.opaque = NO;
+        self.delegate = _delegate;
         
         bounce = 0.9;
         gravity = 0.5;
