@@ -17,4 +17,8 @@
 @property (weak) NSObject<PhysicsViewDelegate>* delegate;
 @property (readonly) NSMutableArray* staticObjects;
 
+-(void) turnOffGestures;
+
+-(void) hideSidebar;
+
 @end

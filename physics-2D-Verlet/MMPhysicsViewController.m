@@ -69,17 +69,14 @@
     [physicsView.staticObjects addObject:[MMSpring springWithP0:[MMPoint pointWithX:sidebarLeft andY:500]
                                                andP1:[MMPoint pointWithX:sidebarRight andY:540]]];
     [physicsView.staticObjects addObject:[MMBalloon balloonWithCGPoint:CGPointMake(sidebarLeft, 600)]];
-    [physicsView.staticObjects addObject:[MMWheel wheelWithCenter:[MMPoint pointWithX:sidebarLeft + 100 andY:680]
+    [physicsView.staticObjects addObject:[MMWheel wheelWithCenter:[MMPoint pointWithX:sidebarLeft + 120 andY:680]
                                              andRadius:kWheelRadius]];
     
     
     
     
     if(![[NSUserDefaults standardUserDefaults] boolForKey:@"hasCompletedTutorial"]){
-        // add the tutorial
-        tutorial = [[TutorialView alloc] initWithFrame:self.view.bounds];
-        tutorial.delegate = self;
-        [self.view addSubview:tutorial];
+        [self pleaseOpenTutorial];
     }
 }
 
@@ -126,6 +123,14 @@
                                      andP1:[points objectAtIndex:3]]];
     
     [points makeObjectsPerformSelector:@selector(bump)];
+}
+
+
+-(void) pleaseOpenTutorial{
+    // add the tutorial
+    tutorial = [[TutorialView alloc] initWithFrame:self.view.bounds];
+    tutorial.delegate = self;
+    [self.view addSubview:tutorial];
 }
 
 @end

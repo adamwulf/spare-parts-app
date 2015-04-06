@@ -14,4 +14,6 @@
                               andSticks:(NSMutableArray*)sticks
                             andBalloons:(NSMutableArray*)balloons;
 
+-(void) pleaseOpenTutorial;
+
 @end

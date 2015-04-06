@@ -56,34 +56,104 @@
         [self addSubview:scrollView];
         
         
+        scrollView.contentSize = CGSizeMake(2000, scrollView.bounds.size.height);
+        
+        physicsView = [[MMPhysicsView alloc] initWithFrame:CGRectMake(0, 0, scrollView.contentSize.width, scrollView.contentSize.height)];
+        physicsView.delegate = self;
+
+        [physicsView.staticObjects addObject:[MMStick stickWithP0:[MMPoint pointWithX:100 andY:50]
+                                                             andP1:[MMPoint pointWithX:300 andY:70]]];
+        [physicsView.staticObjects addObject:[MMPiston pistonWithP0:[MMPoint pointWithX:400 andY:50]
+                                                               andP1:[MMPoint pointWithX:600 andY:70]]];
+        [physicsView.staticObjects addObject:[MMEngine engineWithP0:[MMPoint pointWithX:700 andY:50]
+                                                               andP1:[MMPoint pointWithX:900 andY:70]]];
+        [physicsView.staticObjects addObject:[MMSpring springWithP0:[MMPoint pointWithX:1000 andY:50]
+                                                               andP1:[MMPoint pointWithX:1200 andY:70]]];
+        [physicsView.staticObjects addObject:[MMBalloon balloonWithCGPoint:CGPointMake(1370, 80)]];
+        [physicsView.staticObjects addObject:[MMWheel wheelWithCenter:[MMPoint pointWithX:1580 andY:80]
+                                                             andRadius:kWheelRadius]];
+        [physicsView turnOffGestures];
+        [physicsView hideSidebar];
+        [scrollView addSubview:physicsView];
+        
+        
         UIButton* closeTutorialButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
         NSAttributedString* title = [[NSAttributedString alloc] initWithString:@"Get Started!"
                                                                     attributes:@{ NSFontAttributeName : [UIFont boldSystemFontOfSize:30] }];
         [closeTutorialButton setAttributedTitle:title forState:UIControlStateNormal];
         [closeTutorialButton addTarget:self action:@selector(closeTutorialPressed:) forControlEvents:UIControlEventTouchUpInside];
         [closeTutorialButton sizeToFit];
-        closeTutorialButton.center = CGPointMake(1000, scrollView.bounds.size.height/2);
+        closeTutorialButton.center = CGPointMake(1830, scrollView.bounds.size.height/2);
         [scrollView addSubview:closeTutorialButton];
-        scrollView.contentSize = CGSizeMake(1200, scrollView.bounds.size.height);
         
-        physicsView = [[MMPhysicsView alloc] initWithFrame:CGRectMake(0, 0, scrollView.contentSize.width, scrollView.contentSize.height)];
-        physicsView.delegate = self;
-
-        [physicsView.staticObjects addObject:[MMStick stickWithP0:[MMPoint pointWithX:100 andY:200]
-                                                             andP1:[MMPoint pointWithX:300 andY:240]]];
-        [physicsView.staticObjects addObject:[MMPiston pistonWithP0:[MMPoint pointWithX:100 andY:300]
-                                                               andP1:[MMPoint pointWithX:300 andY:340]]];
-        [physicsView.staticObjects addObject:[MMEngine engineWithP0:[MMPoint pointWithX:100 andY:400]
-                                                               andP1:[MMPoint pointWithX:300 andY:440]]];
-        [physicsView.staticObjects addObject:[MMSpring springWithP0:[MMPoint pointWithX:100 andY:500]
-                                                               andP1:[MMPoint pointWithX:300 andY:540]]];
-        [physicsView.staticObjects addObject:[MMBalloon balloonWithCGPoint:CGPointMake(100, 600)]];
-        [physicsView.staticObjects addObject:[MMWheel wheelWithCenter:[MMPoint pointWithX:100 + 100 andY:680]
-                                                             andRadius:kWheelRadius]];
-        [scrollView addSubview:physicsView];
+        // planks
+        UILabel* lbl = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 200)];
+        lbl.numberOfLines = 0;
+        lbl.text = @"Drag these planks from the sidebar to start building your contraption! Careful that they don't flex or bend, or they'll break!\n\n Connect planks together at their end points!";
+        lbl.center = CGPointMake(200, 200);
+        [self sizeLabelAndKeepWidth:lbl];
+        [scrollView addSubview:lbl];
+        
+        
+        // pistons
+        lbl = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 200)];
+        lbl.numberOfLines = 0;
+        lbl.text = @"Pistons expand and contract to add motion and movement to your machine!";
+        lbl.center = CGPointMake(500, 220);
+        [self sizeLabelAndKeepWidth:lbl];
+        [scrollView addSubview:lbl];
+        
+        // engine
+        lbl = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 200)];
+        lbl.numberOfLines = 0;
+        lbl.text = @"Engines have 3 connection points! The center point will slide between the two endpoints of the engine!";
+        lbl.center = CGPointMake(800, 220);
+        [self sizeLabelAndKeepWidth:lbl];
+        [scrollView addSubview:lbl];
+        
+        // spring
+        lbl = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 200)];
+        lbl.numberOfLines = 0;
+        lbl.text = @"The spring can stretch and add some suspension to your machine! Perfect to help ease stress on planks and pistons!";
+        lbl.center = CGPointMake(1100, 220);
+        [self sizeLabelAndKeepWidth:lbl];
+        [scrollView addSubview:lbl];
+        
+        // balloon
+        lbl = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 200)];
+        lbl.numberOfLines = 0;
+        lbl.text = @"Balloons can be attached to the endpoint of any plank, piston, engine, or spring, and will lift it up! Larger balloons can lift heavier objects!";
+        lbl.center = CGPointMake(1380, 260);
+        [self sizeLabelAndKeepWidth:lbl];
+        [scrollView addSubview:lbl];
+        
+        // wheel
+        lbl = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 200)];
+        lbl.numberOfLines = 0;
+        lbl.text = @"Wheels can spin around their center point, and offer five attachment points for other objects!";
+        lbl.center = CGPointMake(1600, 260);
+        [self sizeLabelAndKeepWidth:lbl];
+        [scrollView addSubview:lbl];
+        
+        
+        
+        
+        lbl = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, 40)];
+        lbl.attributedText = [[NSAttributedString alloc] initWithString:@"Scroll! →"
+                                                                    attributes:@{ NSFontAttributeName : [UIFont boldSystemFontOfSize:18] }];
+        lbl.center = CGPointMake(scrollView.bounds.size.width - 50, scrollView.bounds.size.height - 20);
+        [scrollView addSubview:lbl];
         
     }
     return self;
+}
+
+-(void) sizeLabelAndKeepWidth:(UILabel*)lbl{
+    CGFloat w = lbl.bounds.size.width;
+    [lbl sizeToFit];
+    CGRect fr = lbl.frame;
+    fr.size.width = w;
+    lbl.frame = fr;
 }
 
 
@@ -96,6 +166,10 @@
 -(void) initializePhysicsDataIntoPoints:(NSMutableArray *)points
                               andSticks:(NSMutableArray *)sticks
                             andBalloons:(NSMutableArray *)balloons{
+    // noop
+}
+
+-(void) pleaseOpenTutorial{
     // noop
 }
 

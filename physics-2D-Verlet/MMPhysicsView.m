@@ -141,6 +141,13 @@
         [self addSubview:loadButton];
         loadButton.center = CGPointMake(self.bounds.size.width - 80, 140);
         
+        UIButton* helpButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+        [helpButton setTitle:@"Help" forState:UIControlStateNormal];
+        [helpButton sizeToFit];
+        [helpButton addTarget:self action:@selector(tutorialButtonPressed) forControlEvents:UIControlEventTouchUpInside];
+        [self addSubview:helpButton];
+        helpButton.center = CGPointMake(self.bounds.size.width - 220, self.bounds.size.height - 40);
+        
        
         // initialize default objects in the sidebar
         staticObjects = [NSMutableArray array];
@@ -740,5 +747,21 @@
     isActivelyEditingProperties = NO;
 }
 
+-(void) turnOffGestures{
+    selectGesture.enabled = NO;
+    grabPointGesture.enabled = NO;
+}
+
+-(void) hideSidebar{
+    for(UIView* v in self.subviews){
+        if([v isKindOfClass:[UIControl class]]){
+            v.hidden = YES;
+        }
+    }
+}
+
+-(void) tutorialButtonPressed{
+    [self.delegate pleaseOpenTutorial];
+}
 
 @end
