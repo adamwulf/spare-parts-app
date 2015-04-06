@@ -32,9 +32,9 @@
 
 - (void)viewDidLoad {
     
-#ifdef DEBUG
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"hasCompletedTutorial"];
-#endif
+//#ifdef DEBUG
+//    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"hasCompletedTutorial"];
+//#endif
 
     
     [super viewDidLoad];
