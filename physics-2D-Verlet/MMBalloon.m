@@ -23,10 +23,10 @@
 -(id) init{
     if(self = [super init]){
         color = rand() % 4;
-        radius = kBalloonRadius;
         center = [[MMPoint alloc] init];
         center.attachable = NO;
         center.gravityModifier = -1;
+        self.radius = kBalloonRadius;
         tail = [[MMPoint alloc] init];
         tail.x = radius;
         [tail nullVelocity];
@@ -51,6 +51,11 @@
 -(void) setRadius:(CGFloat)_radius{
     radius = _radius;
     stick.length = _radius;
+
+    CGFloat minG = -0.4;
+    CGFloat maxG = -2;
+    CGFloat percent = (radius - kBalloonMinRadius) / (kBalloonMaxRadius - kBalloonMinRadius);
+    center.gravityModifier = minG + percent * (maxG - minG);
 }
 
 -(MMPoint*) p0{

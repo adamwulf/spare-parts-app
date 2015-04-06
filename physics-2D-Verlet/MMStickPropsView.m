@@ -8,6 +8,7 @@
 
 #import "MMStickPropsView.h"
 #import "MMWheel.h"
+#import "Constants.h"
 #import "MMBalloon.h"
 
 @implementation MMStickPropsView{
@@ -52,8 +53,8 @@
         lengthLbl.text = [NSString stringWithFormat:@"Radius: %.0f", w.radius];
         lengthSlider.value = w.radius;
     }else if([stick isKindOfClass:[MMBalloon class]]){
-        lengthSlider.minimumValue = 20;
-        lengthSlider.maximumValue = 70;
+        lengthSlider.minimumValue = kBalloonMinRadius;
+        lengthSlider.maximumValue = kBalloonMaxRadius;
         MMBalloon* b = (MMBalloon*)stick;
         lengthLbl.text = [NSString stringWithFormat:@"Radius: %.0f", b.radius];
         lengthSlider.value = b.radius;

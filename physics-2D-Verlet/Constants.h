@@ -12,6 +12,8 @@
 #define kStickWidth 30
 #define kPointRadius 6
 #define kWheelRadius 60
+#define kBalloonMinRadius 20
+#define kBalloonMaxRadius 70
 #define kBalloonRadius 40
 #define kSidebarWidth 320
 #define kThumbnailSize 300
