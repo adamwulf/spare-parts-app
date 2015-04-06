@@ -23,13 +23,13 @@
     {
       "size" : "76x76",
       "idiom" : "ipad",
-      "filename" : "spareparts76.png",
+      "filename" : "final-icon.png",
       "scale" : "1x"
     },
     {
       "size" : "76x76",
       "idiom" : "ipad",
-      "filename" : "spareparts-152.png",
+      "filename" : "final-icon@2x.png",
       "scale" : "2x"
     }
   ],
