@@ -20,9 +20,11 @@
 
 -(void) touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event{
     [super touchesMoved:touches withEvent:event];
-    self.state = UIGestureRecognizerStateChanged;
+    if(self.numberOfTouches >= self.minimumNumberOfTouches &&
+       self.numberOfTouches <= self.maximumNumberOfTouches){
+        self.state = UIGestureRecognizerStateChanged;
+    }
 }
-
 
 #pragma mark - Subclass
 

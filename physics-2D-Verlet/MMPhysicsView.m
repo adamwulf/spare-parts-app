@@ -115,14 +115,17 @@
         
         twoFingerPanGesture = [[InstantPanGestureRecognizer alloc] initWithTarget:self action:@selector(twoFingerPanGesture:)];
         twoFingerPanGesture.minimumNumberOfTouches = 2;
+        twoFingerPanGesture.maximumNumberOfTouches = 2;
         [self addGestureRecognizer:twoFingerPanGesture];
         
         selectGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapPointGesture:)];
         selectGesture.delegate = self;
+        selectGesture.numberOfTouchesRequired = 1;
         [self addGestureRecognizer:selectGesture];
         
         grabPointGesture = [[InstantPanGestureRecognizer alloc] initWithTarget:self action:@selector(movePointGesture:)];
         grabPointGesture.delegate = self;
+        grabPointGesture.minimumNumberOfTouches = 1;
         grabPointGesture.maximumNumberOfTouches = 1;
         [self addGestureRecognizer:grabPointGesture];
         
@@ -179,6 +182,10 @@
 
 -(void) twoFingerPanGesture:(InstantPanGestureRecognizer*)panGesture{
     if(panGesture.state == UIGestureRecognizerStateBegan){
+        if(panGesture.numberOfTouches != 2){
+            // what
+            NSLog(@"asdfasdf");
+        }
         // reset our last to 0
         lastTranslationValue = CGPointZero;
     }else{
@@ -187,22 +194,19 @@
         CGPoint deltaTrans;
         deltaTrans.x = currTrans.x - lastTranslationValue.x;
         deltaTrans.y = currTrans.y - lastTranslationValue.y;
-        NSLog(@"deltaTrans: %f %f", deltaTrans.x, deltaTrans.y);
         [selectedStick translateBy:deltaTrans];
         lastTranslationValue = currTrans;
     }
 }
 
 -(void) rotateGesture:(UIRotationGestureRecognizer*)rotGesture{
-    NSLog(@"rotate: %f", rotateGesture.rotation);
-    
     if(rotGesture.state == UIGestureRecognizerStateBegan){
         // reset our last to 0
         lastRotationValue = 0;
     }else{
         // delta == current - last;
         CGFloat deltaRot = rotGesture.rotation - lastRotationValue;
-        [selectedStick rotateBy:deltaRot];
+        [selectedStick rotateBy:deltaRot*2];
         lastRotationValue = rotGesture.rotation;
     }
 }
@@ -345,6 +349,8 @@
         [self tickMachines];
     }
     
+    // update rotate
+    
     [processedPoints removeAllObjects];
     // constrain everything
     for(int i = 0; i < 5; i++) {
@@ -354,6 +360,7 @@
         [self constrainBalloons];
         [self constrainPoints];
     }
+    
     
     if(!isActivelyEditingProperties){
         // remove stressed objects
