@@ -98,6 +98,36 @@
     [crossBar5 tick];
 }
 
+-(void) constrainCollisionsWith:(NSArray*)sticks{
+    // make sure the balloon isn't hitting other balloons
+    for(MMStick* stick in sticks) {
+        if(stick != self){
+            if([stick isKindOfClass:[MMWheel class]]){
+                MMWheel* otherW = (MMWheel*)stick;
+                CGFloat dist = [otherW.center distanceFromPoint:self.center.asCGPoint];
+                CGFloat movement = (otherW.radius + self.radius) - dist;
+                if(movement > 0){
+                    // collision!
+                    
+                    // fix their offset to be outside their
+                    // combined radius
+                    CGPoint distToMove = [otherW.center differenceFrom:self.center];
+                    distToMove.x = (dist != 0) ? distToMove.x / dist : dist;
+                    distToMove.y = (dist != 0) ? distToMove.y / dist : dist;
+                    distToMove.x *= movement;
+                    distToMove.y *= movement;
+                    
+                    self.center.x -= distToMove.x / 2;
+                    self.center.y -= distToMove.y / 2;
+                    otherW.center.x += distToMove.x / 2;
+                    otherW.center.y += distToMove.y / 2;
+                }
+            }
+        }
+    }
+}
+
+
 -(void) constrain{
     [super constrain];
     [spoke1 constrain];

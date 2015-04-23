@@ -388,6 +388,7 @@
         MMStick* stick = [sticks objectAtIndex:i];
         if([stick isKindOfClass:[MMWheel class]]){
             MMWheel* wheel = (MMWheel*) stick;
+            [wheel constrainCollisionsWith:sticks];
             [wheel constrain];
             
             // constrain the wheel
@@ -426,7 +427,6 @@
                     deltaVY = v.y * bounce;
                     wheel.center.oldy = wheel.center.y + deltaVY;
                 }
-                
                 
                 if(moveX || moveY){
                     // update other 4 points
@@ -479,29 +479,7 @@
                 }
             }
             [b constrain];
-            // make sure the balloon isn't hitting other balloons
-            for(MMBalloon* otherB in balloons) {
-                if(otherB != b){
-                    CGFloat dist = [otherB.center distanceFromPoint:b.center.asCGPoint];
-                    CGFloat movement = (otherB.radius + b.radius) - dist;
-                    if(movement > 0){
-                        // collision!
-                        
-                        // fix their offset to be outside their
-                        // combined radius
-                        CGPoint distToMove = [otherB.center differenceFrom:b.center];
-                        distToMove.x = (dist != 0) ? distToMove.x / dist : dist;
-                        distToMove.y = (dist != 0) ? distToMove.y / dist : dist;
-                        distToMove.x *= movement;
-                        distToMove.y *= movement;
-                        
-                        b.center.x -= distToMove.x / 2;
-                        b.center.y -= distToMove.y / 2;
-                        otherB.center.x += distToMove.x / 2;
-                        otherB.center.y += distToMove.y / 2;
-                    }
-                }
-            }
+            [b constrainCollisionsWith:balloons];
             [b constrain];
         }
     }

@@ -17,4 +17,8 @@
 
 +(MMWheel*) wheelWithCenter:(MMPoint*)center andRadius:(CGFloat)radius;
 
+-(void) constrainCollisionsWith:(NSArray*)objs;
+
+
+
 @end

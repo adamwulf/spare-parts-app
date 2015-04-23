@@ -25,6 +25,8 @@
 
 -(CGFloat) distanceFromPoint:(CGPoint)point;
 
+-(void) constrainCollisionsWith:(NSArray*)objs;
+
 -(void) constrain;
 
 -(MMBalloon*) cloneObject;
