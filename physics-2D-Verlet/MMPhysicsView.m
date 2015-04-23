@@ -181,33 +181,37 @@
 #pragma mark - Gesture
 
 -(void) twoFingerPanGesture:(InstantPanGestureRecognizer*)panGesture{
-    if(panGesture.state == UIGestureRecognizerStateBegan){
-        if(panGesture.numberOfTouches != 2){
-            // what
-            NSLog(@"asdfasdf");
+    if([selectedStick isKindOfClass:[MMStick class]]){
+        if(panGesture.state == UIGestureRecognizerStateBegan){
+            if(panGesture.numberOfTouches != 2){
+                // what
+                NSLog(@"asdfasdf");
+            }
+            // reset our last to 0
+            lastTranslationValue = CGPointZero;
+        }else{
+            // delta == current - last;
+            CGPoint currTrans = [panGesture translationInView:self];
+            CGPoint deltaTrans;
+            deltaTrans.x = currTrans.x - lastTranslationValue.x;
+            deltaTrans.y = currTrans.y - lastTranslationValue.y;
+            [selectedStick translateBy:deltaTrans];
+            lastTranslationValue = currTrans;
         }
-        // reset our last to 0
-        lastTranslationValue = CGPointZero;
-    }else{
-        // delta == current - last;
-        CGPoint currTrans = [panGesture translationInView:self];
-        CGPoint deltaTrans;
-        deltaTrans.x = currTrans.x - lastTranslationValue.x;
-        deltaTrans.y = currTrans.y - lastTranslationValue.y;
-        [selectedStick translateBy:deltaTrans];
-        lastTranslationValue = currTrans;
     }
 }
 
 -(void) rotateGesture:(UIRotationGestureRecognizer*)rotGesture{
-    if(rotGesture.state == UIGestureRecognizerStateBegan){
-        // reset our last to 0
-        lastRotationValue = 0;
-    }else{
-        // delta == current - last;
-        CGFloat deltaRot = rotGesture.rotation - lastRotationValue;
-        [selectedStick rotateBy:deltaRot*2];
-        lastRotationValue = rotGesture.rotation;
+    if([selectedStick isKindOfClass:[MMStick class]]){
+        if(rotGesture.state == UIGestureRecognizerStateBegan){
+            // reset our last to 0
+            lastRotationValue = 0;
+        }else{
+            // delta == current - last;
+            CGFloat deltaRot = rotGesture.rotation - lastRotationValue;
+            [selectedStick rotateBy:deltaRot*2];
+            lastRotationValue = rotGesture.rotation;
+        }
     }
 }
 
