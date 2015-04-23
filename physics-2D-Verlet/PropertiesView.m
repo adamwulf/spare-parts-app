@@ -40,8 +40,13 @@
 -(UIView*)hitTest:(CGPoint)point withEvent:(UIEvent *)event{
     UIView* ret = [super hitTest:point withEvent:event];
     if(!ret) return nil;
-    if([ret isKindOfClass:[UIControl class]]){
-        return ret;
+    
+    UIView* foobar = ret;
+    while(foobar.superview){
+        if([foobar isKindOfClass:[UIControl class]]){
+            return ret;
+        }
+        foobar = foobar.superview;
     }
     return self;
 }
