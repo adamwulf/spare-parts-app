@@ -26,6 +26,10 @@
 
 -(void) tick;
 
+-(void) rotateBy:(CGFloat)rads;
+
+-(void) translateBy:(CGPoint)trans;
+
 -(void) constrain;
 
 -(BOOL) replacePoint:(MMPoint*)p withPoint:(MMPoint*)newP;

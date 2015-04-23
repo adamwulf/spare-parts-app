@@ -67,6 +67,7 @@
 		666E0A661AC0924D0018289C /* MMPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = 666E0A651AC0924D0018289C /* MMPoint.m */; };
 		666E0A691AC093A10018289C /* MMStick.m in Sources */ = {isa = PBXBuildFile; fileRef = 666E0A681AC093A10018289C /* MMStick.m */; };
 		668337FE1ACF1EAB00FEE908 /* LoadingDeviceView.m in Sources */ = {isa = PBXBuildFile; fileRef = 668337FD1ACF1EAB00FEE908 /* LoadingDeviceView.m */; };
+		669115B01AE97C0500C4FC89 /* CustomRotationGesture.m in Sources */ = {isa = PBXBuildFile; fileRef = 669115AF1AE97C0500C4FC89 /* CustomRotationGesture.m */; };
 		6695851F1ACC7BFC002C359C /* MMStickPropsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6695851E1ACC7BFC002C359C /* MMStickPropsView.m */; };
 		669585221ACC7FA5002C359C /* spring-component.png in Resources */ = {isa = PBXBuildFile; fileRef = 669585211ACC7FA5002C359C /* spring-component.png */; };
 		669585241ACC80F9002C359C /* spring-component-top.png in Resources */ = {isa = PBXBuildFile; fileRef = 669585231ACC80F9002C359C /* spring-component-top.png */; };
@@ -160,6 +161,8 @@
 		668337FC1ACF1EAB00FEE908 /* LoadingDeviceView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadingDeviceView.h; sourceTree = "<group>"; };
 		668337FD1ACF1EAB00FEE908 /* LoadingDeviceView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoadingDeviceView.m; sourceTree = "<group>"; };
 		668337FF1ACF279500FEE908 /* LoadingDeviceViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadingDeviceViewDelegate.h; sourceTree = "<group>"; };
+		669115AE1AE97C0500C4FC89 /* CustomRotationGesture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomRotationGesture.h; sourceTree = "<group>"; };
+		669115AF1AE97C0500C4FC89 /* CustomRotationGesture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomRotationGesture.m; sourceTree = "<group>"; };
 		6695851D1ACC7BFC002C359C /* MMStickPropsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMStickPropsView.h; sourceTree = "<group>"; };
 		6695851E1ACC7BFC002C359C /* MMStickPropsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMStickPropsView.m; sourceTree = "<group>"; };
 		669585211ACC7FA5002C359C /* spring-component.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "spring-component.png"; sourceTree = "<group>"; };
@@ -446,6 +449,8 @@
 			children = (
 				66A48FFF1AC5E91500CC21BA /* InstantPanGestureRecognizer.h */,
 				66A490001AC5E91500CC21BA /* InstantPanGestureRecognizer.m */,
+				669115AE1AE97C0500C4FC89 /* CustomRotationGesture.h */,
+				669115AF1AE97C0500C4FC89 /* CustomRotationGesture.m */,
 			);
 			name = Gesture;
 			sourceTree = "<group>";
@@ -612,6 +617,7 @@
 				66343C191ABF5BB500801962 /* AppDelegate.m in Sources */,
 				66A490011AC5E91500CC21BA /* InstantPanGestureRecognizer.m in Sources */,
 				66309CF21AC48E9900FACEF9 /* MMBalloon.m in Sources */,
+				669115B01AE97C0500C4FC89 /* CustomRotationGesture.m in Sources */,
 				6695851F1ACC7BFC002C359C /* MMStickPropsView.m in Sources */,
 				66343C3D1ABF5D2900801962 /* MMPhysicsView.m in Sources */,
 				66309CFA1AC4942700FACEF9 /* MMWheel.m in Sources */,

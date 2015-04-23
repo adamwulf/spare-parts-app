@@ -23,4 +23,41 @@
     self.state = UIGestureRecognizerStateChanged;
 }
 
+
+#pragma mark - Subclass
+
+- (BOOL)canPreventGestureRecognizer:(UIGestureRecognizer *)preventedGestureRecognizer{
+    if(self.maximumNumberOfTouches > 1){
+        if([preventedGestureRecognizer isKindOfClass:[InstantPanGestureRecognizer class]]){
+            InstantPanGestureRecognizer* other = (InstantPanGestureRecognizer*)preventedGestureRecognizer;
+            if(other.maximumNumberOfTouches == 1){
+                return YES;
+            }
+        }
+    }
+    return NO;
+}
+
+
+- (BOOL)canBePreventedByGestureRecognizer:(UIGestureRecognizer *)preventingGestureRecognizer{
+    if(self.maximumNumberOfTouches == 1){
+        return YES;
+    }
+    return NO;
+}
+
+// same behavior as the equivalent delegate methods, but can be used by subclasses to define class-wide failure requirements
+- (BOOL)shouldRequireFailureOfGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer NS_AVAILABLE_IOS(7_0){
+    return NO;
+}
+
+
+- (BOOL)shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer NS_AVAILABLE_IOS(7_0){
+    if(self.maximumNumberOfTouches == 1){
+        return YES;
+    }
+    return NO;
+}
+
+
 @end

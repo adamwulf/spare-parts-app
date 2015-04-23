@@ -23,6 +23,7 @@
 #import "LoadingDeviceView.h"
 #import "LoadingDeviceViewDelegate.h"
 #import "PropertiesViewDelegate.h"
+#import "CustomRotationGesture.h"
 
 #define kMaxStress 0.5
 
@@ -51,6 +52,11 @@
     // all of the gestures
     UITapGestureRecognizer* selectGesture;
     UIPanGestureRecognizer* grabPointGesture;
+    
+    CGPoint lastTranslationValue;
+    CGFloat lastRotationValue;
+    CustomRotationGesture* rotateGesture;
+    UIPanGestureRecognizer* twoFingerPanGesture;
     
     // toggle running the simulation on/off
     UIButton* playPauseButton;
@@ -104,13 +110,25 @@
         [displayLink addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSDefaultRunLoopMode];
         
         
+        rotateGesture = [[CustomRotationGesture alloc] initWithTarget:self action:@selector(rotateGesture:)];
+        [self addGestureRecognizer:rotateGesture];
+        
+        twoFingerPanGesture = [[InstantPanGestureRecognizer alloc] initWithTarget:self action:@selector(twoFingerPanGesture:)];
+        twoFingerPanGesture.minimumNumberOfTouches = 2;
+        [self addGestureRecognizer:twoFingerPanGesture];
+        
         selectGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapPointGesture:)];
         selectGesture.delegate = self;
         [self addGestureRecognizer:selectGesture];
         
         grabPointGesture = [[InstantPanGestureRecognizer alloc] initWithTarget:self action:@selector(movePointGesture:)];
         grabPointGesture.delegate = self;
+        grabPointGesture.maximumNumberOfTouches = 1;
         [self addGestureRecognizer:grabPointGesture];
+        
+        
+        [rotateGesture requireGestureRecognizerToFail:grabPointGesture];
+        [twoFingerPanGesture requireGestureRecognizerToFail:grabPointGesture];
         
         playPauseButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [playPauseButton setImage:[UIImage imageNamed:@"play.png"] forState:UIControlStateNormal];
@@ -158,6 +176,36 @@
 }
 
 #pragma mark - Gesture
+
+-(void) twoFingerPanGesture:(InstantPanGestureRecognizer*)panGesture{
+    if(panGesture.state == UIGestureRecognizerStateBegan){
+        // reset our last to 0
+        lastTranslationValue = CGPointZero;
+    }else{
+        // delta == current - last;
+        CGPoint currTrans = [panGesture translationInView:self];
+        CGPoint deltaTrans;
+        deltaTrans.x = currTrans.x - lastTranslationValue.x;
+        deltaTrans.y = currTrans.y - lastTranslationValue.y;
+        NSLog(@"deltaTrans: %f %f", deltaTrans.x, deltaTrans.y);
+        [selectedStick translateBy:deltaTrans];
+        lastTranslationValue = currTrans;
+    }
+}
+
+-(void) rotateGesture:(UIRotationGestureRecognizer*)rotGesture{
+    NSLog(@"rotate: %f", rotateGesture.rotation);
+    
+    if(rotGesture.state == UIGestureRecognizerStateBegan){
+        // reset our last to 0
+        lastRotationValue = 0;
+    }else{
+        // delta == current - last;
+        CGFloat deltaRot = rotGesture.rotation - lastRotationValue;
+        [selectedStick rotateBy:deltaRot];
+        lastRotationValue = rotGesture.rotation;
+    }
+}
 
 -(void) toggleAnimation:(UIButton*)button{
     button.selected = !button.selected;
@@ -714,6 +762,33 @@
     }
     return YES;
 }
+//
+//- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer{
+//    
+//    if(gestureRecognizer == rotateGesture && otherGestureRecognizer == twoFingerPanGesture){
+//        return YES;
+//    }
+//    if(otherGestureRecognizer == rotateGesture && gestureRecognizer == twoFingerPanGesture){
+//        return YES;
+//    }
+//    
+//    return (![gestureRecognizer isKindOfClass:[InstantPanGestureRecognizer class]]) &&
+//    (![otherGestureRecognizer isKindOfClass:[InstantPanGestureRecognizer class]]);
+//}
+//
+//-(BOOL) gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRequireFailureOfGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer{
+//    if(otherGestureRecognizer == twoFingerPanGesture){
+//        return NO;
+//    }
+//    if(gestureRecognizer == twoFingerPanGesture){
+//        return NO;
+//    }
+//    if([gestureRecognizer isKindOfClass:[UIRotationGestureRecognizer class]] &&
+//       [otherGestureRecognizer isKindOfClass:[InstantPanGestureRecognizer class]]){
+//        return YES;
+//    }
+//    return NO;
+//}
 
 
 #pragma mark - PropertiesViewDelegate

@@ -56,6 +56,28 @@
     // noop
 }
 
+-(void) rotateBy:(CGFloat)rads{
+    CGPoint c = CGPointMake((self.p0.x + self.p1.x)/2,
+                            (self.p0.y + self.p1.y)/2);
+    
+    CGAffineTransform transform = CGAffineTransformTranslate(CGAffineTransformRotate(CGAffineTransformMakeTranslation(c.x, c.y), rads), -c.x, -c.y);
+    CGPoint cgp0 = CGPointApplyAffineTransform(self.p0.asCGPoint, transform);
+    CGPoint cgp1 = CGPointApplyAffineTransform(self.p1.asCGPoint, transform);
+    
+    self.p0.x = cgp0.x;
+    self.p0.y = cgp0.y;
+    self.p1.x = cgp1.x;
+    self.p1.y = cgp1.y;
+}
+
+-(void) translateBy:(CGPoint)trans{
+    self.p0.x = self.p0.x + trans.x;
+    self.p0.y = self.p0.y + trans.y;
+    self.p1.x = self.p1.x + trans.x;
+    self.p1.y = self.p1.y + trans.y;
+}
+
+
 -(void) constrain{
     CGFloat dx = self.p1.x - self.p0.x;
     CGFloat dy = self.p1.y - self.p0.y;
