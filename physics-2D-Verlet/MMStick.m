@@ -145,6 +145,10 @@
 #pragma mark - create stick that matches our type
 
 -(BOOL) replacePoint:(MMPoint*)p withPoint:(MMPoint*)newP{
+    if((p == p0 && newP == p1) ||
+       (p == p1 && newP == p0)){
+        return NO;
+    }
     if(p == p0){
         p0 = newP;
     }
