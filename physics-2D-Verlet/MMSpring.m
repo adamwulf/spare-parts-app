@@ -17,30 +17,38 @@
 -(id) initWithP0:(MMPoint *)_p0 andP1:(MMPoint *)_p1{
     if(self = [super initWithP0:_p0 andP1:_p1]){
         springyness = .05;
-        
-        UIImage* springtop = [UIImage imageNamed:@"spring-component-top.png"];
-        UIImage* spring = [UIImage imageNamed:@"spring-component.png"];
-        
-        CGSize drawSize = CGSizeMake([self calcLen] + kStickWidth, kStickWidth);
-        drawSize.width = drawSize.width - ((int)drawSize.width % 8);
-        
-        UIGraphicsBeginImageContext(drawSize);
-        for (int i=0; i<drawSize.width-spring.size.width; i+=8) {
-            CGRect drawRect = CGRectMake(i, 0, spring.size.width, spring.size.height);
-            if(i==0){
-                [springtop drawInRect:drawRect];
-            }else{
-                [spring drawInRect:drawRect];
-            }
-        }
-        image = UIGraphicsGetImageFromCurrentImageContext();
-        UIGraphicsEndImageContext();
+        [self generateTexture];
     }
     return self;
 }
 
+-(void) generateTexture{
+    UIImage* springtop = [UIImage imageNamed:@"spring-component-top.png"];
+    UIImage* spring = [UIImage imageNamed:@"spring-component.png"];
+    
+    CGSize drawSize = CGSizeMake([self calcLen] + kStickWidth, kStickWidth);
+    drawSize.width = drawSize.width - ((int)drawSize.width % 8);
+    
+    UIGraphicsBeginImageContext(drawSize);
+    for (int i=0; i<drawSize.width-spring.size.width; i+=8) {
+        CGRect drawRect = CGRectMake(i, 0, spring.size.width, spring.size.height);
+        if(i==0){
+            [springtop drawInRect:drawRect];
+        }else{
+            [spring drawInRect:drawRect];
+        }
+    }
+    image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+}
+
 +(MMStick*) springWithP0:(MMPoint*)p0 andP1:(MMPoint*)p1{
     return [[MMSpring alloc] initWithP0:p0 andP1:p1];
+}
+
+-(void) setLength:(CGFloat)_length{
+    [super setLength:_length];
+    [self generateTexture];
 }
 
 -(void) constrain{
