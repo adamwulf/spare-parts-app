@@ -10,6 +10,7 @@
 #import "InstantPanGestureRecognizer.h"
 #import "MMPointPropsView.h"
 #import "MMStickPropsView.h"
+#import "MMPhysicsObject.h"
 #import "MMPoint.h"
 #import "MMStick.h"
 #import "MMPiston.h"
@@ -44,7 +45,7 @@
     NSMutableArray* balloons;
 
     // stuff for the move gesture
-    MMStick* grabbedStick;
+    MMPhysicsObject* grabbedStick;
     CGPoint grabbedStickOffsetP0;
     CGPoint grabbedStickOffsetP1;
     MMPoint* grabbedPoint;
@@ -62,13 +63,13 @@
     UIButton* playPauseButton;
     
     // the stick that's currently being made
-    MMStick* currentEditedStick;
+    MMPhysicsObject* currentEditedStick;
     
     
     MMPointPropsView* pointPropertiesView;
     MMStickPropsView* stickPropertiesView;
     MMPoint* selectedPoint;
-    MMStick* selectedStick;
+    MMPhysicsObject* selectedStick;
     
     NSMutableSet* processedPoints;
     
@@ -181,37 +182,33 @@
 #pragma mark - Gesture
 
 -(void) twoFingerPanGesture:(InstantPanGestureRecognizer*)panGesture{
-    if([selectedStick isKindOfClass:[MMStick class]]){
-        if(panGesture.state == UIGestureRecognizerStateBegan){
-            if(panGesture.numberOfTouches != 2){
-                // what
-                NSLog(@"asdfasdf");
-            }
-            // reset our last to 0
-            lastTranslationValue = CGPointZero;
-        }else{
-            // delta == current - last;
-            CGPoint currTrans = [panGesture translationInView:self];
-            CGPoint deltaTrans;
-            deltaTrans.x = currTrans.x - lastTranslationValue.x;
-            deltaTrans.y = currTrans.y - lastTranslationValue.y;
-            [selectedStick translateBy:deltaTrans];
-            lastTranslationValue = currTrans;
+    if(panGesture.state == UIGestureRecognizerStateBegan){
+        if(panGesture.numberOfTouches != 2){
+            // what
+            NSLog(@"asdfasdf");
         }
+        // reset our last to 0
+        lastTranslationValue = CGPointZero;
+    }else{
+        // delta == current - last;
+        CGPoint currTrans = [panGesture translationInView:self];
+        CGPoint deltaTrans;
+        deltaTrans.x = currTrans.x - lastTranslationValue.x;
+        deltaTrans.y = currTrans.y - lastTranslationValue.y;
+        [selectedStick translateBy:deltaTrans];
+        lastTranslationValue = currTrans;
     }
 }
 
 -(void) rotateGesture:(UIRotationGestureRecognizer*)rotGesture{
-    if([selectedStick isKindOfClass:[MMStick class]]){
-        if(rotGesture.state == UIGestureRecognizerStateBegan){
-            // reset our last to 0
-            lastRotationValue = 0;
-        }else{
-            // delta == current - last;
-            CGFloat deltaRot = rotGesture.rotation - lastRotationValue;
-            [selectedStick rotateBy:deltaRot*2];
-            lastRotationValue = rotGesture.rotation;
-        }
+    if(rotGesture.state == UIGestureRecognizerStateBegan){
+        // reset our last to 0
+        lastRotationValue = 0;
+    }else{
+        // delta == current - last;
+        CGFloat deltaRot = rotGesture.rotation - lastRotationValue;
+        [selectedStick rotateBy:deltaRot*2];
+        lastRotationValue = rotGesture.rotation;
     }
 }
 
@@ -244,7 +241,7 @@
     if(panGesture.state == UIGestureRecognizerStateBegan){
         CGPoint currLoc = panGesture.initialLocationInWindow;
         // find the point to grab
-        MMStick* stick = [self getSidebarObject:currLoc];
+        MMPhysicsObject* stick = [self getSidebarObject:currLoc];
         if(stick){
             stick = [stick cloneObject];
             selectedPoint = nil;
@@ -292,11 +289,11 @@
             BOOL didReplaceAllPoints = YES;
             if(pointToReplace && pointToReplace.attachable && pointToSnap.attachable){
                 for(int i=0;i<[sticks count];i++){
-                    MMStick* stick = [sticks objectAtIndex:i];
+                    MMPhysicsObject* stick = [sticks objectAtIndex:i];
                     didReplaceAllPoints = didReplaceAllPoints && [stick replacePoint:pointToReplace withPoint:pointToSnap];
                 }
                 for(int i=0;i<[balloons count];i++){
-                    MMBalloon* balloon = [balloons objectAtIndex:i];
+                    MMPhysicsObject* balloon = [balloons objectAtIndex:i];
                     [balloon replacePoint:pointToReplace withPoint:pointToSnap];
                 }
                 if(didReplaceAllPoints){
@@ -342,7 +339,7 @@
     
     
     // render sidebar objects
-    for (MMStick* stick in staticObjects){
+    for (MMPhysicsObject* stick in staticObjects){
         [stick render];
     }
     
@@ -392,7 +389,7 @@
 #pragma mark - Update Methods
 
 -(void) tickMachines{
-    for(MMStick* stick in sticks){
+    for(MMPhysicsObject* stick in sticks){
         [stick tick];
     }
 }
@@ -434,7 +431,7 @@
 
 -(void) constrainSticks{
     for(int i = 0; i < [sticks count]; i++) {
-        MMStick* s = [sticks objectAtIndex:i];
+        MMPhysicsObject* s = [sticks objectAtIndex:i];
         if(![s isKindOfClass:[MMWheel class]]){
             [s constrain];
         }
@@ -444,7 +441,7 @@
 -(void) constrainWheels{
     // bounce wheels
     for(int i = 0; i < [sticks count]; i++) {
-        MMStick* stick = [sticks objectAtIndex:i];
+        MMPhysicsObject* stick = [sticks objectAtIndex:i];
         if([stick isKindOfClass:[MMWheel class]]){
             MMWheel* wheel = (MMWheel*) stick;
             [wheel constrainCollisionsWith:sticks];
@@ -588,7 +585,7 @@
 
 -(void) cullSticks{
     for(int i = 0; i < [sticks count]; i++) {
-        MMStick* s = [sticks objectAtIndex:i];
+        MMPhysicsObject* s = [sticks objectAtIndex:i];
         if(s.stress >= kMaxStress && !grabbedStick && !grabbedPoint){
             // break stick
             [sticks removeObject:s];
@@ -604,11 +601,11 @@
             CGPoint p2 = CGPointMake(p0.x + .6*xDiff,
                                      p0.y + .6*yDiff);
             
-            MMStick* s1 = [MMStick stickWithP0:[MMPoint pointWithCGPoint:p0]
+            MMPhysicsObject* s1 = [MMStick stickWithP0:[MMPoint pointWithCGPoint:p0]
                                          andP1:[MMPoint pointWithCGPoint:p1]];
-            MMStick* s2 = [MMStick stickWithP0:[MMPoint pointWithCGPoint:p1]
+            MMPhysicsObject* s2 = [MMStick stickWithP0:[MMPoint pointWithCGPoint:p1]
                                          andP1:[MMPoint pointWithCGPoint:p2]];
-            MMStick* s3 = [MMStick stickWithP0:[MMPoint pointWithCGPoint:p2]
+            MMPhysicsObject* s3 = [MMStick stickWithP0:[MMPoint pointWithCGPoint:p2]
                                          andP1:[MMPoint pointWithCGPoint:p3]];
             
             NSArray* newPoints = @[s1.p0, s1.p1, s2.p0, s2.p1, s3.p0, s3.p1];
@@ -633,7 +630,7 @@
 #pragma mark - Render
 
 -(void) renderSticks{
-    for(MMStick* stick in sticks){
+    for(MMPhysicsObject* stick in sticks){
         [stick render];
     }
 }
@@ -658,26 +655,19 @@
     return nil;
 }
 
--(MMStick*) getStickNear:(CGPoint)point{
-    MMStick* ret = [[sticks sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+-(MMPhysicsObject*) getStickNear:(CGPoint)point{
+    MMPhysicsObject* ret = [[[sticks arrayByAddingObjectsFromArray:balloons] sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
         return [obj1 distanceFromPoint:point] < [obj2 distanceFromPoint:point] ? NSOrderedAscending : NSOrderedDescending;
     }] firstObject];
     NSLog(@"closest stick is: %f", [ret distanceFromPoint:point]);
     if([ret distanceFromPoint:point] < 30){
         return ret;
     }
-    MMBalloon* balloon = [[balloons sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
-        return [obj1 distanceFromPoint:point] < [obj2 distanceFromPoint:point] ? NSOrderedAscending : NSOrderedDescending;
-    }] firstObject];
-    NSLog(@"closest stick is: %f", [ret distanceFromPoint:point]);
-    if([balloon distanceFromPoint:point] < balloon.radius){
-        return (MMStick*) balloon;
-    }
     return nil;
 }
 
--(MMStick*) getSidebarObject:(CGPoint)point{
-    MMStick* ret = [[staticObjects sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+-(MMPhysicsObject*) getSidebarObject:(CGPoint)point{
+    MMPhysicsObject* ret = [[staticObjects sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
         return [obj1 distanceFromPoint:point] < [obj2 distanceFromPoint:point] ? NSOrderedAscending : NSOrderedDescending;
     }] firstObject];
     if([ret distanceFromPoint:point] < 30){

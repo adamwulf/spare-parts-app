@@ -79,6 +79,7 @@
 		66A490041AC5EAE500CC21BA /* MMSpring.m in Sources */ = {isa = PBXBuildFile; fileRef = 66A490031AC5EAE500CC21BA /* MMSpring.m */; };
 		66D210E11AD1D729001E733C /* PropertiesView.m in Sources */ = {isa = PBXBuildFile; fileRef = 66D210E01AD1D729001E733C /* PropertiesView.m */; };
 		66DCB8C71AD22B4600538276 /* TutorialView.m in Sources */ = {isa = PBXBuildFile; fileRef = 66DCB8C61AD22B4600538276 /* TutorialView.m */; };
+		66F148E91AF801A20058D145 /* MMPhysicsObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 66F148E81AF801A20058D145 /* MMPhysicsObject.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -183,6 +184,8 @@
 		66DCB8C61AD22B4600538276 /* TutorialView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TutorialView.m; sourceTree = "<group>"; };
 		66DCB8C81AD22BEC00538276 /* TutorialViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TutorialViewDelegate.h; sourceTree = "<group>"; };
 		66DCB8C91AD22FF100538276 /* PhysicsViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhysicsViewDelegate.h; sourceTree = "<group>"; };
+		66F148E71AF801A20058D145 /* MMPhysicsObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMPhysicsObject.h; sourceTree = "<group>"; };
+		66F148E81AF801A20058D145 /* MMPhysicsObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMPhysicsObject.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -223,6 +226,8 @@
 		66309CF41AC48EA700FACEF9 /* Stick Objs */ = {
 			isa = PBXGroup;
 			children = (
+				66F148E71AF801A20058D145 /* MMPhysicsObject.h */,
+				66F148E81AF801A20058D145 /* MMPhysicsObject.m */,
 				666E0A671AC093A10018289C /* MMStick.h */,
 				666E0A681AC093A10018289C /* MMStick.m */,
 				66A490021AC5EAE500CC21BA /* MMSpring.h */,
@@ -628,6 +633,7 @@
 				66D210E11AD1D729001E733C /* PropertiesView.m in Sources */,
 				66343C161ABF5BB500801962 /* main.m in Sources */,
 				66309CEC1AC484E900FACEF9 /* MMEnginePiston.m in Sources */,
+				66F148E91AF801A20058D145 /* MMPhysicsObject.m in Sources */,
 				6651B8BB1ACDCEEA008B1016 /* SaveLoadManager.m in Sources */,
 				668337FE1ACF1EAB00FEE908 /* LoadingDeviceView.m in Sources */,
 				66625FEB1AC3496D0025F441 /* MMEngine.m in Sources */,

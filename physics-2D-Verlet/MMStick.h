@@ -8,37 +8,17 @@
 
 #import <Foundation/Foundation.h>
 #import "MMPoint.h"
-#import "Renderable.h"
+#import "MMPhysicsObject.h"
 
-@interface MMStick : Renderable<NSCoding>{
-    CGFloat stress;
+@interface MMStick : MMPhysicsObject<NSCoding>{
     UIImage* image;
 }
 
-@property (readonly) MMPoint* p0;
-@property (readonly) MMPoint* p1;
 @property (nonatomic) CGFloat length;
-@property (readonly) CGFloat stress;
 
 -(id) initWithP0:(MMPoint*)_p0 andP1:(MMPoint*)_p1;
 
 +(MMStick*) stickWithP0:(MMPoint*)p0 andP1:(MMPoint*)p1;
-
--(void) tick;
-
--(void) rotateBy:(CGFloat)rads;
-
--(void) translateBy:(CGPoint)trans;
-
--(void) constrain;
-
--(BOOL) replacePoint:(MMPoint*)p withPoint:(MMPoint*)newP;
-
--(CGFloat) distanceFromPoint:(CGPoint)point;
-
--(MMStick*) cloneObject;
-
--(NSArray*) allPoints;
 
 // subclasses only please
 

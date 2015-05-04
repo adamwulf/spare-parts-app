@@ -21,4 +21,6 @@
 #define kShadowWidth 30
 #define kShadowOpacity .9
 
+#define kAbstractMethodException [NSException exceptionWithName:@"AbstractMethodException" reason:@"this method should be defined in the subclass" userInfo:nil]
+
 #endif

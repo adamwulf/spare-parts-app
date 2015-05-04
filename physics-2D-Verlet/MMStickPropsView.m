@@ -14,7 +14,7 @@
 @implementation MMStickPropsView{
     UILabel* lengthLbl;
     UISlider* lengthSlider;
-    MMStick* selectedStick;
+    MMPhysicsObject* selectedStick;
 }
 
 -(id) initWithFrame:(CGRect)frame{
@@ -40,25 +40,26 @@
     return self;
 }
 
--(void) showObjectProperties:(MMStick*)stick{
+-(void) showObjectProperties:(MMPhysicsObject*)object{
     lengthSlider.minimumValue = 20;
     lengthSlider.maximumValue = 400;
     
-    selectedStick = stick;
-    self.hidden = !stick;
-    if([stick isKindOfClass:[MMWheel class]]){
+    selectedStick = object;
+    self.hidden = !object;
+    if([object isKindOfClass:[MMWheel class]]){
         lengthSlider.minimumValue = 40;
         lengthSlider.maximumValue = 100;
-        MMWheel* w = (MMWheel*)stick;
+        MMWheel* w = (MMWheel*)object;
         lengthLbl.text = [NSString stringWithFormat:@"Radius: %.0f", w.radius];
         lengthSlider.value = w.radius;
-    }else if([stick isKindOfClass:[MMBalloon class]]){
+    }else if([object isKindOfClass:[MMBalloon class]]){
         lengthSlider.minimumValue = kBalloonMinRadius;
         lengthSlider.maximumValue = kBalloonMaxRadius;
-        MMBalloon* b = (MMBalloon*)stick;
+        MMBalloon* b = (MMBalloon*)object;
         lengthLbl.text = [NSString stringWithFormat:@"Radius: %.0f", b.radius];
         lengthSlider.value = b.radius;
     }else{
+        MMStick* stick = (MMStick*)object;
         lengthLbl.text = [NSString stringWithFormat:@"Length: %.0f", stick.length];
         lengthSlider.value = stick.length;
     }
@@ -75,10 +76,18 @@
         b.radius = lengthSlider.value;
         lengthLbl.text = [NSString stringWithFormat:@"Radius: %.0f", b.radius];
     }else{
-        selectedStick.length = lengthSlider.value;
-        lengthLbl.text = [NSString stringWithFormat:@"Length: %.0f", selectedStick.length];
+        MMStick* stick = (MMStick*)selectedStick;
+        stick.length = lengthSlider.value;
+        lengthLbl.text = [NSString stringWithFormat:@"Length: %.0f", stick.length];
     }
 }
+
+
+
+
+
+
+
 
 
 

@@ -8,29 +8,16 @@
 
 #import "MMPoint.h"
 #import "MMStick.h"
-#import "Renderable.h"
+#import "MMPhysicsObject.h"
 
-@interface MMBalloon : Renderable<NSCoding>
+@interface MMBalloon : MMPhysicsObject<NSCoding>
 
 @property (readonly) MMPoint* center;
 @property (readonly) MMPoint* tail;
 @property (nonatomic) CGFloat radius;
-@property (readonly) MMStick* stick;
-@property (readonly) MMPoint* p0;
-@property (readonly) MMPoint* p1;
 
 +(MMBalloon*) balloonWithCGPoint:(CGPoint)p;
 
--(void) replacePoint:(MMPoint*)p withPoint:(MMPoint*)newP;
-
--(CGFloat) distanceFromPoint:(CGPoint)point;
-
 -(void) constrainCollisionsWith:(NSArray*)objs;
-
--(void) constrain;
-
--(MMBalloon*) cloneObject;
-
--(NSArray*) allPoints;
 
 @end

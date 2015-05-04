@@ -90,7 +90,7 @@
     return [super stress] / 5;
 }
 
--(MMStick*) cloneObject{
+-(MMPhysicsObject*) cloneObject{
     return [MMSpring springWithP0:[MMPoint pointWithCGPoint:self.p0.asCGPoint]
                             andP1:[MMPoint pointWithCGPoint:self.p1.asCGPoint]];
 }

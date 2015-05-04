@@ -13,12 +13,12 @@
 @implementation MMBalloon{
     UIImage* texture;
     NSInteger color;
+    MMStick* stick;
 }
 
 @synthesize center;
 @synthesize radius;
 @synthesize tail;
-@synthesize stick;
 
 -(id) init{
     if(self = [super init]){
@@ -66,6 +66,9 @@
     return tail;
 }
 
+-(void) tick{
+    [stick tick];
+}
 
 #pragma mark - Update
 
@@ -106,17 +109,20 @@
     [triangle fill];
 }
 
--(void) replacePoint:(MMPoint*)p withPoint:(MMPoint*)newP{
-    if(p == center){
-        center = newP;
-        center.attachable = NO;
-        newP.gravityModifier = center.gravityModifier;
+-(BOOL) replacePoint:(MMPoint*)p withPoint:(MMPoint*)newP{
+    if([stick replacePoint:p withPoint:newP]){
+        if(p == center){
+            center = newP;
+            center.attachable = NO;
+            newP.gravityModifier = center.gravityModifier;
+        }
+        if(p == tail){
+            tail = newP;
+            newP.gravityModifier = tail.gravityModifier;
+        }
+        return YES;
     }
-    if(p == tail){
-        tail = newP;
-        newP.gravityModifier = tail.gravityModifier;
-    }
-    [stick replacePoint:p withPoint:newP];
+    return NO;
 }
 
 -(CGFloat) distanceFromPoint:(CGPoint)point{
@@ -154,7 +160,7 @@
     [stick constrain];
 }
 
--(MMBalloon*) cloneObject{
+-(MMPhysicsObject*) cloneObject{
     return [MMBalloon balloonWithCGPoint:center.asCGPoint];
 }
 

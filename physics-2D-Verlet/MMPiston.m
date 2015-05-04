@@ -65,7 +65,7 @@
     CGContextRestoreGState(context);
 }
 
--(MMStick*) cloneObject{
+-(MMPhysicsObject*) cloneObject{
     return [MMPiston pistonWithP0:[MMPoint pointWithCGPoint:self.p0.asCGPoint]
                             andP1:[MMPoint pointWithCGPoint:self.p1.asCGPoint]];
 }

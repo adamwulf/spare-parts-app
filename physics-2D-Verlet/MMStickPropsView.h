@@ -12,7 +12,7 @@
 
 @interface MMStickPropsView : PropertiesView
 
--(void) showObjectProperties:(MMStick*)stick;
+-(void) showObjectProperties:(MMPhysicsObject*)object;
 
 
 @end

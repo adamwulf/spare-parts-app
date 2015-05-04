@@ -12,8 +12,6 @@
 
 @implementation MMStick
 
-@synthesize p0;
-@synthesize p1;
 @synthesize length;
 
 -(id) init{
@@ -207,7 +205,7 @@ CGPoint		NearestPointOnLine( const CGPoint inPoint, const CGPoint a, const CGPoi
         return a;
 }
 
--(MMStick*) cloneObject{
+-(MMPhysicsObject*) cloneObject{
     return [MMStick stickWithP0:[MMPoint pointWithCGPoint:p0.asCGPoint]
                           andP1:[MMPoint pointWithCGPoint:p1.asCGPoint]];
 }

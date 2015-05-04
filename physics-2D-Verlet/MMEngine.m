@@ -96,7 +96,7 @@
     return YES;
 }
 
--(MMStick*) cloneObject{
+-(MMPhysicsObject*) cloneObject{
     return [MMEngine engineWithP0:[MMPoint pointWithCGPoint:self.p0.asCGPoint]
                             andP1:[MMPoint pointWithCGPoint:self.p1.asCGPoint]];
 }

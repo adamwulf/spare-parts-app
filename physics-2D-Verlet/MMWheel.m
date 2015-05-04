@@ -234,7 +234,7 @@
     return MAX(0,[center distanceFromPoint:point] - radius);
 }
 
--(MMStick*) cloneObject{
+-(MMPhysicsObject*) cloneObject{
     return [MMWheel wheelWithCenter:[MMPoint pointWithCGPoint:center.asCGPoint]
                           andRadius:radius];
 }
