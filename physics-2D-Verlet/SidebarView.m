@@ -63,7 +63,7 @@
         [playPauseButton setImage:[UIImage imageNamed:@"play.png"] forState:UIControlStateNormal];
         [playPauseButton setImage:[UIImage imageNamed:@"pause.png"] forState:UIControlStateSelected];
         [playPauseButton sizeToFit];
-        playPauseButton.center = CGPointMake(self.bounds.size.width - 180, 80);
+        playPauseButton.center = CGPointMake(self.bounds.size.width - 220, 80);
         [playPauseButton addTarget:self action:@selector(toggleAnimation:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:playPauseButton];
         
@@ -73,21 +73,21 @@
         [clearButton sizeToFit];
         [clearButton addTarget:self action:@selector(clearObjects) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:clearButton];
-        clearButton.center = CGPointMake(self.bounds.size.width - 80, 80);
+        clearButton.center = CGPointMake(self.bounds.size.width - 120, 80);
         
         UIButton* saveButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
         [saveButton setTitle:@"Save" forState:UIControlStateNormal];
         [saveButton sizeToFit];
         [saveButton addTarget:self action:@selector(saveObjects) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:saveButton];
-        saveButton.center = CGPointMake(self.bounds.size.width - 180, 140);
+        saveButton.center = CGPointMake(self.bounds.size.width - 220, 140);
 
         UIButton* loadButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
         [loadButton setTitle:@"Load" forState:UIControlStateNormal];
         [loadButton sizeToFit];
         [loadButton addTarget:self action:@selector(loadObjects) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:loadButton];
-        loadButton.center = CGPointMake(self.bounds.size.width - 80, 140);
+        loadButton.center = CGPointMake(self.bounds.size.width - 120, 140);
         
         UIButton* helpButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
         [helpButton setTitle:@"Help" forState:UIControlStateNormal];

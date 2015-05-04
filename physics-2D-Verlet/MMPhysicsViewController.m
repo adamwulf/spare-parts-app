@@ -34,6 +34,7 @@
     TutorialView* tutorial;
     UIAlertAction *saveAction;
     
+    
 }
 
 - (void)viewDidLoad {
@@ -81,9 +82,38 @@
     
     [sidebar.physicsView setNeedsDisplay];
     
-    
     if(![[NSUserDefaults standardUserDefaults] boolForKey:@"hasCompletedTutorial"]){
         [self pleaseOpenTutorial];
+    }
+    
+    
+    UIButton* toggleSidebar = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 40, 40)];
+    toggleSidebar.center = CGPointMake(self.view.bounds.size.width - 60, 80);
+    [toggleSidebar setTitle:@">>" forState:UIControlStateNormal];
+    [toggleSidebar setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [toggleSidebar addTarget:self action:@selector(toggleSidebar:) forControlEvents:UIControlEventTouchUpInside];
+    toggleSidebar.layer.borderColor = [UIColor blackColor].CGColor;
+    toggleSidebar.layer.borderWidth = 1;
+    toggleSidebar.layer.cornerRadius = 7;
+    self.view.userInteractionEnabled = YES;
+    [self.view addSubview:toggleSidebar];
+}
+
+-(void) toggleSidebar:(UIButton*)button{
+    if(sidebar.frame.origin.x >= self.view.bounds.size.width){
+        [button setTitle:@">>" forState:UIControlStateNormal];
+        [UIView animateWithDuration:.3 animations:^{
+            CGRect fr = sidebar.frame;
+            fr.origin.x = self.view.bounds.size.width - kSidebarWidth;
+            sidebar.frame = fr;
+        }];
+    }else{
+        [button setTitle:@"<<" forState:UIControlStateNormal];
+        [UIView animateWithDuration:.3 animations:^{
+            CGRect fr = sidebar.frame;
+            fr.origin.x = self.view.bounds.size.width;
+            sidebar.frame = fr;
+        }];
     }
 }
 

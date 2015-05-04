@@ -528,14 +528,6 @@
                     p.y = kStickWidth/2;
                     p.oldy = p.y + vy * bounce;
                 }
-                
-                // push away from sidebar
-                if(p.x > self.bounds.size.width - kSidebarWidth) {
-                    p.x = p.x - 5;
-                    if(!isRunning){
-                        [p nullVelocity];
-                    }
-                }
             }
         }
     }
