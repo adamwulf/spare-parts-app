@@ -17,7 +17,7 @@
 #import "MMSpring.h"
 #import "PhysicsViewDelegate.h"
 
-@interface TutorialView ()<PhysicsViewDelegate>
+@interface TutorialView ()
 
 @end
 
@@ -58,7 +58,7 @@
         
         scrollView.contentSize = CGSizeMake(2000 + scrollView.bounds.size.width, scrollView.bounds.size.height);
         
-        physicsView = [[MMPhysicsView alloc] initWithFrame:CGRectMake(0, 0, scrollView.contentSize.width, scrollView.contentSize.height) andDelegate:self];
+        physicsView = [[MMPhysicsView alloc] initWithFrame:CGRectMake(0, 0, scrollView.contentSize.width, scrollView.contentSize.height) andDelegate:nil andDrawOnce:YES];
         
         CGFloat startOfPartsTutorial = scrollView.bounds.size.width;
 
@@ -179,17 +179,6 @@
 
 -(void) closeTutorialPressed:(id)button{
     [delegate tutorialViewClosed];
-}
-
-#pragma mark - PhysicsViewDelegate
-
--(void) initializePhysicsDataIntoPoints:(NSMutableArray *)points
-                              andSticks:(NSMutableArray *)sticks{
-    // noop
-}
-
--(void) pleaseOpenTutorial{
-    // noop
 }
 
 @end

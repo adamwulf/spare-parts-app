@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MMPhysicsView.h"
 
-@interface SidebarBackground : UIView
+@interface SidebarView : UIView
+
+@property (nonatomic, readonly) MMPhysicsView* physicsView;
 
 @end

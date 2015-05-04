@@ -19,7 +19,7 @@
 
 -(id) initWithFrame:(CGRect)frame NS_UNAVAILABLE;
 
--(id) initWithFrame:(CGRect)frame andDelegate:(NSObject<PhysicsViewDelegate>*)_delegate;
+-(id) initWithFrame:(CGRect)frame andDelegate:(NSObject<PhysicsViewDelegate>*)_delegate andDrawOnce:(BOOL)drawOnce;
 
 -(void) turnOffGestures;
 

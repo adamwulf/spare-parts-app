@@ -79,7 +79,7 @@
 @synthesize staticObjects;
 @synthesize delegate;
 
--(id) initWithFrame:(CGRect)frame andDelegate:(NSObject<PhysicsViewDelegate>*)_delegate{
+-(id) initWithFrame:(CGRect)frame andDelegate:(NSObject<PhysicsViewDelegate>*)_delegate andDrawOnce:(BOOL)drawOnce{
     if(self = [super initWithFrame:frame]){
         self.backgroundColor = [UIColor clearColor];
         self.opaque = NO;
@@ -104,9 +104,11 @@
         
         [self initializeData];
         
-        CADisplayLink* displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(displayLinkPresentRenderBuffer:)];
-        displayLink.frameInterval = 2;
-        [displayLink addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSDefaultRunLoopMode];
+        if(!drawOnce){
+            CADisplayLink* displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(displayLinkPresentRenderBuffer:)];
+            displayLink.frameInterval = 2;
+            [displayLink addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSDefaultRunLoopMode];
+        }
         
         
         rotateGesture = [[CustomRotationGesture alloc] initWithTarget:self action:@selector(rotateGesture:)];
@@ -173,6 +175,7 @@
         // initialize default objects in the sidebar
         staticObjects = [NSMutableArray array];
         
+        [self setNeedsDisplay];
     }
     return self;
 }
@@ -240,7 +243,6 @@
         // find the point to grab
         MMPhysicsObject* stick = [self getSidebarObject:currLoc];
         if(stick){
-            stick = [stick cloneObject];
             selectedPoint = nil;
             selectedStick = stick;
             [pointPropertiesView showPointProperties:selectedPoint];
@@ -654,13 +656,7 @@
 }
 
 -(MMPhysicsObject*) getSidebarObject:(CGPoint)point{
-    MMPhysicsObject* ret = [[staticObjects sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
-        return [obj1 distanceFromPoint:point] < [obj2 distanceFromPoint:point] ? NSOrderedAscending : NSOrderedDescending;
-    }] firstObject];
-    if([ret distanceFromPoint:point] < 30){
-        return ret;
-    }
-    return nil;
+    return [delegate getSidebarObject:point];
 }
 
 #pragma mark - Save and Load

@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "MMPhysicsObject.h"
 
 @protocol PhysicsViewDelegate <NSObject>
 
@@ -14,5 +15,7 @@
                               andSticks:(NSMutableArray*)sticks;
 
 -(void) pleaseOpenTutorial;
+
+-(MMPhysicsObject*) getSidebarObject:(CGPoint)point;
 
 @end

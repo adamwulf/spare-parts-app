@@ -8,7 +8,7 @@
 
 #import "MMPhysicsViewController.h"
 #import "MMPhysicsView.h"
-#import "SidebarBackground.h"
+#import "SidebarView.h"
 #import "Constants.h"
 #import "TutorialView.h"
 #import "TutorialViewDelegate.h"
@@ -26,7 +26,7 @@
 
 @implementation MMPhysicsViewController{
     MMPhysicsView* physicsView;
-    SidebarBackground* sidebar;
+    SidebarView* sidebar;
     TutorialView* tutorial;
 }
 
@@ -46,32 +46,32 @@
     backyard.image = [UIImage imageNamed:@"backyard.jpg"];
     [self.view addSubview:backyard];
 
-    sidebar = [[SidebarBackground alloc] initWithFrame:CGRectMake(self.view.bounds.size.width-kSidebarWidth, 0, kSidebarWidth, self.view.bounds.size.height)];
+    sidebar = [[SidebarView alloc] initWithFrame:CGRectMake(self.view.bounds.size.width-kSidebarWidth, 0, kSidebarWidth, self.view.bounds.size.height)];
     sidebar.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
     [backyard addSubview:sidebar];
     
-    physicsView = [[MMPhysicsView alloc] initWithFrame:self.view.bounds andDelegate:self];
+    physicsView = [[MMPhysicsView alloc] initWithFrame:self.view.bounds andDelegate:self andDrawOnce:NO];
     physicsView.controller = self;
     physicsView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
     [self.view addSubview:physicsView];
     
     
     
-    CGFloat sidebarLeft = self.view.bounds.size.width - 230;
-    CGFloat sidebarRight = self.view.bounds.size.width - 60;
-    [physicsView.staticObjects addObject:[MMStick stickWithP0:[MMPoint pointWithX:sidebarLeft andY:200]
+    CGFloat sidebarLeft = kSidebarWidth - 230;
+    CGFloat sidebarRight = kSidebarWidth - 60;
+    [sidebar.physicsView.staticObjects addObject:[MMStick stickWithP0:[MMPoint pointWithX:sidebarLeft andY:200]
                                              andP1:[MMPoint pointWithX:sidebarRight andY:240]]];
-    [physicsView.staticObjects addObject:[MMPiston pistonWithP0:[MMPoint pointWithX:sidebarLeft andY:300]
+    [sidebar.physicsView.staticObjects addObject:[MMPiston pistonWithP0:[MMPoint pointWithX:sidebarLeft andY:300]
                                                andP1:[MMPoint pointWithX:sidebarRight andY:340]]];
-    [physicsView.staticObjects addObject:[MMEngine engineWithP0:[MMPoint pointWithX:sidebarLeft andY:400]
+    [sidebar.physicsView.staticObjects addObject:[MMEngine engineWithP0:[MMPoint pointWithX:sidebarLeft andY:400]
                                                andP1:[MMPoint pointWithX:sidebarRight andY:440]]];
-    [physicsView.staticObjects addObject:[MMSpring springWithP0:[MMPoint pointWithX:sidebarLeft andY:500]
+    [sidebar.physicsView.staticObjects addObject:[MMSpring springWithP0:[MMPoint pointWithX:sidebarLeft andY:500]
                                                andP1:[MMPoint pointWithX:sidebarRight andY:540]]];
-    [physicsView.staticObjects addObject:[MMBalloon balloonWithCGPoint:CGPointMake(sidebarLeft, 600)]];
-    [physicsView.staticObjects addObject:[MMWheel wheelWithCenter:[MMPoint pointWithX:sidebarLeft + 120 andY:680]
+    [sidebar.physicsView.staticObjects addObject:[MMBalloon balloonWithCGPoint:CGPointMake(sidebarLeft, 600)]];
+    [sidebar.physicsView.staticObjects addObject:[MMWheel wheelWithCenter:[MMPoint pointWithX:sidebarLeft + 120 andY:680]
                                              andRadius:kWheelRadius]];
     
-    
+    [sidebar.physicsView setNeedsDisplay];
     
     
     if(![[NSUserDefaults standardUserDefaults] boolForKey:@"hasCompletedTutorial"]){
@@ -130,5 +130,24 @@
     tutorial.delegate = self;
     [self.view addSubview:tutorial];
 }
+
+-(MMPhysicsObject*) getSidebarObject:(CGPoint)point{
+    point = [sidebar convertPoint:point fromView:physicsView];
+    MMPhysicsObject* ret = [[sidebar.physicsView.staticObjects sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+        return [obj1 distanceFromPoint:point] < [obj2 distanceFromPoint:point] ? NSOrderedAscending : NSOrderedDescending;
+    }] firstObject];
+    if([ret distanceFromPoint:point] < 30){
+        // translate object back into the physics view
+        // coordinate system.
+        
+        ret = [ret cloneObject];
+        CGPoint translation = [sidebar convertPoint:CGPointZero toView:physicsView];
+        [ret translateBy:translation];
+        
+        return ret;
+    }
+    return nil;
+}
+
 
 @end

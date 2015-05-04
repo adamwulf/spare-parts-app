@@ -6,9 +6,11 @@
 //  Copyright (c) 2015 Milestone made. All rights reserved.
 //
 
-#import "SidebarBackground.h"
+#import "SidebarView.h"
 
-@implementation SidebarBackground
+@implementation SidebarView
+
+@synthesize physicsView;
 
 -(id) initWithFrame:(CGRect)frame{
     if(self = [super initWithFrame:frame]){
@@ -50,8 +52,19 @@
         beView.frame = self.bounds;
         [beView.contentView addSubview:bitsOfWhite];
         [self insertSubview:beView atIndex:0];
+        
+        physicsView = [[MMPhysicsView alloc] initWithFrame:self.bounds andDelegate:nil andDrawOnce:YES];
+        [self addSubview:physicsView];
     }
     return self;
+}
+
+- (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event{
+    return nil;
+}
+
+- (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event{
+    return NO;
 }
 
 @end
