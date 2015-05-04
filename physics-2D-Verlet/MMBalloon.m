@@ -166,6 +166,14 @@
     return [MMBalloon balloonWithCGPoint:center.asCGPoint];
 }
 
+-(void) translateBy:(CGPoint)trans{
+    [stick translateBy:trans];
+}
+
+-(void) rotateBy:(CGFloat)rads{
+    [stick rotateBy:rads];
+}
+
 -(NSArray*) allPoints{
     return @[center, tail];
 }

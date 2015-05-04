@@ -8,9 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import "MMPhysicsView.h"
+#import "SidebarViewDelegate.h"
 
 @interface SidebarView : UIView
 
+@property (nonatomic, weak) NSObject<SidebarViewDelegate>* delegate;
 @property (nonatomic, readonly) MMPhysicsView* physicsView;
 
 @end

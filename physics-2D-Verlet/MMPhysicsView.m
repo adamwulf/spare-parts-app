@@ -21,14 +21,12 @@
 #import "Constants.h"
 #import "MMPhysicsViewController.h"
 #import "SaveLoadManager.h"
-#import "LoadingDeviceView.h"
-#import "LoadingDeviceViewDelegate.h"
 #import "PropertiesViewDelegate.h"
 #import "CustomRotationGesture.h"
 
 #define kMaxStress 0.5
 
-@interface MMPhysicsView ()<LoadingDeviceViewDelegate, UIGestureRecognizerDelegate,PropertiesViewDelegate>
+@interface MMPhysicsView ()<UIGestureRecognizerDelegate,PropertiesViewDelegate>
 
 @end
 
@@ -36,8 +34,6 @@
     CGFloat bounce;
     CGFloat gravity;
     CGFloat friction;
-    
-    UIAlertAction *saveAction;
     
     // state
     NSMutableArray* points;
@@ -59,7 +55,7 @@
     UIPanGestureRecognizer* twoFingerPanGesture;
     
     // toggle running the simulation on/off
-    UIButton* playPauseButton;
+    BOOL isRunning;
     
     // the stick that's currently being made
     MMPhysicsObject* currentEditedStick;
@@ -78,6 +74,8 @@
 @synthesize controller;
 @synthesize staticObjects;
 @synthesize delegate;
+@synthesize points;
+@synthesize sticks;
 
 -(id) initWithFrame:(CGRect)frame andDelegate:(NSObject<PhysicsViewDelegate>*)_delegate andDrawOnce:(BOOL)drawOnce{
     if(self = [super initWithFrame:frame]){
@@ -134,43 +132,6 @@
         [rotateGesture requireGestureRecognizerToFail:grabPointGesture];
         [twoFingerPanGesture requireGestureRecognizerToFail:grabPointGesture];
         
-        playPauseButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        [playPauseButton setImage:[UIImage imageNamed:@"play.png"] forState:UIControlStateNormal];
-        [playPauseButton setImage:[UIImage imageNamed:@"pause.png"] forState:UIControlStateSelected];
-        [playPauseButton sizeToFit];
-        playPauseButton.center = CGPointMake(self.bounds.size.width - 180, 80);
-        [playPauseButton addTarget:self action:@selector(toggleAnimation:) forControlEvents:UIControlEventTouchUpInside];
-        [self addSubview:playPauseButton];
-
-
-        UIButton* clearButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        [clearButton setImage:[UIImage imageNamed:@"trash.png"] forState:UIControlStateNormal];
-        [clearButton sizeToFit];
-        [clearButton addTarget:self action:@selector(clearObjects) forControlEvents:UIControlEventTouchUpInside];
-        [self addSubview:clearButton];
-        clearButton.center = CGPointMake(self.bounds.size.width - 80, 80);
-        
-        UIButton* saveButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-        [saveButton setTitle:@"Save" forState:UIControlStateNormal];
-        [saveButton sizeToFit];
-        [saveButton addTarget:self action:@selector(saveObjects) forControlEvents:UIControlEventTouchUpInside];
-        [self addSubview:saveButton];
-        saveButton.center = CGPointMake(self.bounds.size.width - 180, 140);
-        
-        UIButton* loadButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-        [loadButton setTitle:@"Load" forState:UIControlStateNormal];
-        [loadButton sizeToFit];
-        [loadButton addTarget:self action:@selector(loadObjects) forControlEvents:UIControlEventTouchUpInside];
-        [self addSubview:loadButton];
-        loadButton.center = CGPointMake(self.bounds.size.width - 80, 140);
-        
-        UIButton* helpButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-        [helpButton setTitle:@"Help" forState:UIControlStateNormal];
-        [helpButton sizeToFit];
-        [helpButton addTarget:self action:@selector(tutorialButtonPressed) forControlEvents:UIControlEventTouchUpInside];
-        [self addSubview:helpButton];
-        helpButton.center = CGPointMake(self.bounds.size.width - 220, self.bounds.size.height - 40);
-        
        
         // initialize default objects in the sidebar
         staticObjects = [NSMutableArray array];
@@ -179,6 +140,20 @@
     }
     return self;
 }
+
+#pragma mark - actions
+
+-(void) toggleRunning{
+    isRunning = !isRunning;
+}
+
+-(void) clearObjects{
+    [points removeAllObjects];
+    [sticks removeAllObjects];
+    selectedPoint = nil;
+    selectedStick = nil;
+}
+
 
 #pragma mark - Gesture
 
@@ -213,16 +188,6 @@
     }
 }
 
--(void) toggleAnimation:(UIButton*)button{
-    button.selected = !button.selected;
-}
-
--(void) clearObjects{
-    [points removeAllObjects];
-    [sticks removeAllObjects];
-    selectedPoint = nil;
-    selectedStick = nil;
-}
 
 -(void) tapPointGesture:(UITapGestureRecognizer*)tapGesture{
     CGPoint currLoc = [tapGesture locationInView:self];
@@ -338,7 +303,7 @@
     }
     
 
-    if(playPauseButton.selected){
+    if(isRunning){
         // gravity + velocity etc
         [self updatePoints];
         [self tickMachines];
@@ -394,7 +359,7 @@
             grabbedPoint.x = [grabPointGesture locationInView:self].x;
             grabbedPoint.y = [grabPointGesture locationInView:self].y;
         }
-        if(!playPauseButton.selected){
+        if(!isRunning){
             for (MMPoint* p in points) {
                 [p nullVelocity];
             }
@@ -407,7 +372,7 @@
             grabbedStick.p1.x = [grabPointGesture locationInView:self].x - grabbedStickOffsetP1.x;
             grabbedStick.p1.y = [grabPointGesture locationInView:self].y - grabbedStickOffsetP1.y;
         }
-        if(!playPauseButton.selected){
+        if(!isRunning){
             for (MMPoint* p in points) {
                 [p nullVelocity];
             }
@@ -567,7 +532,7 @@
                 // push away from sidebar
                 if(p.x > self.bounds.size.width - kSidebarWidth) {
                     p.x = p.x - 5;
-                    if(!playPauseButton.selected){
+                    if(!isRunning){
                         [p nullVelocity];
                     }
                 }
@@ -659,80 +624,11 @@
     return [delegate getSidebarObject:point];
 }
 
-#pragma mark - Save and Load
-
--(void) saveObjects{
-    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Save!" message:@"Name your contraption!" preferredStyle:UIAlertControllerStyleAlert];
-    [alert addTextFieldWithConfigurationHandler:^(UITextField *textField) {
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(alertTextFieldDidChange:)
-                                                     name:UITextFieldTextDidChangeNotification
-                                                   object:textField];
-    }];
-    [controller presentViewController:alert animated:YES completion:nil];
-    
-    
-    saveAction = [UIAlertAction
-                                 actionWithTitle:@"Save"
-                                 style:UIAlertActionStyleDefault
-                                 handler:^(UIAlertAction *action)
-                                 {
-                                     [[NSNotificationCenter defaultCenter] removeObserver:self];
-                                     saveAction = nil;
-                                     
-                                     NSString* name = [[alert.textFields firstObject] text];
-                                     NSLog(@"Save action: %@", name);
-                                     [[SaveLoadManager sharedInstance] savePoints:points andSticks:sticks forName:name];
-                                 }];
-    saveAction.enabled = NO;
-    [alert addAction:saveAction];
-
-    UIAlertAction *cancelAction = [UIAlertAction
-                                 actionWithTitle:@"Cancel"
-                                 style:UIAlertActionStyleCancel
-                                 handler:^(UIAlertAction *action)
-                                 {
-                                     [[NSNotificationCenter defaultCenter] removeObserver:self];
-                                     saveAction = nil;
-                                 }];
-    [alert addAction:cancelAction];
-}
-
--(void) loadObjects{
-    LoadingDeviceView* loadingView = [[LoadingDeviceView alloc] initWithFrame:self.bounds];
-    loadingView.delegate = self;
-    [self addSubview:loadingView];
-    [loadingView reloadData];
-
-    selectGesture.enabled = NO;
-    grabPointGesture.enabled = NO;
-}
-
--(void) alertTextFieldDidChange:(NSNotification*)note{
-    // did change
-    if([[note.object text] length]){
-        saveAction.enabled = YES;
-    }else{
-        saveAction.enabled = NO;
-    }
-}
-
-
 #pragma mark - LoadingDeviceViewDelegate
 
--(void) loadDeviceNamed:(NSString*)name{
-    NSDictionary* loadedInfo = [[SaveLoadManager sharedInstance] loadName:name];
-    
-    [points addObjectsFromArray:[loadedInfo objectForKey:@"points"]];
-    [sticks addObjectsFromArray:[loadedInfo objectForKey:@"sticks"]];
-    
-    selectGesture.enabled = YES;
-    grabPointGesture.enabled = YES;
-}
-
--(void) cancelLoadingDevice{
-    selectGesture.enabled = YES;
-    grabPointGesture.enabled = YES;
+-(void) loadPoints:(NSArray *)_points andSticks:(NSArray *)_sticks{
+    [points addObjectsFromArray:_points];
+    [sticks addObjectsFromArray:_sticks];
 }
 
 #pragma mark - UIGestureRecognizerDelegate

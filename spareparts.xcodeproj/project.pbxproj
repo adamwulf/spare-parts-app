@@ -186,6 +186,7 @@
 		66DCB8C91AD22FF100538276 /* PhysicsViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhysicsViewDelegate.h; sourceTree = "<group>"; };
 		66F148E71AF801A20058D145 /* MMPhysicsObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMPhysicsObject.h; sourceTree = "<group>"; };
 		66F148E81AF801A20058D145 /* MMPhysicsObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMPhysicsObject.m; sourceTree = "<group>"; };
+		66F148EA1AF80E890058D145 /* SidebarViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SidebarViewDelegate.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -300,6 +301,7 @@
 				66343C1B1ABF5BB500801962 /* MMPhysicsViewController.m */,
 				66677C5D1ACBA6D6003A6723 /* SidebarView.h */,
 				66677C5E1ACBA6D6003A6723 /* SidebarView.m */,
+				66F148EA1AF80E890058D145 /* SidebarViewDelegate.h */,
 			);
 			name = "App Delegate";
 			sourceTree = "<group>";

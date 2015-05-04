@@ -17,6 +17,9 @@
 @property (weak) NSObject<PhysicsViewDelegate>* delegate;
 @property (readonly) NSMutableArray* staticObjects;
 
+@property (readonly) NSArray* points;
+@property (readonly) NSArray* sticks;
+
 -(id) initWithFrame:(CGRect)frame NS_UNAVAILABLE;
 
 -(id) initWithFrame:(CGRect)frame andDelegate:(NSObject<PhysicsViewDelegate>*)_delegate andDrawOnce:(BOOL)drawOnce;
@@ -24,5 +27,11 @@
 -(void) turnOffGestures;
 
 -(void) hideSidebar;
+
+-(void) loadPoints:(NSArray*)points andSticks:(NSArray*)sticks;
+
+-(void) toggleRunning;
+-(void) clearObjects;
+-(void) tutorialButtonPressed;
 
 @end

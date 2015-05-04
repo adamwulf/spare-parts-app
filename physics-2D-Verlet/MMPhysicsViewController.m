@@ -19,8 +19,12 @@
 #import "MMBalloon.h"
 #import "MMSpring.h"
 #import "PhysicsViewDelegate.h"
+#import "SidebarViewDelegate.h"
+#import "LoadingDeviceView.h"
+#import "LoadingDeviceViewDelegate.h"
+#import "SaveLoadManager.h"
 
-@interface MMPhysicsViewController ()<TutorialViewDelegate,PhysicsViewDelegate>
+@interface MMPhysicsViewController ()<TutorialViewDelegate,PhysicsViewDelegate,SidebarViewDelegate,LoadingDeviceViewDelegate>
 
 @end
 
@@ -28,6 +32,8 @@
     MMPhysicsView* physicsView;
     SidebarView* sidebar;
     TutorialView* tutorial;
+    UIAlertAction *saveAction;
+    
 }
 
 - (void)viewDidLoad {
@@ -46,15 +52,17 @@
     backyard.image = [UIImage imageNamed:@"backyard.jpg"];
     [self.view addSubview:backyard];
 
-    sidebar = [[SidebarView alloc] initWithFrame:CGRectMake(self.view.bounds.size.width-kSidebarWidth, 0, kSidebarWidth, self.view.bounds.size.height)];
-    sidebar.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
-    [backyard addSubview:sidebar];
-    
     physicsView = [[MMPhysicsView alloc] initWithFrame:self.view.bounds andDelegate:self andDrawOnce:NO];
     physicsView.controller = self;
     physicsView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
     [self.view addSubview:physicsView];
+
+    sidebar = [[SidebarView alloc] initWithFrame:CGRectMake(self.view.bounds.size.width-kSidebarWidth, 0, kSidebarWidth, self.view.bounds.size.height)];
+    sidebar.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
+    sidebar.delegate = self;
+    [self.view addSubview:sidebar];
     
+   
     
     
     CGFloat sidebarLeft = kSidebarWidth - 230;
@@ -149,5 +157,88 @@
     return nil;
 }
 
+
+#pragma mark - SidebarViewDelegate
+
+-(void) toggleRunning{
+    [physicsView toggleRunning];
+}
+
+-(void) clearObjects{
+    [physicsView clearObjects];
+}
+
+-(void) saveObjects{
+    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Save!" message:@"Name your contraption!" preferredStyle:UIAlertControllerStyleAlert];
+    [alert addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(alertTextFieldDidChange:)
+                                                     name:UITextFieldTextDidChangeNotification
+                                                   object:textField];
+    }];
+    [self presentViewController:alert animated:YES completion:nil];
+    
+    
+    saveAction = [UIAlertAction
+                  actionWithTitle:@"Save"
+                  style:UIAlertActionStyleDefault
+                  handler:^(UIAlertAction *action)
+                  {
+                      [[NSNotificationCenter defaultCenter] removeObserver:self];
+                      saveAction = nil;
+                      
+                      NSString* name = [[alert.textFields firstObject] text];
+                      NSLog(@"Save action: %@", name);
+                      
+                      [[SaveLoadManager sharedInstance] savePoints:physicsView.points andSticks:physicsView.sticks forName:name];
+                  }];
+    saveAction.enabled = NO;
+    [alert addAction:saveAction];
+    
+    UIAlertAction *cancelAction = [UIAlertAction
+                                   actionWithTitle:@"Cancel"
+                                   style:UIAlertActionStyleCancel
+                                   handler:^(UIAlertAction *action)
+                                   {
+                                       [[NSNotificationCenter defaultCenter] removeObserver:self];
+                                       saveAction = nil;
+                                   }];
+    [alert addAction:cancelAction];
+}
+
+-(void) loadObjects{
+    LoadingDeviceView* loadingView = [[LoadingDeviceView alloc] initWithFrame:self.view.bounds];
+    loadingView.delegate = self;
+    [self.view addSubview:loadingView];
+    [loadingView reloadData];
+}
+
+-(void) tutorialButtonPressed{
+    [physicsView tutorialButtonPressed];
+}
+
+#pragma mark - LoadingDeviceViewDelegate
+
+
+-(void) alertTextFieldDidChange:(NSNotification*)note{
+    // did change
+    if([[note.object text] length]){
+        saveAction.enabled = YES;
+    }else{
+        saveAction.enabled = NO;
+    }
+}
+
+
+-(void) loadDeviceNamed:(NSString*)name{
+    NSDictionary* loadedInfo = [[SaveLoadManager sharedInstance] loadName:name];
+
+    [physicsView loadPoints:[loadedInfo objectForKey:@"points"]
+                  andSticks:[loadedInfo objectForKey:@"sticks"]];
+}
+
+-(void) cancelLoadingDevice{
+    // noop
+}
 
 @end
