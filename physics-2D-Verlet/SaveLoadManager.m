@@ -41,11 +41,10 @@ static SaveLoadManager* _instance;
     return [[[self documentsPath] stringByAppendingPathComponent:name] stringByAppendingPathExtension:@"png"];
 }
 
--(void) savePoints:(NSArray*)points andSticks:(NSArray*)sticks andBallons:(NSArray*)balloons forName:(NSString*)name{
+-(void) savePoints:(NSArray*)points andSticks:(NSArray*)sticks forName:(NSString*)name{
     NSDictionary* infoToSave = @{
                                  @"points" : points,
-                                 @"sticks" : sticks,
-                                 @"balloons" : balloons
+                                 @"sticks" : sticks
                                  };
     
     NSString* pathToSaveTo = [self pathForName:name];
@@ -55,7 +54,7 @@ static SaveLoadManager* _instance;
     
     CGPoint translate = CGPointMake(CGFLOAT_MAX, CGFLOAT_MAX);
     CGPoint maxP = CGPointZero;
-    for (MMStick* stick in [sticks arrayByAddingObjectsFromArray:balloons]) {
+    for (MMStick* stick in sticks) {
         for (MMPoint* p in [stick allPoints]) {
             if(p.x < translate.x) translate.x = p.x;
             if(p.y < translate.y) translate.y = p.y;
@@ -84,9 +83,6 @@ static SaveLoadManager* _instance;
     
     for (MMStick* stick in sticks) {
         [stick render];
-    }
-    for (MMStick* balloon in balloons) {
-        [balloon render];
     }
     
     UIImage* thumb = UIGraphicsGetImageFromCurrentImageContext();

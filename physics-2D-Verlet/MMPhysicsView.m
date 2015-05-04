@@ -42,7 +42,6 @@
     // state
     NSMutableArray* points;
     NSMutableArray* sticks;
-    NSMutableArray* balloons;
 
     // stuff for the move gesture
     MMPhysicsObject* grabbedStick;
@@ -94,7 +93,6 @@
         
         points = [NSMutableArray array];
         sticks = [NSMutableArray array];
-        balloons = [NSMutableArray array];
         
         pointPropertiesView = [[MMPointPropsView alloc] initWithFrame:CGRectMake(20, 20, 200, 250)];
         pointPropertiesView.delegate = self;
@@ -219,7 +217,6 @@
 -(void) clearObjects{
     [points removeAllObjects];
     [sticks removeAllObjects];
-    [balloons removeAllObjects];
     selectedPoint = nil;
     selectedStick = nil;
 }
@@ -251,7 +248,7 @@
             // we just created a new object
             [points addObjectsFromArray:[stick allPoints]];
             if([stick isKindOfClass:[MMBalloon class]]){
-                [balloons addObject:stick];
+                [sticks addObject:stick];
                 grabbedPoint = [((MMBalloon*)stick) center];
             }else{
                 [sticks addObject:stick];
@@ -292,10 +289,6 @@
                     MMPhysicsObject* stick = [sticks objectAtIndex:i];
                     didReplaceAllPoints = didReplaceAllPoints && [stick replacePoint:pointToReplace withPoint:pointToSnap];
                 }
-                for(int i=0;i<[balloons count];i++){
-                    MMPhysicsObject* balloon = [balloons objectAtIndex:i];
-                    [balloon replacePoint:pointToReplace withPoint:pointToSnap];
-                }
                 if(didReplaceAllPoints){
                     [points removeObject:pointToReplace];
                 }
@@ -315,8 +308,7 @@
 
 -(void) initializeData{
     [self.delegate initializePhysicsDataIntoPoints:points
-                                         andSticks:sticks
-                                       andBalloons:balloons];
+                                         andSticks:sticks];
 }
 
 
@@ -370,7 +362,6 @@
     
     // render everything
     [self renderSticks];
-    [self renderBalloons];
     
     if(selectedStick){
         [selectedStick renderWithHighlight];
@@ -432,7 +423,8 @@
 -(void) constrainSticks{
     for(int i = 0; i < [sticks count]; i++) {
         MMPhysicsObject* s = [sticks objectAtIndex:i];
-        if(![s isKindOfClass:[MMWheel class]]){
+        if(![s isKindOfClass:[MMWheel class]] &&
+           ![s isKindOfClass:[MMBalloon class]]){
             [s constrain];
         }
     }
@@ -509,34 +501,36 @@
 
 
 -(void) constrainBalloons{
-    for(MMBalloon* b in balloons) {
-        if(![processedPoints containsObject:b.center]){
-            [processedPoints addObject:b.center];
-            // make sure balloon is inside the box
-            if(!b.center.immovable){
-                CGFloat vx = (b.center.x - b.center.oldx) * friction;
-                CGFloat vy = (b.center.y - b.center.oldy) * friction;
-                
-                if(b.center.x > self.bounds.size.width - b.radius) {
-                    b.center.x = self.bounds.size.width - b.radius;
-                    b.center.oldx = b.center.x + vx * bounce;
+    for(MMBalloon* b in sticks) {
+        if([b isKindOfClass:[MMBalloon class]]){
+            if(![processedPoints containsObject:b.center]){
+                [processedPoints addObject:b.center];
+                // make sure balloon is inside the box
+                if(!b.center.immovable){
+                    CGFloat vx = (b.center.x - b.center.oldx) * friction;
+                    CGFloat vy = (b.center.y - b.center.oldy) * friction;
+                    
+                    if(b.center.x > self.bounds.size.width - b.radius) {
+                        b.center.x = self.bounds.size.width - b.radius;
+                        b.center.oldx = b.center.x + vx * bounce;
+                    }
+                    else if(b.center.x < b.radius) {
+                        b.center.x = b.radius;
+                        b.center.oldx = b.center.x + vx * bounce;
+                    }
+                    if(b.center.y > self.bounds.size.height - b.radius) {
+                        b.center.y = self.bounds.size.height - b.radius;
+                        b.center.oldy = b.center.y + vy * bounce;
+                    }
+                    else if(b.center.y < b.radius) {
+                        b.center.y = b.radius;
+                        b.center.oldy = b.center.y + vy * bounce;
+                    }
                 }
-                else if(b.center.x < b.radius) {
-                    b.center.x = b.radius;
-                    b.center.oldx = b.center.x + vx * bounce;
-                }
-                if(b.center.y > self.bounds.size.height - b.radius) {
-                    b.center.y = self.bounds.size.height - b.radius;
-                    b.center.oldy = b.center.y + vy * bounce;
-                }
-                else if(b.center.y < b.radius) {
-                    b.center.y = b.radius;
-                    b.center.oldy = b.center.y + vy * bounce;
-                }
+                [b constrain];
+                [b constrainCollisionsWith:sticks];
+                [b constrain];
             }
-            [b constrain];
-            [b constrainCollisionsWith:balloons];
-            [b constrain];
         }
     }
 }
@@ -635,13 +629,6 @@
     }
 }
 
--(void) renderBalloons{
-    for(MMBalloon* balloon in balloons){
-        [balloon render];
-    }
-}
-
-
 
 #pragma mark - Helper
 
@@ -656,7 +643,7 @@
 }
 
 -(MMPhysicsObject*) getStickNear:(CGPoint)point{
-    MMPhysicsObject* ret = [[[sticks arrayByAddingObjectsFromArray:balloons] sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+    MMPhysicsObject* ret = [[sticks sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
         return [obj1 distanceFromPoint:point] < [obj2 distanceFromPoint:point] ? NSOrderedAscending : NSOrderedDescending;
     }] firstObject];
     NSLog(@"closest stick is: %f", [ret distanceFromPoint:point]);
@@ -699,7 +686,7 @@
                                      
                                      NSString* name = [[alert.textFields firstObject] text];
                                      NSLog(@"Save action: %@", name);
-                                     [[SaveLoadManager sharedInstance] savePoints:points andSticks:sticks andBallons:balloons forName:name];
+                                     [[SaveLoadManager sharedInstance] savePoints:points andSticks:sticks forName:name];
                                  }];
     saveAction.enabled = NO;
     [alert addAction:saveAction];
@@ -742,7 +729,6 @@
     
     [points addObjectsFromArray:[loadedInfo objectForKey:@"points"]];
     [sticks addObjectsFromArray:[loadedInfo objectForKey:@"sticks"]];
-    [balloons addObjectsFromArray:[loadedInfo objectForKey:@"balloons"]];
     
     selectGesture.enabled = YES;
     grabPointGesture.enabled = YES;

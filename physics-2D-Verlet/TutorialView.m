@@ -184,8 +184,7 @@
 #pragma mark - PhysicsViewDelegate
 
 -(void) initializePhysicsDataIntoPoints:(NSMutableArray *)points
-                              andSticks:(NSMutableArray *)sticks
-                            andBalloons:(NSMutableArray *)balloons{
+                              andSticks:(NSMutableArray *)sticks{
     // noop
 }
 

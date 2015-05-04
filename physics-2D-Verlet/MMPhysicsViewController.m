@@ -101,8 +101,7 @@
 #pragma mark - PhysicsViewDelegate
 
 -(void) initializePhysicsDataIntoPoints:(NSMutableArray *)points
-                              andSticks:(NSMutableArray *)sticks
-                            andBalloons:(NSMutableArray *)balloons{
+                              andSticks:(NSMutableArray *)sticks{
     [points addObject:[MMPoint pointWithX:300 andY:100]];
     [points addObject:[MMPoint pointWithX:400 andY:100]];
     [points addObject:[MMPoint pointWithX:400 andY:200]];

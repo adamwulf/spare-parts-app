@@ -14,7 +14,7 @@
 
 +(SaveLoadManager*) sharedInstance;
 
--(void) savePoints:(NSArray*)points andSticks:(NSArray*)sticks andBallons:(NSArray*)balloons forName:(NSString*)name;
+-(void) savePoints:(NSArray*)points andSticks:(NSArray*)sticks forName:(NSString*)name;
 
 -(NSDictionary*) loadName:(NSString*)name;
 

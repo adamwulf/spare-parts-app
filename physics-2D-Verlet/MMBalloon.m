@@ -133,24 +133,26 @@
 -(void) constrainCollisionsWith:(NSArray*)balloons{
     // make sure the balloon isn't hitting other balloons
     for(MMBalloon* otherB in balloons) {
-        if(otherB != self){
-            CGFloat dist = [otherB.center distanceFromPoint:self.center.asCGPoint];
-            CGFloat movement = (otherB.radius + self.radius) - dist;
-            if(movement > 0){
-                // collision!
-                
-                // fix their offset to be outside their
-                // combined radius
-                CGPoint distToMove = [otherB.center differenceFrom:self.center];
-                distToMove.x = (dist != 0) ? distToMove.x / dist : dist;
-                distToMove.y = (dist != 0) ? distToMove.y / dist : dist;
-                distToMove.x *= movement;
-                distToMove.y *= movement;
-                
-                self.center.x -= distToMove.x / 2;
-                self.center.y -= distToMove.y / 2;
-                otherB.center.x += distToMove.x / 2;
-                otherB.center.y += distToMove.y / 2;
+        if([otherB isKindOfClass:[MMBalloon class]]){
+            if(otherB != self){
+                CGFloat dist = [otherB.center distanceFromPoint:self.center.asCGPoint];
+                CGFloat movement = (otherB.radius + self.radius) - dist;
+                if(movement > 0){
+                    // collision!
+                    
+                    // fix their offset to be outside their
+                    // combined radius
+                    CGPoint distToMove = [otherB.center differenceFrom:self.center];
+                    distToMove.x = (dist != 0) ? distToMove.x / dist : dist;
+                    distToMove.y = (dist != 0) ? distToMove.y / dist : dist;
+                    distToMove.x *= movement;
+                    distToMove.y *= movement;
+                    
+                    self.center.x -= distToMove.x / 2;
+                    self.center.y -= distToMove.y / 2;
+                    otherB.center.x += distToMove.x / 2;
+                    otherB.center.y += distToMove.y / 2;
+                }
             }
         }
     }
