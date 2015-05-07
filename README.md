@@ -8,7 +8,9 @@ Spare Parts
  - 100% of the development is livestreamed
  - Version 1.0 will be finished within 2 weeks and submitted to the App Store
  
-Development started on March 23rd, and the app will be submitted on April 5th!
+Development started on March 23rd, and the app was submitted on April 5th!
+
+The app is now on the [App Store](https://itunes.apple.com/us/app/spare-parts/id981297199?mt=8&ign-mpt=uo%3D4).
 
 Follow the progress on the website: [http://www.sparepartsapp.com](http://www.sparepartsapp.com).
 
